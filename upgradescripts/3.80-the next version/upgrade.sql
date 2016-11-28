@@ -2036,6 +2036,12 @@ set @resources='
   <LocaleResource Name="Admin.Catalog.Products.ProductAttributes.Attributes.ValidationRules.ViewLink">
     <Value>Edit rules</Value>
   </LocaleResource>
+  <LocaleResource Name="Messages.Order.Product(s).PriceByQuantity">
+    <Value>{0} items for {1}</Value>
+   </LocaleResource>
+   <LocaleResource Name="Order.Product(s).PriceByQuantity">
+    <Value>{0} items for {1}</Value>
+   </LocaleResource>
 </Language>
 '
 
