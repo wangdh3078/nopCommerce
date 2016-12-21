@@ -32,6 +32,7 @@ namespace Nop.Plugin.Shipping.UPS.Controllers
         {
             var model = new UPSShippingModel();
             model.Url = _upsSettings.Url;
+            model.AccountNumber = _upsSettings.AccountNumber;
             model.AccessKey = _upsSettings.AccessKey;
             model.Username = _upsSettings.Username;
             model.Password = _upsSettings.Password;
@@ -101,6 +102,7 @@ namespace Nop.Plugin.Shipping.UPS.Controllers
 
             //save settings
             _upsSettings.Url = model.Url;
+            _upsSettings.AccountNumber = model.AccountNumber;
             _upsSettings.AccessKey = model.AccessKey;
             _upsSettings.Username = model.Username;
             _upsSettings.Password = model.Password;

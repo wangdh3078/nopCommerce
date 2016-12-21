@@ -1106,6 +1106,12 @@ set @resources='
   <LocaleResource Name="Admin.ContentManagement.News.Comments.Fields.StoreName">
     <Value>Store name</Value>
   </LocaleResource>
+  <LocaleResource Name="Plugins.Shipping.UPS.Fields.AccountNumber">
+    <Value>Account number</Value>
+  </LocaleResource>
+  <LocaleResource Name="Plugins.Shipping.UPS.Fields.AccountNumber.Hint">
+    <Value>Specify UPS account number (required to get negotiated rates).</Value>
+  </LocaleResource>
 </Language>
 '
 

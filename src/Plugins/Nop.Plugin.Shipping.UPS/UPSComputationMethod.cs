@@ -58,6 +58,7 @@ namespace Nop.Plugin.Shipping.UPS
         #endregion
 
         #region Ctor
+
         public UPSComputationMethod(IMeasureService measureService,
             IShippingService shippingService,
             ISettingService settingService,
@@ -82,6 +83,7 @@ namespace Nop.Plugin.Shipping.UPS
 
             this._traceMessages = new StringBuilder();
         }
+
         #endregion
 
         #region Utilities
@@ -94,6 +96,10 @@ namespace Nop.Plugin.Shipping.UPS
             string zipPostalCodeTo = getShippingOptionRequest.ShippingAddress.ZipPostalCode;
             string countryCodeFrom = getShippingOptionRequest.CountryFrom.TwoLetterIsoCode;
             string countryCodeTo = getShippingOptionRequest.ShippingAddress.Country.TwoLetterIsoCode;
+            var stateCodeFrom = getShippingOptionRequest.StateProvinceFrom != null
+                ? getShippingOptionRequest.StateProvinceFrom.Abbreviation : string.Empty;
+            var stateCodeTo = getShippingOptionRequest.ShippingAddress.StateProvince != null
+                ? getShippingOptionRequest.ShippingAddress.StateProvince.Abbreviation : string.Empty;
 
             var sb = new StringBuilder();
             sb.Append("<?xml version='1.0'?>");
@@ -122,6 +128,7 @@ namespace Nop.Plugin.Shipping.UPS
             }
             sb.Append("<Shipment>");
             sb.Append("<Shipper>");
+            sb.AppendFormat("<ShipperNumber>{0}</ShipperNumber>", _upsSettings.AccountNumber);
             sb.Append("<Address>");
             sb.AppendFormat("<PostalCode>{0}</PostalCode>", zipPostalCodeFrom);
             sb.AppendFormat("<CountryCode>{0}</CountryCode>", countryCodeFrom);
@@ -132,12 +139,16 @@ namespace Nop.Plugin.Shipping.UPS
             sb.Append("<ResidentialAddressIndicator/>");
             sb.AppendFormat("<PostalCode>{0}</PostalCode>", zipPostalCodeTo);
             sb.AppendFormat("<CountryCode>{0}</CountryCode>", countryCodeTo);
+            if (!string.IsNullOrEmpty(stateCodeTo))
+                sb.AppendFormat("<StateProvinceCode>{0}</StateProvinceCode>", stateCodeTo);
             sb.Append("</Address>");
             sb.Append("</ShipTo>");
             sb.Append("<ShipFrom>");
             sb.Append("<Address>");
             sb.AppendFormat("<PostalCode>{0}</PostalCode>", zipPostalCodeFrom);
             sb.AppendFormat("<CountryCode>{0}</CountryCode>", countryCodeFrom);
+            if (!string.IsNullOrEmpty(stateCodeFrom))
+                sb.AppendFormat("<StateProvinceCode>{0}</StateProvinceCode>", stateCodeFrom);
             sb.Append("</Address>");
             sb.Append("</ShipFrom>");
             sb.Append("<Service>");
@@ -150,6 +161,14 @@ namespace Nop.Plugin.Shipping.UPS
                 sb.Append("<ShipmentServiceOptions>");
                 sb.Append("<SaturdayDelivery></SaturdayDelivery>");
                 sb.Append("</ShipmentServiceOptions>");
+            }
+
+            //negotiated rates flag
+            if (!string.IsNullOrEmpty(_upsSettings.AccountNumber) && !string.IsNullOrEmpty(stateCodeFrom))
+            {
+                sb.Append("<ShipmentRatingOptions>");
+                sb.Append("<NegotiatedRatesIndicator/>");
+                sb.Append("</ShipmentRatingOptions>");
             }
 
             string currencyCode = _currencyService.GetCurrencyById(_currencySettings.PrimaryStoreCurrencyId).CurrencyCode;
@@ -669,6 +688,28 @@ namespace Nop.Plugin.Shipping.UPS
                             {
                                 break;
                             }
+                            //parse negotiated rates
+                            if ((tr.Name == "NegotiatedRateCharges") && (tr.NodeType == XmlNodeType.Element))
+                            {
+                                while (tr.Read())
+                                {
+                                    if ((tr.Name == "TotalCharge") && (tr.NodeType == XmlNodeType.Element))
+                                    {
+                                        while (tr.Read())
+                                        {
+                                            if ((tr.Name == "MonetaryValue") && (tr.NodeType == XmlNodeType.Element))
+                                            {
+                                                monetaryValue = tr.ReadString();
+                                                tr.ReadEndElement();
+                                            }
+                                            if ((tr.Name == "TotalCharge") && (tr.NodeType == XmlNodeType.EndElement))
+                                                break;
+                                        }
+                                    }
+                                    if ((tr.Name == "NegotiatedRateCharges") && (tr.NodeType == XmlNodeType.EndElement))
+                                        break;
+                                }
+                            }
                             if ((tr.Name == "TotalCharges") && (tr.NodeType == XmlNodeType.Element))
                             {
                                 while (tr.Read())
@@ -852,9 +893,6 @@ namespace Nop.Plugin.Shipping.UPS
             var settings = new UPSSettings
             {
                 Url = "https://www.ups.com/ups.app/xml/Rate",
-                AccessKey = "AccessKey1",
-                Username = "Username1",
-                Password = "Password",
                 CustomerClassification = UPSCustomerClassification.Retail,
                 PickupType = UPSPickupType.OneTimePickup,
                 PackagingType = UPSPackagingType.ExpressBox,
@@ -869,6 +907,8 @@ namespace Nop.Plugin.Shipping.UPS
             this.AddOrUpdatePluginLocaleResource("Plugins.Shipping.UPS.Fields.Url.Hint", "Specify UPS URL.");
             this.AddOrUpdatePluginLocaleResource("Plugins.Shipping.UPS.Fields.AccessKey", "Access Key");
             this.AddOrUpdatePluginLocaleResource("Plugins.Shipping.UPS.Fields.AccessKey.Hint", "Specify UPS access key.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Shipping.UPS.Fields.AccountNumber", "Account number");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Shipping.UPS.Fields.AccountNumber.Hint", "Specify UPS account number (required to get negotiated rates).");
             this.AddOrUpdatePluginLocaleResource("Plugins.Shipping.UPS.Fields.Username", "Username");
             this.AddOrUpdatePluginLocaleResource("Plugins.Shipping.UPS.Fields.Username.Hint", "Specify UPS username.");
             this.AddOrUpdatePluginLocaleResource("Plugins.Shipping.UPS.Fields.Password", "Password");
@@ -922,6 +962,8 @@ namespace Nop.Plugin.Shipping.UPS
             this.DeletePluginLocaleResource("Plugins.Shipping.UPS.Fields.Url.Hint");
             this.DeletePluginLocaleResource("Plugins.Shipping.UPS.Fields.AccessKey");
             this.DeletePluginLocaleResource("Plugins.Shipping.UPS.Fields.AccessKey.Hint");
+            this.DeletePluginLocaleResource("Plugins.Shipping.UPS.Fields.AccountNumber");
+            this.DeletePluginLocaleResource("Plugins.Shipping.UPS.Fields.AccountNumber.Hint");
             this.DeletePluginLocaleResource("Plugins.Shipping.UPS.Fields.Username");
             this.DeletePluginLocaleResource("Plugins.Shipping.UPS.Fields.Username.Hint");
             this.DeletePluginLocaleResource("Plugins.Shipping.UPS.Fields.Password");
