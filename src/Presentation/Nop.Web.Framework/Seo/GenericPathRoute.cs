@@ -80,6 +80,7 @@ namespace Nop.Web.Framework.Seo
             RouteData data = base.GetRouteData(httpContext);
             if (data != null && DataSettingsHelper.DatabaseIsInstalled())
             {
+                var workContext = EngineContext.Current.Resolve<IWorkContext>();
                 var urlRecordService = EngineContext.Current.Resolve<IUrlRecordService>();
                 var slug = data.Values["generic_se_name"] as string;
                 //performance optimization.
@@ -124,20 +125,21 @@ namespace Nop.Web.Framework.Seo
                     }
 
                     //the active one is found
-                    var redirectUrl = httpContext.Request.RawUrl.Replace(slug, activeSlug);
+                    var redirectUrl = activeSlug.GetRedirectUrlForSlug(httpContext.Request.RawUrl,
+                        httpContext.Request.ApplicationPath, httpContext.Request.Url.Query, workContext.WorkingLanguage);
                     httpContext.Response.RedirectPermanent(redirectUrl, true);
                     return null;
                 }
 
                 //ensure that the slug is the same for the current language
                 //otherwise, it can cause some issues when customers choose a new language but a slug stays the same
-                var workContext = EngineContext.Current.Resolve<IWorkContext>();
                 var slugForCurrentLanguage = SeoExtensions.GetSeName(urlRecord.EntityId, urlRecord.EntityName, workContext.WorkingLanguage.Id);
                 if (!String.IsNullOrEmpty(slugForCurrentLanguage) && 
                     !slugForCurrentLanguage.Equals(slug, StringComparison.InvariantCultureIgnoreCase))
                 {
                     //we should make not null or "" validation above because some entities does not have SeName for standard (ID=0) language (e.g. news, blog posts)
-                    var redirectUrl = httpContext.Request.RawUrl.Replace(slug, slugForCurrentLanguage);
+                    var redirectUrl = slugForCurrentLanguage.GetRedirectUrlForSlug(httpContext.Request.RawUrl, 
+                        httpContext.Request.ApplicationPath, httpContext.Request.Url.Query, workContext.WorkingLanguage);
                     httpContext.Response.Redirect(redirectUrl, true);
                     return null;
                 }

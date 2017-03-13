@@ -1,5 +1,7 @@
 ﻿using System;
 using Nop.Core.Domain.Localization;
+using Nop.Core.Infrastructure;
+using Nop.Services.Seo;
 
 namespace Nop.Web.Framework.Localization
 {
@@ -92,7 +94,12 @@ namespace Nop.Web.Framework.Localization
 
                 //url like "/en"
                 if (length == 1 + _seoCodeLength)
-                    return true;
+                {
+                    //we can have slugs like SEO codes (e.g. "en"), so check them here
+                    var urlRecordService = EngineContext.Current.Resolve<IUrlRecordService>();
+                    var urlRecord = urlRecordService.GetBySlugCached(url.Substring(1));
+                    return urlRecord == null  || !urlRecord.IsActive;
+                }
 
                 //urls like "/en/" or "/en/somethingelse"
                 return (length > 1 + _seoCodeLength) && (url[1 + _seoCodeLength] == '/');
@@ -174,6 +181,24 @@ namespace Nop.Web.Framework.Localization
             url = url.Insert(startIndex, "/");
 
             return url;
+        }
+
+        /// <summary>
+        /// Get redirect URL for specific slug
+        /// </summary>
+        /// <param name="slug">Slug</param>
+        /// <param name="rawUrl">Raw URL</param>
+        /// <param name="applicationPath">Application path</param>
+        /// <param name="query">Query information</param>
+        /// <param name="language">Language</param>
+        /// <returns>Redirect URL</returns>
+        public static string GetRedirectUrlForSlug(this string slug, string rawUrl, string applicationPath, string query, Language language)
+        {
+            var path = string.Concat("/", slug);
+            return string.Format("{0}{1}{2}", 
+                applicationPath.IsVirtualDirectory() ? applicationPath : string.Empty,
+                rawUrl.IsLocalizedUrl(applicationPath, true) ? path.AddLanguageSeoCodeToRawUrl("/", language) : path, 
+                query);
         }
     }
 }
