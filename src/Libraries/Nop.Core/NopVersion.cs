@@ -4,7 +4,7 @@ namespace Nop.Core
     public static class NopVersion
     {
         /// <summary>
-        /// Gets or sets the store version
+        /// 获取或设置NOP版本
         /// </summary>
         public static string CurrentVersion 
         {

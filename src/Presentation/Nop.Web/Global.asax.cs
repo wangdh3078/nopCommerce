@@ -29,8 +29,8 @@ namespace Nop.Web
         {
             routes.IgnoreRoute("favicon.ico");
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            
-            //register custom routes (plugins, etc)
+
+            //注册自定义路由（插件等）
             var routePublisher = EngineContext.Current.Resolve<IRoutePublisher>();
             routePublisher.RegisterRoutes(routes);
             
@@ -47,35 +47,35 @@ namespace Nop.Web
             //most of API providers require TLS 1.2 nowadays
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-            //disable "X-AspNetMvc-Version" header name
+            //禁用“X-AspNetMvc-Version”头名称
             MvcHandler.DisableMvcResponseHeader = true;
 
-            //initialize engine context
+            //初始化引擎上下文
             EngineContext.Initialize(false);
 
             bool databaseInstalled = DataSettingsHelper.DatabaseIsInstalled();
             if (databaseInstalled)
             {
-                //remove all view engines
+                //删除所有视图引擎
                 ViewEngines.Engines.Clear();
                 //except the themeable razor view engine we use
                 ViewEngines.Engines.Add(new ThemeableRazorViewEngine());
             }
 
-            //Add some functionality on top of the default ModelMetadataProvider
+            //在默认的ModelMetadataProvider之上添加一些功能
             ModelMetadataProviders.Current = new NopMetadataProvider();
 
-            //Registering some regular mvc stuff
+            //注册一些常规的mvc东西
             AreaRegistration.RegisterAllAreas();
             RegisterRoutes(RouteTable.Routes);
-            
-            //fluent validation
+
+            //流畅验证
             DataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;
             ModelValidatorProviders.Providers.Add(new FluentValidationModelValidatorProvider(new NopValidatorFactory()));
 
             if (databaseInstalled)
             {
-                //start scheduled tasks
+                //启动计划任务
                 TaskManager.Instance.Initialize();
                 TaskManager.Instance.Start();
 
@@ -85,23 +85,23 @@ namespace Nop.Web
                     GlobalFilters.Filters.Add(new ProfilingActionFilter());
                 }
 
-                //log application start
+                //日志应用程序启动
                 try
                 {
-                    //log
+                    //日志对象
                     var logger = EngineContext.Current.Resolve<ILogger>();
                     logger.Information("Application started", null, null);
                 }
                 catch (Exception)
                 {
-                    //don't throw new exception if occurs
+                    //如果发生，不抛出新的异常
                 }
             }
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            //ignore static resources
+            //忽略静态资源
             var webHelper = EngineContext.Current.Resolve<IWebHelper>();
             if (webHelper.IsStaticResource(this.Request))
                 return;
@@ -111,7 +111,7 @@ namespace Nop.Web
             if (webHelper.GetThisPageUrl(false).StartsWith(keepAliveUrl, StringComparison.InvariantCultureIgnoreCase))
                 return;
 
-            //ensure database is installed
+            //确保数据库已安装
             if (!DataSettingsHelper.DatabaseIsInstalled())
             {
                 string installUrl = string.Format("{0}install", webHelper.GetStoreLocation());
@@ -128,7 +128,7 @@ namespace Nop.Web
             if (EngineContext.Current.Resolve<StoreInformationSettings>().DisplayMiniProfilerInPublicStore)
             {
                 MiniProfiler.Start();
-                //store a value indicating whether profiler was started
+                //存储一个值，指示profiler是否启动
                 HttpContext.Current.Items["nop.MiniProfilerStarted"] = true;
             }
         }
@@ -145,8 +145,8 @@ namespace Nop.Web
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
-        { 
-            //we don't do it in Application_BeginRequest because a user is not authenticated yet
+        {
+            //我们不在Application_BeginRequest中执行，因为用户尚未进行身份验证
             SetWorkingCulture();
         }
 
@@ -154,10 +154,10 @@ namespace Nop.Web
         {
             var exception = Server.GetLastError();
 
-            //log error
+            //记录错误
             LogException(exception);
 
-            //process 404 HTTP errors
+            //处理404 HTTP错误
             var httpException = exception as HttpException;
             if (httpException != null && httpException.GetHttpCode() == 404)
             {
@@ -168,7 +168,7 @@ namespace Nop.Web
                     Server.ClearError();
                     Response.TrySkipIisCustomErrors = true;
 
-                    // Call target Controller and pass the routeData.
+                    // 调用目标控制器并传递routeData。
                     IController errorController = EngineContext.Current.Resolve<CommonController>();
 
                     var routeData = new RouteData();
@@ -185,7 +185,7 @@ namespace Nop.Web
             if (!DataSettingsHelper.DatabaseIsInstalled())
                 return;
 
-            //ignore static resources
+            //忽略静态资源
             var webHelper = EngineContext.Current.Resolve<IWebHelper>();
             if (webHelper.IsStaticResource(this.Request))
                 return;
@@ -202,7 +202,7 @@ namespace Nop.Web
                 //admin area
 
 
-                //always set culture to 'en-US'
+                //始终将文化设定为'en-US'
                 //we set culture of admin area to 'en-US' because current implementation of Telerik grid 
                 //doesn't work well in other cultures
                 //e.g., editing decimal value in russian culture
@@ -226,7 +226,7 @@ namespace Nop.Web
             if (!DataSettingsHelper.DatabaseIsInstalled())
                 return;
 
-            //ignore 404 HTTP errors
+            //忽略404 HTTP错误
             var httpException = exc as HttpException;
             if (httpException != null && httpException.GetHttpCode() == 404 &&
                 !EngineContext.Current.Resolve<CommonSettings>().Log404Errors)
@@ -234,7 +234,7 @@ namespace Nop.Web
 
             try
             {
-                //log
+                //日志对象
                 var logger = EngineContext.Current.Resolve<ILogger>();
                 var workContext = EngineContext.Current.Resolve<IWorkContext>();
                 logger.Error(exc.Message, exc, workContext.CurrentCustomer);

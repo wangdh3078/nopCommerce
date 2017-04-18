@@ -8,17 +8,17 @@ using System.Xml.Serialization;
 namespace Nop.Core
 {
     /// <summary>
-    /// Xml helper class
+    ///XML帮助类
     /// </summary>
     public partial class XmlHelper
     {
         #region Methods
 
         /// <summary>
-        /// XML Encode
+        /// XML编码
         /// </summary>
-        /// <param name="str">String</param>
-        /// <returns>Encoded string</returns>
+        /// <param name="str">字符串</param>
+        /// <returns>编码字符串</returns>
         public static string XmlEncode(string str)
         {
             if (str == null)
@@ -28,10 +28,10 @@ namespace Nop.Core
         }
 
         /// <summary>
-        /// XML Encode as is
+        /// XML按原样编码
         /// </summary>
-        /// <param name="str">String</param>
-        /// <returns>Encoded string</returns>
+        /// <param name="str">字符串</param>
+        /// <returns>编码字符串</returns>
         public static string XmlEncodeAsIs(string str)
         {
             if (str == null)
@@ -45,10 +45,10 @@ namespace Nop.Core
         }
 
         /// <summary>
-        /// Encodes an attribute
+        /// 编码属性
         /// </summary>
-        /// <param name="str">Attribute</param>
-        /// <returns>Encoded attribute</returns>
+        /// <param name="str">属性</param>
+        /// <returns>编码属性</returns>
         public static string XmlEncodeAttribute(string str)
         {
             if (str == null)
@@ -58,20 +58,20 @@ namespace Nop.Core
         }
 
         /// <summary>
-        /// Encodes an attribute as is
+        ///根据原样编码属性
         /// </summary>
-        /// <param name="str">Attribute</param>
-        /// <returns>Encoded attribute</returns>
+        /// <param name="str">属性</param>
+        /// <returns>编码属性</returns>
         public static string XmlEncodeAttributeAsIs(string str)
         {
             return XmlEncodeAsIs(str).Replace("\"", "&quot;");
         }
 
         /// <summary>
-        /// Decodes an attribute
+        /// 解码属性
         /// </summary>
-        /// <param name="str">Attribute</param>
-        /// <returns>Decoded attribute</returns>
+        /// <param name="str">属性</param>
+        /// <returns>解码属性</returns>
         public static string XmlDecode(string str)
         {
             var sb = new StringBuilder(str);
@@ -79,10 +79,10 @@ namespace Nop.Core
         }
 
         /// <summary>
-        /// Serializes a datetime
+        /// 序列化日期时间
         /// </summary>
-        /// <param name="dateTime">Datetime</param>
-        /// <returns>Serialized datetime</returns>
+        /// <param name="dateTime">时间</param>
+        /// <returns>序列化日期时间</returns>
         public static string SerializeDateTime(DateTime dateTime)
         {
             var xmlS = new XmlSerializer(typeof(DateTime));
@@ -95,10 +95,10 @@ namespace Nop.Core
         }
 
         /// <summary>
-        /// Deserializes a datetime
+        /// 反序列化日期时间
         /// </summary>
-        /// <param name="dateTime">Datetime</param>
-        /// <returns>Deserialized datetime</returns>
+        /// <param name="dateTime">时间</param>
+        /// <returns>反序列化日期时间</returns>
         public static DateTime DeserializeDateTime(string dateTime)
         {
             var xmlS = new XmlSerializer(typeof(DateTime));

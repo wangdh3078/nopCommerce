@@ -3,12 +3,12 @@ using System;
 namespace Nop.Core
 {
     /// <summary>
-    /// Base class for entities
+    /// 实体基类
     /// </summary>
     public abstract partial class BaseEntity
     {
         /// <summary>
-        /// Gets or sets the entity identifier
+        /// 获取或设置实体标识符
         /// </summary>
         public int Id { get; set; }
 

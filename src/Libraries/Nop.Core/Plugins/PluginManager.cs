@@ -18,40 +18,56 @@ using Nop.Core.Plugins;
 namespace Nop.Core.Plugins
 {
     /// <summary>
-    /// Sets the application up for the plugin referencing
+    /// 插件管理
     /// </summary>
     public class PluginManager
     {
-        #region Const
-
+        #region 常量
+        /// <summary>
+        /// 插件安装记录路径
+        /// </summary>
         private const string InstalledPluginsFilePath = "~/App_Data/InstalledPlugins.txt";
+        /// <summary>
+        /// 插件路径
+        /// </summary>
         private const string PluginsPath = "~/Plugins";
+        /// <summary>
+        /// 插件复制路径
+        /// </summary>
         private const string ShadowCopyPath = "~/Plugins/bin";
 
         #endregion
 
-        #region Fields
-
+        #region 字段
+        /// <summary>
+        /// 锁
+        /// </summary>
         private static readonly ReaderWriterLockSlim Locker = new ReaderWriterLockSlim();
+        /// <summary>
+        /// 影像复制文件夹信息
+        /// </summary>
         private static DirectoryInfo _shadowCopyFolder;
+        /// <summary>
+        /// 启动时清除影像复制文件
+        /// </summary>
         private static bool _clearShadowDirectoryOnStartup;
 
         #endregion
 
-        #region Methods
+        #region 方法
 
         /// <summary>
-        /// Returns a collection of all referenced plugin assemblies that have been shadow copied
+        ///获取或设置已被影像复制的插件集合
         /// </summary>
         public static IEnumerable<PluginDescriptor> ReferencedPlugins { get; set; }
 
         /// <summary>
-        /// Returns a collection of all plugin which are not compatible with the current version
+        /// 获取或设置与当前版本不兼容的所有插件的集合
         /// </summary>
         public static IEnumerable<string> IncompatiblePlugins { get; set; }
 
         /// <summary>
-        /// Initialize
+        /// 初始化
         /// </summary>
         public static void Initialize()
         {
@@ -73,15 +89,15 @@ namespace Nop.Core.Plugins
                     var installedPluginSystemNames = PluginFileParser.ParseInstalledPluginsFile(GetInstalledPluginsFilePath());
 
                     Debug.WriteLine("Creating shadow copy folder and querying for dlls");
-                    //ensure folders are created
+                    //确保创建文件夹
                     Directory.CreateDirectory(pluginFolder.FullName);
                     Directory.CreateDirectory(_shadowCopyFolder.FullName);
 
-                    //get list of all files in bin
+                    //获取bin下所有文件的列表
                     var binFiles = _shadowCopyFolder.GetFiles("*", SearchOption.AllDirectories);
                     if (_clearShadowDirectoryOnStartup)
                     {
-                        //clear out shadow copied plugins
+                        //清除影像复制的插件
                         foreach (var f in binFiles)
                         {
                             Debug.WriteLine("Deleting " + f.Name);
@@ -96,26 +112,26 @@ namespace Nop.Core.Plugins
                         }
                     }
 
-                    //load description files
+                    //加载描述文件
                     foreach (var dfd in GetDescriptionFilesAndDescriptors(pluginFolder))
                     {
                         var descriptionFile = dfd.Key;
                         var pluginDescriptor = dfd.Value;
 
-                        //ensure that version of plugin is valid
+                        //确保插件版本支持
                         if (!pluginDescriptor.SupportedVersions.Contains(NopVersion.CurrentVersion, StringComparer.InvariantCultureIgnoreCase))
                         {
                             incompatiblePlugins.Add(pluginDescriptor.SystemName);
                             continue;
                         }
 
-                        //some validation
+                        //一些验证
                         if (String.IsNullOrWhiteSpace(pluginDescriptor.SystemName))
                             throw new Exception(string.Format("A plugin '{0}' has no system name. Try assigning the plugin a unique name and recompiling.", descriptionFile.FullName));
                         if (referencedPlugins.Contains(pluginDescriptor))
                             throw new Exception(string.Format("A plugin with '{0}' system name is already defined", pluginDescriptor.SystemName));
 
-                        //set 'Installed' property
+                        //设置 'Installed' 属性
                         pluginDescriptor.Installed = installedPluginSystemNames
                             .FirstOrDefault(x => x.Equals(pluginDescriptor.SystemName, StringComparison.InvariantCultureIgnoreCase)) != null;
 
@@ -123,28 +139,28 @@ namespace Nop.Core.Plugins
                         {
                             if (descriptionFile.Directory == null)
                                 throw new Exception(string.Format("Directory cannot be resolved for '{0}' description file", descriptionFile.Name));
-                            //get list of all DLLs in plugins (not in bin!)
+                            //获取插件中所有DLL的列表（不在bin目录下！）
                             var pluginFiles = descriptionFile.Directory.GetFiles("*.dll", SearchOption.AllDirectories)
-                                //just make sure we're not registering shadow copied plugins
+                                //只需确保我们没有注册影像复制插件
                                 .Where(x => !binFiles.Select(q => q.FullName).Contains(x.FullName))
                                 .Where(x => IsPackagePluginFolder(x.Directory))
                                 .ToList();
 
-                            //other plugin description info
+                            //其他插件描述信息
                             var mainPluginFile = pluginFiles
                                 .FirstOrDefault(x => x.Name.Equals(pluginDescriptor.PluginFileName, StringComparison.InvariantCultureIgnoreCase));
                             pluginDescriptor.OriginalAssemblyFile = mainPluginFile;
 
-                            //shadow copy main plugin file
+                            //影像复制主要插件文件
                             pluginDescriptor.ReferencedAssembly = PerformFileDeploy(mainPluginFile);
 
-                            //load all other referenced assemblies now
+                            //现在加载所有其他引用的程序集
                             foreach (var plugin in pluginFiles
                                 .Where(x => !x.Name.Equals(mainPluginFile.Name, StringComparison.InvariantCultureIgnoreCase))
                                 .Where(x => !IsAlreadyLoaded(x)))
                                     PerformFileDeploy(plugin);
-                            
-                            //init plugin type (only one plugin per assembly is allowed)
+
+                            //初始化插件类型（每个程序集只允许一个插件）
                             foreach (var t in pluginDescriptor.ReferencedAssembly.GetTypes())
                                 if (typeof(IPlugin).IsAssignableFrom(t))
                                     if (!t.IsInterface)
@@ -158,7 +174,7 @@ namespace Nop.Core.Plugins
                         }
                         catch (ReflectionTypeLoadException ex)
                         {
-                            //add a plugin name. this way we can easily identify a problematic plugin
+                            //添加一个插件名称。 这样我们可以很容易地识别一个有问题的插件
                             var msg = string.Format("Plugin '{0}'. ", pluginDescriptor.FriendlyName);
                             foreach (var e in ex.LoaderExceptions)
                                 msg += e.Message + Environment.NewLine;
@@ -168,7 +184,7 @@ namespace Nop.Core.Plugins
                         }
                         catch (Exception ex)
                         {
-                            //add a plugin name. this way we can easily identify a problematic plugin
+                            //添加一个插件名称。 这样我们可以很容易地识别一个有问题的插件
                             var msg = string.Format("Plugin '{0}'. {1}", pluginDescriptor.FriendlyName, ex.Message);
 
                             var fail = new Exception(msg, ex);
@@ -194,9 +210,9 @@ namespace Nop.Core.Plugins
         }
 
         /// <summary>
-        /// Mark plugin as installed
+        /// 标记插件安装
         /// </summary>
-        /// <param name="systemName">Plugin system name</param>
+        /// <param name="systemName">插件系统名称</param>
         public static void MarkPluginAsInstalled(string systemName)
         {
             if (String.IsNullOrEmpty(systemName))
@@ -219,9 +235,9 @@ namespace Nop.Core.Plugins
         }
 
         /// <summary>
-        /// Mark plugin as uninstalled
+        ///将插件标记为已卸载
         /// </summary>
-        /// <param name="systemName">Plugin system name</param>
+        /// <param name="systemName">插件系统名称</param>
         public static void MarkPluginAsUninstalled(string systemName)
         {
             if (String.IsNullOrEmpty(systemName))
@@ -244,7 +260,7 @@ namespace Nop.Core.Plugins
         }
 
         /// <summary>
-        /// Mark plugin as uninstalled
+        ///将所有插件标记为已卸载
         /// </summary>
         public static void MarkAllPluginsAsUninstalled()
         {
@@ -258,9 +274,9 @@ namespace Nop.Core.Plugins
         #region Utilities
 
         /// <summary>
-        /// Get description files
+        /// 获取描述文件
         /// </summary>
-        /// <param name="pluginFolder">Plugin directory info</param>
+        /// <param name="pluginFolder">插件目录信息</param>
         /// <returns>Original and parsed description files</returns>
         private static IEnumerable<KeyValuePair<FileInfo, PluginDescriptor>> GetDescriptionFilesAndDescriptors(DirectoryInfo pluginFolder)
         {
@@ -275,10 +291,10 @@ namespace Nop.Core.Plugins
                 if (!IsPackagePluginFolder(descriptionFile.Directory))
                     continue;
 
-                //parse file
+                //解析文件
                 var pluginDescriptor = PluginFileParser.ParsePluginDescriptionFile(descriptionFile.FullName);
 
-                //populate list
+                //填充列表
                 result.Add(new KeyValuePair<FileInfo, PluginDescriptor>(descriptionFile, pluginDescriptor));
             }
 
@@ -289,22 +305,13 @@ namespace Nop.Core.Plugins
         }
 
         /// <summary>
-        /// Indicates whether assembly file is already loaded
+        /// 指示装配文件是否已加载
         /// </summary>
-        /// <param name="fileInfo">File info</param>
+        /// <param name="fileInfo">文件信息</param>
         /// <returns>Result</returns>
         private static bool IsAlreadyLoaded(FileInfo fileInfo)
         {
-            //compare full assembly name
-            //var fileAssemblyName = AssemblyName.GetAssemblyName(fileInfo.FullName);
-            //foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
-            //{
-            //    if (a.FullName.Equals(fileAssemblyName.FullName, StringComparison.InvariantCultureIgnoreCase))
-            //        return true;
-            //}
-            //return false;
 
-            //do not compare the full assembly name, just filename
             try
             {
                 string fileNameWithoutExt = Path.GetFileNameWithoutExtension(fileInfo.FullName);
@@ -325,9 +332,9 @@ namespace Nop.Core.Plugins
         }
 
         /// <summary>
-        /// Perform file deply
+        /// 执行文件部署
         /// </summary>
-        /// <param name="plug">Plugin file info</param>
+        /// <param name="plug">插件文件信息</param>
         /// <returns>Assembly</returns>
         private static Assembly PerformFileDeploy(FileInfo plug)
         {
@@ -338,10 +345,10 @@ namespace Nop.Core.Plugins
 
             if (CommonHelper.GetTrustLevel() != AspNetHostingPermissionLevel.Unrestricted)
             {
-                //all plugins will need to be copied to ~/Plugins/bin/
-                //this is absolutely required because all of this relies on probingPaths being set statically in the web.config
-                
-                //were running in med trust, so copy to custom bin folder
+                //所有插件都需要复制到~/Plugins/bin/
+                //这是绝对必需的，因为所有这些都依赖于在web.config中静态设置探测路径(probingPaths)
+
+                //正在med中运行，所以复制到自定义bin文件夹
                 var shadowCopyPlugFolder = Directory.CreateDirectory(_shadowCopyFolder.FullName);
                 shadowCopiedPlug = InitializeMediumTrust(plug, shadowCopyPlugFolder);
             }
@@ -349,14 +356,14 @@ namespace Nop.Core.Plugins
             {
                 var directory = AppDomain.CurrentDomain.DynamicDirectory;
                 Debug.WriteLine(plug.FullName + " to " + directory);
-                //were running in full trust so copy to standard dynamic folder
+                //正在完全信任地运行，所以复制到标准的动态文件夹
                 shadowCopiedPlug = InitializeFullTrust(plug, new DirectoryInfo(directory));
             }
 
-            //we can now register the plugin definition
+            //我们现在可以注册插件定义
             var shadowCopiedAssembly = Assembly.Load(AssemblyName.GetAssemblyName(shadowCopiedPlug.FullName));
 
-            //add the reference to the build manager
+            //添加对构建管理器的引用
             Debug.WriteLine("Adding to BuildManager: '{0}'", shadowCopiedAssembly.FullName);
             BuildManager.AddReferencedAssembly(shadowCopiedAssembly);
 
@@ -364,10 +371,10 @@ namespace Nop.Core.Plugins
         }
 
         /// <summary>
-        /// Used to initialize plugins when running in Full Trust
+        /// 用于在完全信任环境中初始化插件
         /// </summary>
-        /// <param name="plug"></param>
-        /// <param name="shadowCopyPlugFolder"></param>
+        /// <param name="plug">插件信息</param>
+        /// <param name="shadowCopyPlugFolder">影像复制文件夹信息</param>
         /// <returns></returns>
         private static FileInfo InitializeFullTrust(FileInfo plug, DirectoryInfo shadowCopyPlugFolder)
         {
@@ -398,21 +405,21 @@ namespace Nop.Core.Plugins
         }
 
         /// <summary>
-        /// Used to initialize plugins when running in Medium Trust
+        /// 用于在中等信任环境中初始化插件
         /// </summary>
-        /// <param name="plug"></param>
-        /// <param name="shadowCopyPlugFolder"></param>
+        /// <param name="plug">插件信息</param>
+        /// <param name="shadowCopyPlugFolder">影像复制文件夹信息</param>
         /// <returns></returns>
         private static FileInfo InitializeMediumTrust(FileInfo plug, DirectoryInfo shadowCopyPlugFolder)
         {
             var shouldCopy = true;
             var shadowCopiedPlug = new FileInfo(Path.Combine(shadowCopyPlugFolder.FullName, plug.Name));
 
-            //check if a shadow copied file already exists and if it does, check if it's updated, if not don't copy
+            //检查影像复制的文件是否已经存在，如果是，则检查是否更新，如果不是不复制
             if (shadowCopiedPlug.Exists)
             {
-                //it's better to use LastWriteTimeUTC, but not all file systems have this property
-                //maybe it is better to compare file hash?
+                //最好使用LastWriteTimeUTC，但并不是所有的文件系统都有这个属性
+                //也许比较文件哈希更好吗？
                 var areFilesIdentical = shadowCopiedPlug.CreationTimeUtc.Ticks >= plug.CreationTimeUtc.Ticks;
                 if (areFilesIdentical)
                 {
@@ -421,7 +428,7 @@ namespace Nop.Core.Plugins
                 }
                 else
                 {
-                    //delete an existing file
+                    //删除现有文件
 
                     //More info: http://www.nopcommerce.com/boards/t/11511/access-error-nopplugindiscountrulesbillingcountrydll.aspx?p=4#60838
                     Debug.WriteLine("New plugin found; Deleting the old file: '{0}'", shadowCopiedPlug.Name);
@@ -438,7 +445,7 @@ namespace Nop.Core.Plugins
                 catch (IOException)
                 {
                     Debug.WriteLine(shadowCopiedPlug.FullName + " is locked, attempting to rename");
-                    //this occurs when the files are locked,
+                    //当文件被锁定时，会发生这种情况，
                     //for some reason devenv locks plugin files some times and for another crazy reason you are allowed to rename them
                     //which releases the lock, so that it what we are doing here, once it's renamed, we can re-shadow copy
                     try
@@ -457,11 +464,11 @@ namespace Nop.Core.Plugins
 
             return shadowCopiedPlug;
         }
-        
+
         /// <summary>
-        /// Determines if the folder is a bin plugin folder for a package
+        /// 确定文件夹是否是包的bin插件文件夹
         /// </summary>
-        /// <param name="folder"></param>
+        /// <param name="folder">文件夹信息</param>
         /// <returns></returns>
         private static bool IsPackagePluginFolder(DirectoryInfo folder)
         {
@@ -472,7 +479,7 @@ namespace Nop.Core.Plugins
         }
 
         /// <summary>
-        /// Gets the full path of InstalledPlugins.txt file
+        /// 获取InstalledPlugins.txt文件的完整路径
         /// </summary>
         /// <returns></returns>
         private static string GetInstalledPluginsFilePath()

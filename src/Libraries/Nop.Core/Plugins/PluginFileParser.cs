@@ -7,13 +7,18 @@ using System.Text;
 namespace Nop.Core.Plugins
 {
     /// <summary>
-    /// Plugin files parser
+    /// 插件记录文件解析
     /// </summary>
     public static class PluginFileParser
     {
+        /// <summary>
+        /// 解析已安装的插件描述文件
+        /// </summary>
+        /// <param name="filePath">文件路径</param>
+        /// <returns></returns>
         public static IList<string> ParseInstalledPluginsFile(string filePath)
         {
-            //read and parse the file
+            //读取解析文件
             if (!File.Exists(filePath))
                 return new List<string>();
 
@@ -37,7 +42,11 @@ namespace Nop.Core.Plugins
             }
             return lines;
         }
-
+        /// <summary>
+        /// 保存已安装插件信息
+        /// </summary>
+        /// <param name="pluginSystemNames">插件系统名称</param>
+        /// <param name="filePath">文件路径</param>
         public static void SaveInstalledPluginsFile(IList<String> pluginSystemNames, string filePath)
         {
             string result = "";
@@ -47,6 +56,11 @@ namespace Nop.Core.Plugins
             File.WriteAllText(filePath, result);
         }
 
+        /// <summary>
+        /// 解析插件描述文件
+        /// </summary>
+        /// <param name="filePath">文件路径</param>
+        /// <returns></returns>
         public static PluginDescriptor ParsePluginDescriptionFile(string filePath)
         {
             var descriptor = new PluginDescriptor();
@@ -95,7 +109,7 @@ namespace Nop.Core.Plugins
                         break;
                     case "SupportedVersions":
                         {
-                            //parse supported versions
+                            //解析支持版本
                             descriptor.SupportedVersions = value.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                                 .Select(x => x.Trim())
                                 .ToList();
@@ -154,13 +168,16 @@ namespace Nop.Core.Plugins
 
             return descriptor;
         }
-        
+        /// <summary>
+        /// 保存插件描述文件
+        /// </summary>
+        /// <param name="plugin">插件描述信息</param>
         public static void SavePluginDescriptionFile(PluginDescriptor plugin)
         {
             if (plugin == null)
                 throw new ArgumentException("plugin");
 
-            //get the Description.txt file path
+            //获取Description.txt文件路径
             if (plugin.OriginalAssemblyFile == null)
                 throw new Exception(string.Format("Cannot load original assembly path for {0} plugin.", plugin.SystemName));
             var filePath = Path.Combine(plugin.OriginalAssemblyFile.Directory.FullName, "Description.txt");
@@ -193,7 +210,7 @@ namespace Nop.Core.Plugins
                 if (i != keyValues.Count -1)
                     sb.Append(Environment.NewLine);
             }
-            //save the file
+            //保存文件
             File.WriteAllText(filePath, sb.ToString());
         }
     }

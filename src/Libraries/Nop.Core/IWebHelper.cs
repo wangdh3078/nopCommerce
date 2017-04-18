@@ -3,55 +3,55 @@ using System.Web;
 namespace Nop.Core
 {
     /// <summary>
-    /// Represents a common helper
+    /// Web帮助类
     /// </summary>
     public partial interface IWebHelper
     {
         /// <summary>
-        /// Get URL referrer
+        /// 获取URL连接
         /// </summary>
-        /// <returns>URL referrer</returns>
+        /// <returns>URL连接</returns>
         string GetUrlReferrer();
 
         /// <summary>
-        /// Get context IP address
+        /// 获取上下文IP地址
         /// </summary>
-        /// <returns>URL referrer</returns>
+        /// <returns>IP地址</returns>
         string GetCurrentIpAddress();
 
         /// <summary>
-        /// Gets this page name
+        ///获取页面名称
         /// </summary>
-        /// <param name="includeQueryString">Value indicating whether to include query strings</param>
-        /// <returns>Page name</returns>
+        /// <param name="includeQueryString">指示是否包含查询字符串的值</param>
+        /// <returns>页面名称</returns>
         string GetThisPageUrl(bool includeQueryString);
 
         /// <summary>
-        /// Gets this page name
+        /// 获取页面名称
         /// </summary>
-        /// <param name="includeQueryString">Value indicating whether to include query strings</param>
-        /// <param name="useSsl">Value indicating whether to get SSL protected page</param>
-        /// <returns>Page name</returns>
+        /// <param name="includeQueryString">指示是否包含查询字符串的值</param>
+        /// <param name="useSsl">指示是否获得SSL保护页的值</param>
+        /// <returns>页面名称</returns>
         string GetThisPageUrl(bool includeQueryString, bool useSsl);
 
         /// <summary>
-        /// Gets a value indicating whether current connection is secured
+        /// 获取一个值，指示当前连接是否被保护
         /// </summary>
-        /// <returns>true - secured, false - not secured</returns>
+        /// <returns>True - 安全，false - 不安全</returns>
         bool IsCurrentConnectionSecured();
-        
+
         /// <summary>
-        /// Gets server variable by name
+        /// 通过名称获取服务器变量
         /// </summary>
-        /// <param name="name">Name</param>
-        /// <returns>Server variable</returns>
+        /// <param name="name">名称</param>
+        /// <returns>服务器变量</returns>
         string ServerVariables(string name);
 
         /// <summary>
-        /// Gets store host location
+        ///获取主机位置
         /// </summary>
-        /// <param name="useSsl">Use SSL</param>
-        /// <returns>Store host location</returns>
+        /// <param name="useSsl">使用SSL</param>
+        /// <returns>存储主机位置</returns>
         string GetStoreHost(bool useSsl);
 
         /// <summary>
@@ -83,10 +83,10 @@ namespace Nop.Core
         /// .axd
         /// .ashx
         /// </remarks>
-        bool IsStaticResource(HttpRequest request);        
+        bool IsStaticResource(HttpRequest request);
 
         /// <summary>
-        /// Modifies query string
+        /// 修改查询字符串
         /// </summary>
         /// <param name="url">Url to modify</param>
         /// <param name="queryStringModification">Query string modification</param>
@@ -101,29 +101,29 @@ namespace Nop.Core
         /// <param name="queryString">Query string to remove</param>
         /// <returns>New url</returns>
         string RemoveQueryString(string url, string queryString);
-        
+
         /// <summary>
-        /// Gets query string value by name
+        /// 通过名称获取查询字符串值
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="name">Parameter name</param>
-        /// <returns>Query string value</returns>
+        /// <param name="name">参数名称</param>
+        /// <returns>查询字符串值</returns>
         T QueryString<T>(string name);
 
         /// <summary>
-        /// Restart application domain
+        /// 重新启动应用程序域
         /// </summary>
-        /// <param name="makeRedirect">A value indicating whether we should made redirection after restart</param>
-        /// <param name="redirectUrl">Redirect URL; empty string if you want to redirect to the current page URL</param>
+        /// <param name="makeRedirect">一个值，表示重启后是否应该重定向</param>
+        /// <param name="redirectUrl">重定向网址; 如果要重定向到当前页面URL，则为空字符串</param>
         void RestartAppDomain(bool makeRedirect = false, string redirectUrl = "");
-        
+
         /// <summary>
-        /// Gets a value that indicates whether the client is being redirected to a new location
+        /// 获取一个值，指示客户端是否被重定向到新位置
         /// </summary>
         bool IsRequestBeingRedirected { get; }
 
         /// <summary>
-        /// Gets or sets a value that indicates whether the client is being redirected to a new location using POST
+        /// 获取或设置一个值，该值指示客户端是否使用POST重定向到新位置
         /// </summary>
         bool IsPostBeingDone { get; set; }
     }

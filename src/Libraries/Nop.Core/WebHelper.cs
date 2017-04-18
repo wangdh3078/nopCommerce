@@ -11,13 +11,18 @@ using Nop.Core.Infrastructure;
 namespace Nop.Core
 {
     /// <summary>
-    /// Represents a common helper
+    /// Web帮助类
     /// </summary>
     public partial class WebHelper : IWebHelper
     {
         #region Fields 
-
+        /// <summary>
+        /// HTTP上下文
+        /// </summary>
         private readonly HttpContextBase _httpContext;
+        /// <summary>
+        /// 静态文件扩展
+        /// </summary>
         private readonly string[] _staticFileExtensions;
 
         #endregion
@@ -25,9 +30,9 @@ namespace Nop.Core
         #region Constructor
 
         /// <summary>
-        /// Ctor
+        /// 构造函数
         /// </summary>
-        /// <param name="httpContext">HTTP context</param>
+        /// <param name="httpContext">HTTP上下文</param>
         public WebHelper(HttpContextBase httpContext)
         {
             this._httpContext = httpContext;
@@ -37,7 +42,11 @@ namespace Nop.Core
         #endregion
 
         #region Utilities
-
+        /// <summary>
+        /// 请求是否可用
+        /// </summary>
+        /// <param name="httpContext">HTTP上下文</param>
+        /// <returns></returns>
         protected virtual Boolean IsRequestAvailable(HttpContextBase httpContext)
         {
             if (httpContext == null)
@@ -55,12 +64,16 @@ namespace Nop.Core
 
             return true;
         }
+        /// <summary>
+        /// 尝试写入webconfig
+        /// </summary>
+        /// <returns></returns>
         protected virtual bool TryWriteWebConfig()
         {
             try
             {
-                // In medium trust, "UnloadAppDomain" is not supported. Touch web.config
-                // to force an AppDomain restart.
+                // 在中等信任度中，不支持“UnloadAppDomain”。 
+                // 触摸web.config强制AppDomain重新启动。
                 File.SetLastWriteTimeUtc(CommonHelper.MapPath("~/web.config"), DateTime.UtcNow);
                 return true;
             }
@@ -69,19 +82,22 @@ namespace Nop.Core
                 return false;
             }
         }
-
+        /// <summary>
+        /// 尝试写
+        /// </summary>
+        /// <returns></returns>
         protected virtual bool TryWriteGlobalAsax()
         {
             try
             {
-                //When a new plugin is dropped in the Plugins folder and is installed into nopCommerce, 
-                //even if the plugin has registered routes for its controllers, 
-                //these routes will not be working as the MVC framework couldn't 
-                //find the new controller types and couldn't instantiate the requested controller. 
-                //That's why you get these nasty errors 
-                //i.e "Controller does not implement IController".
-                //The issue is described here: http://www.nopcommerce.com/boards/t/10969/nop-20-plugin.aspx?p=4#51318
-                //The solution is to touch global.asax file
+                //当新插件放到插件文件夹并被安装到NOP
+                //即使插件已经为其控制器注册了路由，
+                //这些路由将不会像MVC框架那样工作
+                //找到新的控制器类型，无法实例化请求的控制器。
+                //这就是为什么你得到这些讨厌的错误
+                //即“控制器不实现IController”。
+                //这里描述的问题: http://www.nopcommerce.com/boards/t/10969/nop-20-plugin.aspx?p=4#51318
+                //解决方案是修改global.asax文件
                 File.SetLastWriteTimeUtc(CommonHelper.MapPath("~/global.asax"), DateTime.UtcNow);
                 return true;
             }
@@ -96,14 +112,14 @@ namespace Nop.Core
         #region Methods
 
         /// <summary>
-        /// Get URL referrer
+        /// 获取URL链接
         /// </summary>
-        /// <returns>URL referrer</returns>
+        /// <returns>URL链接</returns>
         public virtual string GetUrlReferrer()
         {
             string referrerUrl = string.Empty;
 
-            //URL referrer is null in some case (for example, in IE 8)
+            //在某些情况下，URL链接为null（例如，在IE 8中）
             if (IsRequestAvailable(_httpContext) && _httpContext.Request.UrlReferrer != null)
                 referrerUrl = _httpContext.Request.UrlReferrer.PathAndQuery;
 
@@ -111,9 +127,9 @@ namespace Nop.Core
         }
 
         /// <summary>
-        /// Get context IP address
+        /// 获取当前IP地址
         /// </summary>
-        /// <returns>URL referrer</returns>
+        /// <returns>URL链接</returns>
         public virtual string GetCurrentIpAddress()
         {
             if (!IsRequestAvailable(_httpContext))
@@ -161,10 +177,10 @@ namespace Nop.Core
                 return result;
             }
 
-            //some validation
+            //一些验证
             if (result == "::1")
                 result = "127.0.0.1";
-            //remove port
+            //删除端口
             if (!String.IsNullOrEmpty(result))
             {
                 int index = result.IndexOf(":", StringComparison.InvariantCultureIgnoreCase);
@@ -176,10 +192,10 @@ namespace Nop.Core
         }
 
         /// <summary>
-        /// Gets this page name
+        /// 获取页面名称
         /// </summary>
-        /// <param name="includeQueryString">Value indicating whether to include query strings</param>
-        /// <returns>Page name</returns>
+        /// <param name="includeQueryString">指示是否包含查询字符串的值</param>
+        /// <returns>页面名称</returns>
         public virtual string GetThisPageUrl(bool includeQueryString)
         {
             bool useSsl = IsCurrentConnectionSecured();
@@ -187,35 +203,35 @@ namespace Nop.Core
         }
 
         /// <summary>
-        /// Gets this page name
+        ///获取页面名称
         /// </summary>
-        /// <param name="includeQueryString">Value indicating whether to include query strings</param>
-        /// <param name="useSsl">Value indicating whether to get SSL protected page</param>
-        /// <returns>Page name</returns>
+        /// <param name="includeQueryString">指示是否包含查询字符串的值</param>
+        /// <param name="useSsl">指示是否获得SSL保护页的值</param>
+        /// <returns>页面名称</returns>
         public virtual string GetThisPageUrl(bool includeQueryString, bool useSsl)
         {
             if (!IsRequestAvailable(_httpContext))
                 return string.Empty;
-            
-            //get the host considering using SSL
+
+            //让主机考虑使用SSL
             var url = GetStoreHost(useSsl).TrimEnd('/');
 
-            //get full URL with or without query string
+            //获取或不添加查询字符串的完整URL
             url += includeQueryString ? _httpContext.Request.RawUrl : _httpContext.Request.Path;
 
             return url.ToLowerInvariant();
         }
 
         /// <summary>
-        /// Gets a value indicating whether current connection is secured
+        /// 获取一个值，指示当前连接是否被保护
         /// </summary>
-        /// <returns>true - secured, false - not secured</returns>
+        /// <returns>True - 安全，false - 不安全</returns>
         public virtual bool IsCurrentConnectionSecured()
         {
             bool useSsl = false;
             if (IsRequestAvailable(_httpContext))
             {
-                //when your hosting uses a load balancer on their server then the Request.IsSecureConnection is never got set to true
+                //当您的主机在其服务器上使用负载平衡器时，Request.IsSecureConnection从不被设置为true
 
                 //1. use HTTP_CLUSTER_HTTPS?
                 if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["Use_HTTP_CLUSTER_HTTPS"]) &&
@@ -239,10 +255,10 @@ namespace Nop.Core
         }
 
         /// <summary>
-        /// Gets server variable by name
+        ///通过名称获取服务器变量
         /// </summary>
-        /// <param name="name">Name</param>
-        /// <returns>Server variable</returns>
+        /// <param name="name">名称</param>
+        /// <returns>服务器变量</returns>
         public virtual string ServerVariables(string name)
         {
             string result = string.Empty;
@@ -267,10 +283,10 @@ namespace Nop.Core
         }
 
         /// <summary>
-        /// Gets store host location
+        /// 获取主机位置
         /// </summary>
-        /// <param name="useSsl">Use SSL</param>
-        /// <returns>Store host location</returns>
+        /// <param name="useSsl">使用SSL</param>
+        /// <returns>主机位置</returns>
         public virtual string GetStoreHost(bool useSsl)
         {
             var result = "";
@@ -639,7 +655,7 @@ namespace Nop.Core
         }
 
         /// <summary>
-        /// Gets a value that indicates whether the client is being redirected to a new location
+        /// 获取一个值，指示客户端是否被重定向到新位置
         /// </summary>
         public virtual bool IsRequestBeingRedirected
         {
@@ -651,7 +667,7 @@ namespace Nop.Core
         }
 
         /// <summary>
-        /// Gets or sets a value that indicates whether the client is being redirected to a new location using POST
+        ///获取或设置一个值，该值指示客户端是否使用POST重定向到新位置
         /// </summary>
         public virtual bool IsPostBeingDone
         {

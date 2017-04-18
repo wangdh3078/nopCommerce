@@ -7,12 +7,12 @@ using Nop.Core.Infrastructure;
 namespace Nop.Core
 {
     /// <summary>
-    /// Startup task for the registration custom type converters
+    /// 注册自定义类型转换器的启动任务
     /// </summary>
     public class TypeConverterRegistrationStartUpTask : IStartupTask
     {
         /// <summary>
-        /// Executes a task
+        /// 执行任务
         /// </summary>
         public void Execute()
         {

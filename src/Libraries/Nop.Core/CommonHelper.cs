@@ -177,17 +177,17 @@ namespace Nop.Core
 
         private static AspNetHostingPermissionLevel? _trustLevel;
         /// <summary>
-        /// Finds the trust level of the running application (http://blogs.msdn.com/dmitryr/archive/2007/01/23/finding-out-the-current-trust-level-in-asp-net.aspx)
+        /// 查找正在运行的应用程序的信任级别 (http://blogs.msdn.com/dmitryr/archive/2007/01/23/finding-out-the-current-trust-level-in-asp-net.aspx)
         /// </summary>
-        /// <returns>The current trust level.</returns>
+        /// <returns>当前信任级别。</returns>
         public static AspNetHostingPermissionLevel GetTrustLevel()
         {
             if (!_trustLevel.HasValue)
             {
-                //set minimum
+                //设置最小
                 _trustLevel = AspNetHostingPermissionLevel.None;
 
-                //determine maximum
+                //确定最大值
                 foreach (AspNetHostingPermissionLevel trustLevel in new[] {
                                 AspNetHostingPermissionLevel.Unrestricted,
                                 AspNetHostingPermissionLevel.High,
@@ -200,7 +200,7 @@ namespace Nop.Core
                     {
                         new AspNetHostingPermission(trustLevel).Demand();
                         _trustLevel = trustLevel;
-                        break; //we've set the highest permission we can
+                        break; //我们确定了最高的权限
                     }
                     catch (System.Security.SecurityException)
                     {
