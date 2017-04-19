@@ -5,43 +5,43 @@ using StackExchange.Redis;
 namespace Nop.Core.Caching
 {
     /// <summary>
-    /// Redis connection wrapper interface
+    /// Redis连接包装接口
     /// </summary>
     public interface IRedisConnectionWrapper : IDisposable
     {
         /// <summary>
-        /// Obtain an interactive connection to a database inside redis
+        /// 获取与redis中的数据库的连接
         /// </summary>
-        /// <param name="db">Database number; pass null to use the default value</param>
-        /// <returns>Redis cache database</returns>
+        /// <param name="db">数据库号 传递null使用默认值</param>
+        /// <returns>Redis缓存数据库</returns>
         IDatabase GetDatabase(int? db = null);
 
         /// <summary>
-        /// Obtain a configuration API for an individual server
+        /// 获取单个服务器的配置API
         /// </summary>
-        /// <param name="endPoint">The network endpoint</param>
-        /// <returns>Redis server</returns>
+        /// <param name="endPoint">网络端点</param>
+        /// <returns>Redis服务</returns>
         IServer GetServer(EndPoint endPoint);
 
         /// <summary>
-        /// Gets all endpoints defined on the server
+        ///获取服务器上定义的所有端点
         /// </summary>
-        /// <returns>Array of endpoints</returns>
+        /// <returns>端点阵列</returns>
         EndPoint[] GetEndPoints();
 
         /// <summary>
-        /// Delete all the keys of the database
+        /// 删除数据库的所有键
         /// </summary>
-        /// <param name="db">Database number; pass null to use the default value<</param>
+        /// <param name="db">数据库号 传递null使用默认值<</param>
         void FlushDatabase(int? db = null);
 
         /// <summary>
-        /// Perform some action with Redis distributed lock
+        /// 使用Redis分发锁执行一些操作
         /// </summary>
-        /// <param name="resource">The thing we are locking on</param>
-        /// <param name="expirationTime">The time after which the lock will automatically be expired by Redis</param>
-        /// <param name="action">Action to be performed with locking</param>
-        /// <returns>True if lock was acquired and action was performed; otherwise false</returns>
+        /// <param name="resource">我们锁定的东西</param>
+        /// <param name="expirationTime">Redis自动过期的时间</param>
+        /// <param name="action">通过锁定执行的操作</param>
+        /// <returns>如果获得锁定并执行动作，则为true; 否则为false</returns>
         bool PerformActionWithLock(string resource, TimeSpan expirationTime, Action action);
     }
 }

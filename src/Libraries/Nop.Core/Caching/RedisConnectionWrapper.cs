@@ -8,11 +8,11 @@ using StackExchange.Redis;
 namespace Nop.Core.Caching
 {
     /// <summary>
-    /// Redis connection wrapper implementation
+    /// Redis连接包装器实现
     /// </summary>
     public class RedisConnectionWrapper : IRedisConnectionWrapper
     {
-        #region Fields
+        #region 字段
 
         private readonly NopConfig _config;
         private readonly Lazy<string> _connectionString;
@@ -23,7 +23,7 @@ namespace Nop.Core.Caching
 
         #endregion
 
-        #region Ctor
+        #region 构造函数
 
         public RedisConnectionWrapper(NopConfig config)
         {
@@ -34,10 +34,93 @@ namespace Nop.Core.Caching
 
         #endregion
 
+        #region 方法
+
+        /// <summary>
+        /// 获取与redis中的数据库的交互式连接
+        /// </summary>
+        /// <param name="db">数据库号 传递null使用默认值</param>
+        /// <returns>Redis缓存数据库</returns>
+        public IDatabase GetDatabase(int? db = null)
+        {
+            return GetConnection().GetDatabase(db ?? -1); //_settings.DefaultDb);
+        }
+
+        /// <summary>
+        ///获取单个服务器的配置API
+        /// </summary>
+        /// <param name="endPoint">网络端点</param>
+        /// <returns>Redis服务</returns>
+        public IServer GetServer(EndPoint endPoint)
+        {
+            return GetConnection().GetServer(endPoint);
+        }
+
+        /// <summary>
+        /// 获取服务器上定义的所有端点
+        /// </summary>
+        /// <returns>端点阵列</returns>
+        public EndPoint[] GetEndPoints()
+        {
+            return GetConnection().GetEndPoints();
+        }
+
+        /// <summary>
+        /// 删除数据库的所有键
+        /// </summary>
+        /// <param name="db">数据库号 传递null使用默认值</param>
+        public void FlushDatabase(int? db = null)
+        {
+            var endPoints = GetEndPoints();
+
+            foreach (var endPoint in endPoints)
+            {
+                GetServer(endPoint).FlushDatabase(db ?? -1); //_settings.DefaultDb);
+            }
+        }
+
+        /// <summary>
+        /// 使用Redis分发锁执行一些操作
+        /// </summary>
+        /// <param name="resource">我们锁定的东西</param>
+        /// <param name="expirationTime">Redis自动过期的时间</param>
+        /// <param name="action">通过锁定执行的操作</param>
+        /// <returns>如果获得锁定并执行动作，则为true; 否则为false</returns>
+        public bool PerformActionWithLock(string resource, TimeSpan expirationTime, Action action)
+        {
+            //use RedLock library
+            using (var redisLock = _redisLockFactory.Create(resource, expirationTime))
+            {
+                //确保获得锁
+                if (!redisLock.IsAcquired)
+                    return false;
+
+                //执行动作
+                action();
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// 释放与此对象关联的所有资源
+        /// </summary>
+        public void Dispose()
+        {
+            //释放ConnectionMultiplexer
+            if (_connection != null)
+                _connection.Dispose();
+
+            //释放RedisLockFactory
+            if (_redisLockFactory != null)
+                _redisLockFactory.Dispose();
+        }
+
+        #endregion
+
         #region Utilities
 
         /// <summary>
-        /// Get connection string to Redis cache from configuration
+        ///从配置获取连接字符串到Redis缓存
         /// </summary>
         /// <returns></returns>
         protected string GetConnectionString()
@@ -46,7 +129,7 @@ namespace Nop.Core.Caching
         }
 
         /// <summary>
-        /// Get connection to Redis servers
+        /// 连接到Redis服务器
         /// </summary>
         /// <returns></returns>
         protected ConnectionMultiplexer GetConnection()
@@ -59,11 +142,11 @@ namespace Nop.Core.Caching
 
                 if (_connection != null)
                 {
-                    //Connection disconnected. Disposing connection...
+                    //连接断开。 处理连接...
                     _connection.Dispose();
                 }
 
-                //Creating new instance of Redis Connection
+                //创建Redis Connection的新实例
                 _connection = ConnectionMultiplexer.Connect(_connectionString.Value);
             }
 
@@ -71,12 +154,12 @@ namespace Nop.Core.Caching
         }
 
         /// <summary>
-        /// Create instance of RedisLockFactory
+        /// 创建RedisLockFactory的实例
         /// </summary>
         /// <returns>RedisLockFactory</returns>
         protected RedisLockFactory CreateRedisLockFactory()
         {
-            //get password and value whether to use ssl from connection string
+            //获取密码和值是否使用连接字符串中的ssl
             var password = string.Empty;
             var useSsl = false;
             foreach (var option in GetConnectionString().Split(',').Where(option => option.Contains('=')))
@@ -92,7 +175,7 @@ namespace Nop.Core.Caching
                 }
             }
 
-            //create RedisLockFactory for using Redlock distributed lock algorithm
+            //创建RedisLockFactory使用Redlock分布式锁定算法
             return new RedisLockFactory(GetEndPoints().Select(endPoint => new RedisLockEndPoint
             {
                 EndPoint = endPoint,
@@ -103,87 +186,6 @@ namespace Nop.Core.Caching
 
         #endregion
 
-        #region Methods
-
-        /// <summary>
-        /// Obtain an interactive connection to a database inside redis
-        /// </summary>
-        /// <param name="db">Database number; pass null to use the default value</param>
-        /// <returns>Redis cache database</returns>
-        public IDatabase GetDatabase(int? db = null)
-        {
-            return GetConnection().GetDatabase(db ?? -1); //_settings.DefaultDb);
-        }
-
-        /// <summary>
-        /// Obtain a configuration API for an individual server
-        /// </summary>
-        /// <param name="endPoint">The network endpoint</param>
-        /// <returns>Redis server</returns>
-        public IServer GetServer(EndPoint endPoint)
-        {
-            return GetConnection().GetServer(endPoint);
-        }
-
-        /// <summary>
-        /// Gets all endpoints defined on the server
-        /// </summary>
-        /// <returns>Array of endpoints</returns>
-        public EndPoint[] GetEndPoints()
-        {
-            return GetConnection().GetEndPoints();
-        }
-
-        /// <summary>
-        /// Delete all the keys of the database
-        /// </summary>
-        /// <param name="db">Database number; pass null to use the default value<</param>
-        public void FlushDatabase(int? db = null)
-        {
-            var endPoints = GetEndPoints();
-
-            foreach (var endPoint in endPoints)
-            {
-                GetServer(endPoint).FlushDatabase(db ?? -1); //_settings.DefaultDb);
-            }
-        }
-
-        /// <summary>
-        /// Perform some action with Redis distributed lock
-        /// </summary>
-        /// <param name="resource">The thing we are locking on</param>
-        /// <param name="expirationTime">The time after which the lock will automatically be expired by Redis</param>
-        /// <param name="action">Action to be performed with locking</param>
-        /// <returns>True if lock was acquired and action was performed; otherwise false</returns>
-        public bool PerformActionWithLock(string resource, TimeSpan expirationTime, Action action)
-        {
-            //use RedLock library
-            using (var redisLock = _redisLockFactory.Create(resource, expirationTime))
-            {
-                //ensure that lock is acquired
-                if (!redisLock.IsAcquired)
-                    return false;
-
-                //perform action
-                action();
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// Release all resources associated with this object
-        /// </summary>
-        public void Dispose()
-        {
-            //dispose ConnectionMultiplexer
-            if (_connection != null)
-                _connection.Dispose();
-
-            //dispose RedisLockFactory
-            if (_redisLockFactory != null)
-                _redisLockFactory.Dispose();
-        }
-
-        #endregion
+        
     }
 }
