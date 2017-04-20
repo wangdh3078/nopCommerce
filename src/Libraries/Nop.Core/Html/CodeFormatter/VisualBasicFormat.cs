@@ -1,4 +1,4 @@
-#region Copyright © 2001-2003 Jean-Claude Manoli [jc@manoli.net]
+#region Copyright ?2001-2003 Jean-Claude Manoli [jc@manoli.net]
 /*
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the author(s) be held liable for any damages arising from
@@ -22,40 +22,40 @@
 
 namespace Nop.Core.Html.CodeFormatter
 {
-	/// <summary>
-	/// Generates color-coded HTML 4.01 from Visual Basic source code.
-	/// </summary>
+    /// <summary>
+    /// ´ÓVisual BasicÔ´´úÂëÉú³ÉÑÕÉ«±àÂëµÄHTML 4.01¡£
+    /// </summary>
     public partial class VisualBasicFormat : CodeFormat
 	{
-		/// <summary>
-		/// Determines if the language is case sensitive.
-		/// </summary>
-		/// <value>Always <b>true</b>, since VB is not case sensitive.</value>
-		public override bool CaseSensitive
+        /// <summary>
+        /// È·¶¨ÓïÑÔÊÇ·ñÇø·Ö´óĞ¡Ğ´¡£
+        /// </summary>
+        /// <value>Ê¼ÖÕ<b> true </b>£¬ÒòÎªVB²»Çø·Ö´óĞ¡Ğ´¡£</value>
+        public override bool CaseSensitive
 		{
 			get { return false; }
 		}
 
-		/// <summary>
-		/// Regular expression string to match comments (' and REM). 
-		/// </summary>
-		protected override string CommentRegex
+        /// <summary>
+        /// ÕıÔò±í´ïÊ½×Ö·û´®ÒÔÆ¥Åä×¢ÊÍ£¨'ºÍREM£©¡£
+        /// </summary>
+        protected override string CommentRegex
 		{
 			get { return @"(?:'|REM\s).*?(?=\r|\n)"; }
 		}
 
-		/// <summary>
-		/// Regular expression string to match string and character literals. 
-		/// </summary>
-		protected override string StringRegex
+        /// <summary>
+        /// ÕıÔò±í´ïÊ½×Ö·û´®£¬ÒÔÆ¥Åä×Ö·û´®ºÍ×Ö·ûÎÄ×Ö¡£
+        /// </summary>
+        protected override string StringRegex
 		{
 			get { return @"""""|"".*?"""; }
 		}
 
-		/// <summary>
-		/// The list of VB keywords.
-		/// </summary>
-		protected override string Keywords 
+        /// <summary>
+        /// VB¹Ø¼ü×ÖÁĞ±í¡£
+        /// </summary>
+        protected override string Keywords 
 		{
 			get 
 			{ 
@@ -79,10 +79,10 @@ namespace Nop.Core.Html.CodeFormatter
 			}
 		}
 
-		/// <summary>
-		/// The list of VB preprocessors.
-		/// </summary>
-		protected override string Preprocessors
+        /// <summary>
+        /// VBÔ¤´¦ÀíÆ÷ÁĞ±í¡£
+        /// </summary>
+        protected override string Preprocessors
 		{
 			get 
 			{ 

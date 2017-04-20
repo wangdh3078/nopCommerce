@@ -4,19 +4,19 @@ using System.Threading;
 namespace Nop.Core.ComponentModel
 {
     /// <summary>
-    /// Provides a convenience methodology for implementing locked access to resources. 
+    ///为实现锁定的资源访问提供了方便的方法。
     /// </summary>
     /// <remarks>
-    /// Intended as an infrastructure class.
+    /// 作为基础设施类。
     /// </remarks>
     public class WriteLockDisposable : IDisposable
     {
         private readonly ReaderWriterLockSlim _rwLock;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WriteLockDisposable"/> class.
+        /// 初始化<see cref ="WriteLockDisposable"/>类的新实例。
         /// </summary>
-        /// <param name="rwLock">The rw lock.</param>
+        /// <param name="rwLock">读写锁</param>
         public WriteLockDisposable(ReaderWriterLockSlim rwLock)
         {
             _rwLock = rwLock;

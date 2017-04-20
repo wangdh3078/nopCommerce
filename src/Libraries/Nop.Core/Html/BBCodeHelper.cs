@@ -7,11 +7,11 @@ using Nop.Core.Infrastructure;
 namespace Nop.Core.Html
 {
     /// <summary>
-    /// Represents a BBCode helper
+    /// 代表一个BBCode帮助类
     /// </summary>
     public partial class BBCodeHelper
     {
-        #region Fields
+        #region 字段
         private static readonly Regex regexBold = new Regex(@"\[b\](.+?)\[/b\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex regexItalic = new Regex(@"\[i\](.+?)\[/i\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex regexUnderLine = new Regex(@"\[u\](.+?)\[/u\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -22,19 +22,19 @@ namespace Nop.Core.Html
 
         #endregion
 
-        #region Methods
+        #region 方法
         /// <summary>
-        /// Formats the text
+        /// 格式化文本
         /// </summary>
-        /// <param name="text">Text</param>
-        /// <param name="replaceBold">A value indicating whether to replace Bold</param>
-        /// <param name="replaceItalic">A value indicating whether to replace Italic</param>
-        /// <param name="replaceUnderline">A value indicating whether to replace Underline</param>
-        /// <param name="replaceUrl">A value indicating whether to replace URL</param>
-        /// <param name="replaceCode">A value indicating whether to replace Code</param>
-        /// <param name="replaceQuote">A value indicating whether to replace Quote</param>
-        /// <param name="replaceImg">A value indicating whether to replace Img</param>
-        /// <returns>Formatted text</returns>
+        /// <param name="text">文本</param>
+        /// <param name="replaceBold">指示是否替换粗体的值</param>
+        /// <param name="replaceItalic">指示是否替换斜体的值</param>
+        /// <param name="replaceUnderline">指示是否替换下划线的值</param>
+        /// <param name="replaceUrl">指示是否替换URL的值</param>
+        /// <param name="replaceCode">指示是否替换代码的值</param>
+        /// <param name="replaceQuote">一个值表示是否替换引号</param>
+        /// <param name="replaceImg">指示是否替换Img的值</param>
+        /// <returns>格式化后的文本</returns>
         public static string FormatText(string text, bool replaceBold, bool replaceItalic,
             bool replaceUnderline, bool replaceUrl, bool replaceCode, bool replaceQuote, bool replaceImg)
         {
@@ -43,34 +43,34 @@ namespace Nop.Core.Html
 
             if (replaceBold)
             {
-                // format the bold tags: [b][/b]
-                // becomes: <strong></strong>
+                //格式化粗体标签: [b][/b]
+                // 成为: <strong></strong>
                 text = regexBold.Replace(text, "<strong>$1</strong>");
             }
 
             if (replaceItalic)
             {
-                // format the italic tags: [i][/i]
-                // becomes: <em></em>
+                // 格式化斜体标签: [i][/i]
+                // 成为: <em></em>
                 text = regexItalic.Replace(text, "<em>$1</em>");
             }
 
             if (replaceUnderline)
             {
-                // format the underline tags: [u][/u]
-                // becomes: <u></u>
+                // 格式下划线标签: [u][/u]
+                // 成为: <u></u>
                 text = regexUnderLine.Replace(text, "<u>$1</u>");
             }
 
             if (replaceUrl)
             {
                 var newWindow = EngineContext.Current.Resolve<CommonSettings>().BbcodeEditorOpenLinksInNewWindow;
-                // format the url tags: [url=http://www.nopCommerce.com]my site[/url]
-                // becomes: <a href="http://www.nopCommerce.com">my site</a>
+                // 格式化URL标签: [url=http://www.nopCommerce.com]my site[/url]
+                // 成为: <a href="http://www.nopCommerce.com">my site</a>
                 text = regexUrl1.Replace(text, string.Format("<a href=\"$1\" rel=\"nofollow\"{0}>$2</a>", newWindow ? " target=_blank" : ""));
 
-                // format the url tags: [url]http://www.nopCommerce.com[/url]
-                // becomes: <a href="http://www.nopCommerce.com">http://www.nopCommerce.com</a>
+                // 格式化URL标签: [url]http://www.nopCommerce.com[/url]
+                // 成为: <a href="http://www.nopCommerce.com">http://www.nopCommerce.com</a>
                 text = regexUrl2.Replace(text, string.Format("<a href=\"$1\" rel=\"nofollow\"{0}>$1</a>", newWindow ? " target=_blank" : ""));
             }
 
@@ -88,17 +88,17 @@ namespace Nop.Core.Html
             if (replaceImg)
             {
                 // format the img tags: [img]http://www.nopCommerce.com/Content/Images/Image.jpg[/img]
-                // becomes: <img src="http://www.nopCommerce.com/Content/Images/Image.jpg">
+                // 成为: <img src="http://www.nopCommerce.com/Content/Images/Image.jpg">
                 text = regexImg.Replace(text, "<img src=\"$1\" class=\"user-posted-image\" alt=\"\">");
             }
             return text;
         }
 
         /// <summary>
-        /// Removes all quotes from string
+        /// 从字符串中删除所有引号
         /// </summary>
-        /// <param name="str">Source string</param>
-        /// <returns>string</returns>
+        /// <param name="str">字符串</param>
+        /// <returns></returns>
         public static string RemoveQuotes(string str)
         {
             str = Regex.Replace(str, @"\[quote=(.+?)\]", String.Empty, RegexOptions.Compiled | RegexOptions.IgnoreCase);

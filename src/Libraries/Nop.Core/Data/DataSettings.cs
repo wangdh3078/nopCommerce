@@ -4,12 +4,12 @@ using System.Collections.Generic;
 namespace Nop.Core.Data
 {
     /// <summary>
-    /// Data settings (connection string information)
+    /// 数据设置（连接字符串信息）
     /// </summary>
     public partial class DataSettings
     {
         /// <summary>
-        /// Ctor
+        /// 构造函数
         /// </summary>
         public DataSettings()
         {
@@ -17,22 +17,22 @@ namespace Nop.Core.Data
         }
 
         /// <summary>
-        /// Data provider
+        /// 获取或设置数据驱动
         /// </summary>
         public string DataProvider { get; set; }
 
         /// <summary>
-        /// Connection string
+        /// 获取或设置连接字符串
         /// </summary>
         public string DataConnectionString { get; set; }
 
         /// <summary>
-        /// Raw settings file
+        /// 原始设置文件
         /// </summary>
         public IDictionary<string, string> RawDataSettings { get; private set; }
 
         /// <summary>
-        /// A value indicating whether entered information is valid
+        ///指示输入的信息是否有效的值
         /// </summary>
         /// <returns></returns>
         public bool IsValid()

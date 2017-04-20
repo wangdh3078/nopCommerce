@@ -1,4 +1,4 @@
-#region Copyright © 2001-2003 Jean-Claude Manoli [jc@manoli.net]
+#region Copyright ?2001-2003 Jean-Claude Manoli [jc@manoli.net]
 /*
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the author(s) be held liable for any damages arising from
@@ -23,14 +23,14 @@
 namespace Nop.Core.Html.CodeFormatter
 {
     /// <summary>
-	/// Generates color-coded HTML 4.01 from JavaSctript source code.
+	/// ´ÓJavaScriptÔ´´úÂëÉú³ÉÑÕÉ«±àÂëµÄHTML 4.01¡£
 	/// </summary>
     public partial class JavaScriptFormat : CLikeFormat
 	{
-		/// <summary>
-		/// The list of JavaScript keywords.
-		/// </summary>
-		protected override string Keywords 
+        /// <summary>
+        /// JavaScript¹Ø¼ü×ÖÁĞ±í¡£
+        /// </summary>
+        protected override string Keywords 
 		{
 			get 
 			{ 
@@ -45,10 +45,10 @@ namespace Nop.Core.Html.CodeFormatter
 			}
 		}
 
-		/// <summary>
-		/// Use the pre-processor color to mark directives that start with @.
-		/// </summary>
-		protected override string Preprocessors
+        /// <summary>
+        ///Ê¹ÓÃÔ¤´¦ÀíÆ÷ÑÕÉ«À´±ê¼ÇÒÔ@¿ªÍ·µÄÖ¸Áî¡£
+        /// </summary>
+        protected override string Preprocessors
 		{
 			get 
 			{ 

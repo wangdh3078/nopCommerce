@@ -1,31 +1,31 @@
 
 namespace Nop.Core.Html.CodeFormatter
 {
-	/// <summary>
-	/// Generates color-coded HTML 4.01 from MSH (code name Monad) source code.
-	/// </summary>
+    /// <summary>
+    /// 从MSH（代码名称Monad）源代码生成颜色编码的HTML 4.01。
+    /// </summary>
     public partial class MshFormat : CodeFormat
 	{
-		/// <summary>
-		/// Regular expression string to match single line comments (#).
-		/// </summary>
-		protected override string CommentRegex
+        /// <summary>
+        ///正则表达式字符串，以匹配单行注释（＃）。
+        /// </summary>
+        protected override string CommentRegex
 		{
 			get { return @"#.*?(?=\r|\n)"; }
 		}
 
-		/// <summary>
-		/// Regular expression string to match string and character literals. 
-		/// </summary>
-		protected override string StringRegex
+        /// <summary>
+        /// 正则表达式字符串，以匹配字符串和字符文字。
+        /// </summary>
+        protected override string StringRegex
 		{
 			get { return @"@?""""|@?"".*?(?!\\).""|''|'.*?(?!\\).'"; }
 		}
 
-		/// <summary>
-		/// The list of MSH keywords.
-		/// </summary>
-		protected override string Keywords 
+        /// <summary>
+        /// MSH关键字列表。
+        /// </summary>
+        protected override string Keywords 
 		{
 			get 
 			{ 
@@ -35,10 +35,10 @@ namespace Nop.Core.Html.CodeFormatter
 			}
 		}
 
-		/// <summary>
-		/// Use preprocessors property to highlight operators.
-		/// </summary>
-		protected override string Preprocessors
+        /// <summary>
+        /// 使用预处理器属性来突出显示运算符。
+        /// </summary>
+        protected override string Preprocessors
 		{
 			get
 			{

@@ -1,4 +1,4 @@
-#region Copyright © 2001-2003 Jean-Claude Manoli [jc@manoli.net]
+#region Copyright ?2001-2003 Jean-Claude Manoli [jc@manoli.net]
 /*
  * This software is provided 'as-is', without any express or implied warranty.
  * In no event will the author(s) be held liable for any damages arising from
@@ -26,20 +26,19 @@ using System.Text.RegularExpressions;
 
 namespace Nop.Core.Html.CodeFormatter
 {
-	/// <summary>
-	/// Generates color-coded HTML 4.01 from HTML/XML/ASPX source code.
-	/// </summary>
-	/// <remarks>
-	/// <para>
-	/// This implementation assumes that code inside &lt;script&gt; blocks 
-	/// is JavaScript, and code inside &lt;% %&gt; blocks is C#.</para>
-	/// <para>
-	/// The default tab width is set to 2 characters in this class.</para>
-	/// </remarks>
+    /// <summary>
+    /// ´ÓHTML / XML / ASPXÔ´´úÂëÉú³ÉÑÕÉ«±àÂëµÄHTML 4.01¡£
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    ///´ËÊµÏÖ¼Ù¶¨£¦lt; script£¦gt;ÖĞµÄ´úÂë ¿éÊÇJavaScript£¬£¦lt;£¥£¥£¦gt;ÄÚµÄ´úÂë ¿éÊÇC££¡£</para>
+    /// <para>
+    /// ´ËÀàÖĞµÄÄ¬ÈÏÑ¡Ïî¿¨¿í¶ÈÉèÖÃÎª2¸ö×Ö·û¡£</para>
+    /// </remarks>
     public partial class HtmlFormat : SourceFormat
 	{
-		private readonly CSharpFormat csf; //to format embedded C# code
-        private readonly JavaScriptFormat jsf; //to format client-side JavaScript code
+		private readonly CSharpFormat csf; //¸ñÊ½»¯Ç¶ÈëÊ½C££´úÂë
+        private readonly JavaScriptFormat jsf; //¸ñÊ½»¯¿Í»§¶ËJavaScript´úÂë
         private readonly Regex attribRegex;
 
 		/// <summary/>
@@ -54,9 +53,9 @@ namespace Nop.Core.Html.CodeFormatter
 			const string regAttributes = @"(?<=&lt;(?!%)/?!?\??[\w:-]+).*?(?=(?<!%)/?&gt;)";
 			const string regEntity = @"&amp;\w+;";
 			const string regAttributeMatch = @"(=?"".*?""|=?'.*?')|([\w:-]+)";
-			
-			//the regex object will handle all the replacements in one pass
-			string regAll = "(" + regJavaScript + ")|(" + regComment + ")|(" 
+
+            //ÕıÔò±í´ïÊ½¶ÔÏó½«ÔÚÒ»´ÎÍ¨¹ıÖĞ´¦ÀíËùÓĞÌæ»»
+            string regAll = "(" + regJavaScript + ")|(" + regComment + ")|(" 
 				+ regAspTag + ")|(" + regAspCode + ")|(" 
 				+ regTagDelimiter + ")|(" + regTagName + ")|("
 				+ regAttributes + ")|(" + regEntity + ")";
@@ -68,14 +67,12 @@ namespace Nop.Core.Html.CodeFormatter
 			jsf = new JavaScriptFormat();
 		}
 
-		/// <summary>
-		/// Called to evaluate the HTML fragment corresponding to each 
-		/// attribute's name/value in the code.
-		/// </summary>
-		/// <param name="match">The <see cref="Match"/> resulting from a 
-		/// single regular expression match.</param>
-		/// <returns>A string containing the HTML code fragment.</returns>
-		private string AttributeMatchEval(Match match)
+        /// <summary>
+        ///ÓÃÓÚÆÀ¹ÀÓë´úÂëÖĞÃ¿¸öÊôĞÔÃû³Æ/ÖµÏà¶ÔÓ¦µÄHTMLÆ¬¶Î¡£
+        /// </summary>
+        /// <param name="match">´Óµ¥¸öÕıÔò±í´ïÊ½Æ¥ÅäµÃµ½µÄ<see cref =¡°Match¡±/>¡£</param>
+        /// <returns>°üº¬HTML´úÂëÆ¬¶ÎµÄ×Ö·û´®¡£</returns>
+        private string AttributeMatchEval(Match match)
 		{
 			if(match.Groups[1].Success) //attribute value
 				return "<span class=\"kwrd\">" + match.ToString() + "</span>";
@@ -86,14 +83,12 @@ namespace Nop.Core.Html.CodeFormatter
 			return match.ToString();
 		}
 
-		/// <summary>
-		/// Called to evaluate the HTML fragment corresponding to each 
-		/// matching token in the code.
-		/// </summary>
-		/// <param name="match">The <see cref="Match"/> resulting from a 
-		/// single regular expression match.</param>
-		/// <returns>A string containing the HTML code fragment.</returns>
-		protected override string MatchEval(Match match)
+        /// <summary>
+        /// ÓÃÓÚÆÀ¹À´úÂëÖĞÓëÃ¿¸öÆ¥ÅäÁîÅÆÏà¶ÔÓ¦µÄHTMLÆ¬¶Î¡£
+        /// </summary>
+        /// <param name="match">´Óµ¥¸öÕıÔò±í´ïÊ½Æ¥ÅäµÃµ½µÄ<see cref =¡°Match¡±/>¡£</param>
+        /// <returns>°üº¬HTML´úÂëÆ¬¶ÎµÄ×Ö·û´®¡£</returns>
+        protected override string MatchEval(Match match)
 		{
 			if(match.Groups[1].Success) //JavaScript code
 			{

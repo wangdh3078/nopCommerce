@@ -1,4 +1,4 @@
-#region Copyright © 2001-2003 Jean-Claude Manoli [jc@manoli.net]
+#region Copyright ?2001-2003 Jean-Claude Manoli [jc@manoli.net]
 /*
  * Based on code submitted by Mitsugi Ogawa.
  * 
@@ -24,16 +24,15 @@
 
 namespace Nop.Core.Html.CodeFormatter
 {
-	/// <summary>
-	/// Generates color-coded T-SQL source code.
-	/// </summary>
+    /// <summary>
+    ///Éú³ÉÑÕÉ«±àÂëµÄT-SQLÔ´´úÂë¡£
+    /// </summary>
     public partial class TsqlFormat : CodeFormat
 	{
-		/// <summary>
-		/// Regular expression string to match single line 
-		/// comments (--). 
-		/// </summary>
-		protected override string CommentRegex
+        /// <summary>
+        /// ÕýÔò±í´ïÊ½×Ö·û´®£¬ÒÔÆ¥Åäµ¥ÐÐ×¢ÊÍ£¨ - £©¡£
+        /// </summary>
+        protected override string CommentRegex
 		{
 			get
 			{
@@ -41,10 +40,10 @@ namespace Nop.Core.Html.CodeFormatter
 			}
 		}
 
-		/// <summary>
-		/// Regular expression string to match string literals. 
-		/// </summary>
-		protected override string StringRegex
+        /// <summary>
+        /// ÕýÔò±í´ïÊ½×Ö·û´®£¬ÒÔÆ¥Åä×Ö·û´®ÎÄ×Ö¡£
+        /// </summary>
+        protected override string StringRegex
 		{
 			get
 			{
@@ -52,19 +51,19 @@ namespace Nop.Core.Html.CodeFormatter
 			}
 		}
 
-		/// <summary>
-		/// Returns <b>false</b>, since T-SQL is not case sensitive.
-		/// </summary>
-		public override bool CaseSensitive
+        /// <summary>
+        /// ·µ»Ø<b> false </b>£¬ÒòÎªT-SQL²»Çø·Ö´óÐ¡Ð´¡£
+        /// </summary>
+        public override bool CaseSensitive
 		{
 			get { return false; }
 		}
 
 
-		/// <summary>
-		/// The list of T-SQL keywords.
-		/// </summary>
-		protected override string Keywords
+        /// <summary>
+        /// T-SQL¹Ø¼ü×ÖÁÐ±í¡£
+        /// </summary>
+        protected override string Keywords
 		{
 			get
 			{
@@ -124,10 +123,10 @@ namespace Nop.Core.Html.CodeFormatter
 			}
 		}
 
-		/// <summary>
-		/// Use the pre-processor color to mark keywords that start with @@.
-		/// </summary>
-		protected override string Preprocessors
+        /// <summary>
+        /// Ê¹ÓÃÔ¤´¦ÀíÆ÷ÑÕÉ«À´±ê¼ÇÒÔ@@¿ªÍ·µÄ¹Ø¼ü×Ö¡£
+        /// </summary>
+        protected override string Preprocessors
 		{
 			get 
 			{ 

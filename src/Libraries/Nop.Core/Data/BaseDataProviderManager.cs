@@ -3,30 +3,28 @@
 namespace Nop.Core.Data
 {
     /// <summary>
-    /// Base data provider manager
+    /// 基础数据驱动管理
     /// </summary>
     public abstract class BaseDataProviderManager
     {
         /// <summary>
-        /// Ctor
+        /// 构造函数
         /// </summary>
-        /// <param name="settings">Data settings</param>
+        /// <param name="settings">数据配置</param>
         protected BaseDataProviderManager(DataSettings settings)
         {
-            if (settings == null)
-                throw new ArgumentNullException("settings");
-            this.Settings = settings;
+            this.Settings = settings ?? throw new ArgumentNullException("settings");
         }
 
         /// <summary>
-        /// Gets or sets settings
+        /// 获取或设置配置
         /// </summary>
         protected DataSettings Settings { get; private set; }
 
         /// <summary>
-        /// Load data provider
+        /// 加载数据驱动
         /// </summary>
-        /// <returns>Data provider</returns>
+        /// <returns>数据驱动</returns>
         public abstract IDataProvider LoadDataProvider();
     }
 }

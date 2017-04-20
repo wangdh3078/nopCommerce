@@ -4,37 +4,59 @@ using System.Web;
 
 namespace Nop.Core.Html.CodeFormatter
 {
-	/// <summary>
-	/// Represents a code format helper
-	/// </summary>
+    /// <summary>
+    ///代码格式帮助类
+    /// </summary>
     public partial class CodeFormatHelper
     {
-        #region Fields
+        #region 字段
         //private static Regex regexCode1 = new Regex(@"(?<begin>\[code:(?<lang>.*?)(?:;ln=(?<linenumbers>(?:on|off)))?(?:;alt=(?<altlinenumbers>(?:on|off)))?(?:;(?<title>.*?))?\])(?<code>.*?)(?<end>\[/code\])", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase | RegexOptions.Singleline);
         private readonly static Regex regexHtml = new Regex("<[^>]*>", RegexOptions.Compiled);
         private readonly static Regex regexCode2 = new Regex(@"\[code\](?<inner>(.*?))\[/code\]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         #endregion
 
+        #region 方法
+
+        /// <summary>
+        /// 格式化文本
+        /// </summary>
+        /// <param name="text">文本</param>
+        /// <returns>格式化后的文本</returns>
+        public static string FormatTextSimple(string text)
+        {
+            if (String.IsNullOrEmpty(text))
+                return string.Empty;
+
+            if (text.Contains("[/code]"))
+            {
+                text = regexCode2.Replace(text, new MatchEvaluator(CodeEvaluatorSimple));
+                text = regexCode2.Replace(text, "$1");
+            }
+            return text;
+        }
+
+        #endregion
+
         #region Utilities
 
         /// <summary>
-        /// Code evaluator method
+        /// 代码评估器方法
         /// </summary>
-        /// <param name="match">Match</param>
-        /// <returns>Formatted text</returns>
+        /// <param name="match">匹配</param>
+        /// <returns>格式化后的文本</returns>
         private static string CodeEvaluator(Match match)
         {
             if (!match.Success)
                 return match.Value;
 
-            var options = new HighlightOptions();
-
-            options.Language = match.Groups["lang"].Value;
-            options.Code = match.Groups["code"].Value;
-            options.DisplayLineNumbers = match.Groups["linenumbers"].Value == "on";
-            options.Title = match.Groups["title"].Value;
-            options.AlternateLineNumbers = match.Groups["altlinenumbers"].Value == "on";
-
+            var options = new HighlightOptions()
+            {
+                Language = match.Groups["lang"].Value,
+                Code = match.Groups["code"].Value,
+                DisplayLineNumbers = match.Groups["linenumbers"].Value == "on",
+                Title = match.Groups["title"].Value,
+                AlternateLineNumbers = match.Groups["altlinenumbers"].Value == "on"
+            };
             string result = match.Value.Replace(match.Groups["begin"].Value, "");
             result = result.Replace(match.Groups["end"].Value, "");
             result = Highlight(options, result);
@@ -43,10 +65,10 @@ namespace Nop.Core.Html.CodeFormatter
         }
 
         /// <summary>
-        /// Code evaluator method
+        /// 代码评估器方法
         /// </summary>
-        /// <param name="match">Match</param>
-        /// <returns>Formatted text</returns>
+        /// <param name="match">匹配</param>
+        /// <returns>格式化后的文本</returns>
         private static string CodeEvaluatorSimple(Match match)
         {
             if (!match.Success)
@@ -80,7 +102,7 @@ namespace Nop.Core.Html.CodeFormatter
         }
 
         /// <summary>
-        /// Returns the formatted text.
+        /// 返回格式化的文本。
         /// </summary>
         /// <param name="options">Whatever options were set in the regex groups.</param>
         /// <param name="text">Send the e.body so it can get formatted.</param>
@@ -143,27 +165,7 @@ namespace Nop.Core.Html.CodeFormatter
 
         #endregion
 
-        #region Methods
-
-        /// <summary>
-        /// Formats the text
-        /// </summary>
-        /// <param name="text">Text</param>
-        /// <returns>Formatted text</returns>
-        public static string FormatTextSimple(string text)
-        {
-            if (String.IsNullOrEmpty(text))
-                return string.Empty;
-
-            if (text.Contains("[/code]"))
-            {
-                text = regexCode2.Replace(text, new MatchEvaluator(CodeEvaluatorSimple));
-                text = regexCode2.Replace(text, "$1");
-            }
-            return text;
-        }
-
-        #endregion
+        
     }
 }
 

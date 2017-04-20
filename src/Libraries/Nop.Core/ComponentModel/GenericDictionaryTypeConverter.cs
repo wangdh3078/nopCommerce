@@ -7,17 +7,17 @@ using System.Linq;
 namespace Nop.Core.ComponentModel
 {
     /// <summary>
-    /// Generic Dictionary type converted
+    /// 泛型字典类型转换
     /// </summary>
-    /// <typeparam name="K">Key type (simple)</typeparam>
-    /// <typeparam name="V">Value type (simple)</typeparam>
+    /// <typeparam name="K">键类型（简单）</typeparam>
+    /// <typeparam name="V">值类型 (简单)</typeparam>
     public class GenericDictionaryTypeConverter<K, V> : TypeConverter
     {
         protected readonly TypeConverter typeConverterKey;
         protected readonly TypeConverter typeConverterValue;
 
         /// <summary>
-        /// Ctor
+        /// 构造函数
         /// </summary>
         public GenericDictionaryTypeConverter()
         {
@@ -30,12 +30,10 @@ namespace Nop.Core.ComponentModel
         }
 
         /// <summary>
-        /// Gets a value indicating whether this converter can        
-        /// convert an object in the given source type to the native type of the converter
-        /// using the context.
+        /// 获取一个值，指示此转换器是否可以使用上下文将给定源类型中的对象转换为转换器的本机类型。
         /// </summary>
-        /// <param name="context">Context</param>
-        /// <param name="sourceType">Source type</param>
+        /// <param name="context">上下文</param>
+        /// <param name="sourceType">源类型</param>
         /// <returns>Result</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
@@ -46,11 +44,11 @@ namespace Nop.Core.ComponentModel
         }
 
         /// <summary>
-        /// Converts the given object to the converter's native type.
+        ///将给定对象转换为转换器的本机类型。
         /// </summary>
-        /// <param name="context">Context</param>
-        /// <param name="culture">Culture</param>
-        /// <param name="value">Value</param>
+        /// <param name="context">上下文</param>
+        /// <param name="culture">语言文化</param>
+        /// <param name="value">值</param>
         /// <returns>Result</returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
@@ -81,12 +79,12 @@ namespace Nop.Core.ComponentModel
         }
 
         /// <summary>
-        /// Converts the given value object to the specified destination type using the specified context and arguments
+        /// 使用指定的上下文和参数将给定值对象转换为指定的目标类型
         /// </summary>
-        /// <param name="context">Context</param>
-        /// <param name="culture">Culture</param>
-        /// <param name="value">Value</param>
-        /// <param name="destinationType">Destination type</param>
+        /// <param name="context">上下文</param>
+        /// <param name="culture">语言文化</param>
+        /// <param name="value">值</param>
+        /// <param name="destinationType">目标地类型</param>
         /// <returns>Result</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {

@@ -7,15 +7,15 @@ using System.Linq;
 namespace Nop.Core.ComponentModel
 {
     /// <summary>
-    /// Generic List type converted
+    /// 泛型 List类型转换
     /// </summary>
-    /// <typeparam name="T">Type</typeparam>
+    /// <typeparam name="T">类型</typeparam>
     public class GenericListTypeConverter<T> : TypeConverter
     {
         protected readonly TypeConverter typeConverter;
 
         /// <summary>
-        /// Ctor
+        /// 构造函数
         /// </summary>
         public GenericListTypeConverter()
         {
@@ -25,23 +25,21 @@ namespace Nop.Core.ComponentModel
         }
 
         /// <summary>
-        /// Get string array from a comma-separate string
+        /// 从逗号分隔的字符串获取字符串数组
         /// </summary>
-        /// <param name="input">Input</param>
-        /// <returns>Array</returns>
+        /// <param name="input">输入值</param>
+        /// <returns>数组</returns>
         protected virtual string[] GetStringArray(string input)
         {
             return string.IsNullOrEmpty(input) ? new string[0] : input.Split(',').Select(x => x.Trim()).ToArray();
         }
 
         /// <summary>
-        /// Gets a value indicating whether this converter can        
-        /// convert an object in the given source type to the native type of the converter
-        /// using the context.
+        /// 获取一个值，指示此转换器是否可以使用上下文将给定源类型中的对象转换为转换器的本机类型。
         /// </summary>
-        /// <param name="context">Context</param>
-        /// <param name="sourceType">Source type</param>
-        /// <returns>Result</returns>
+        /// <param name="context">上下文</param>
+        /// <param name="sourceType">源类型</param>
+        /// <returns></returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             if (sourceType == typeof(string))
@@ -54,12 +52,12 @@ namespace Nop.Core.ComponentModel
         }
 
         /// <summary>
-        /// Converts the given object to the converter's native type.
+        /// 将给定对象转换为转换器的本机类型。
         /// </summary>
-        /// <param name="context">Context</param>
-        /// <param name="culture">Culture</param>
-        /// <param name="value">Value</param>
-        /// <returns>Result</returns>
+        /// <param name="context">上下文</param>
+        /// <param name="culture">语言文化</param>
+        /// <param name="value">值</param>
+        /// <returns></returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             if (value is string)
@@ -81,13 +79,13 @@ namespace Nop.Core.ComponentModel
         }
 
         /// <summary>
-        /// Converts the given value object to the specified destination type using the specified context and arguments
+        /// 使用指定的上下文和参数将给定值对象转换为指定的目标类型
         /// </summary>
-        /// <param name="context">Context</param>
-        /// <param name="culture">Culture</param>
-        /// <param name="value">Value</param>
-        /// <param name="destinationType">Destination type</param>
-        /// <returns>Result</returns>
+        /// <param name="context">上下文</param>
+        /// <param name="culture">语言文化</param>
+        /// <param name="value">值</param>
+        /// <param name="destinationType">目标类型</param>
+        /// <returns></returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             if (destinationType == typeof(string))

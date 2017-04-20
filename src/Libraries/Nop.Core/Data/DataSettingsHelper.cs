@@ -3,14 +3,14 @@
 namespace Nop.Core.Data
 {
     /// <summary>
-    /// Data settings helper
+    /// 数据设置帮助类
     /// </summary>
     public partial class DataSettingsHelper
     {
         private static bool? _databaseIsInstalled;
 
         /// <summary>
-        /// Returns a value indicating whether database is already installed
+        /// 返回一个值，表示数据库是否已经安装
         /// </summary>
         /// <returns></returns>
         public static bool DatabaseIsInstalled()
@@ -24,7 +24,7 @@ namespace Nop.Core.Data
             return _databaseIsInstalled.Value;
         }
 
-        //Reset information cached in the "DatabaseIsInstalled" method
+        //重置信息缓存在“DatabaseIsInstalled”方法中
         public static void ResetCache()
         {
             _databaseIsInstalled = null;

@@ -4,60 +4,60 @@ using System.Linq;
 namespace Nop.Core.Data
 {
     /// <summary>
-    /// Repository
+    /// 仓储接口
     /// </summary>
     public partial interface IRepository<T> where T : BaseEntity
     {
         /// <summary>
-        /// Get entity by identifier
+        /// 通过标识符获取实体
         /// </summary>
-        /// <param name="id">Identifier</param>
-        /// <returns>Entity</returns>
+        /// <param name="id">标识符</param>
+        /// <returns>实体对象</returns>
         T GetById(object id);
 
         /// <summary>
-        /// Insert entity
+        /// 添加实体
         /// </summary>
-        /// <param name="entity">Entity</param>
+        /// <param name="entity">实体对象</param>
         void Insert(T entity);
 
         /// <summary>
-        /// Insert entities
+        /// 添加实体集合
         /// </summary>
-        /// <param name="entities">Entities</param>
+        /// <param name="entities">实体集合</param>
         void Insert(IEnumerable<T> entities);
 
         /// <summary>
-        /// Update entity
+        /// 更新实体
         /// </summary>
-        /// <param name="entity">Entity</param>
+        /// <param name="entity">实体对象</param>
         void Update(T entity);
 
         /// <summary>
-        /// Update entities
+        ///更新实体集合
         /// </summary>
-        /// <param name="entities">Entities</param>
+        /// <param name="entities">实体集合</param>
         void Update(IEnumerable<T> entities);
 
         /// <summary>
-        /// Delete entity
+        /// 删除实体
         /// </summary>
-        /// <param name="entity">Entity</param>
+        /// <param name="entity">实体对象</param>
         void Delete(T entity);
 
         /// <summary>
-        /// Delete entities
+        /// 删除实体集合
         /// </summary>
-        /// <param name="entities">Entities</param>
+        /// <param name="entities">实体集合</param>
         void Delete(IEnumerable<T> entities);
 
         /// <summary>
-        /// Gets a table
+        /// 获取表
         /// </summary>
         IQueryable<T> Table { get; }
 
         /// <summary>
-        /// Gets a table with "no tracking" enabled (EF feature) Use it only when you load record(s) only for read-only operations
+        ///获取启用“无跟踪”的表（EF功能）仅在仅为只读操作加载记录时使用
         /// </summary>
         IQueryable<T> TableNoTracking { get; }
     }
