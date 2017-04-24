@@ -8,14 +8,13 @@ using System.Text.RegularExpressions;
 namespace Nop.Core.Infrastructure
 {
     /// <summary>
-    /// A class that finds types needed by Nop by looping assemblies in the 
-    /// currently executing AppDomain. Only assemblies whose names matches
-    /// certain patterns are investigated and an optional list of assemblies
-    /// referenced by <see cref="AssemblyNames"/> are always investigated.
+    ///通过循环在当前执行的AppDomain中的程序集，查找Nop需要的类型的类。
+    ///调查其名称与某些模式匹配的程序集，
+    ///并且始终调查由<see cref ="AssemblyNames"/>引用的程序集的可选列表。
     /// </summary>
     public class AppDomainTypeFinder : ITypeFinder
     {
-        #region Fields
+        #region 字段
 
         private bool ignoreReflectionErrors = true;
         private bool loadAppDomainAssemblies = true;
@@ -25,29 +24,38 @@ namespace Nop.Core.Infrastructure
 
         #endregion
 
-        #region Properties
+        #region 属性
 
-        /// <summary>The app domain to look for types in.</summary>
+        /// <summary>
+        /// 应用程序域
+        /// </summary>
         public virtual AppDomain App
         {
             get { return AppDomain.CurrentDomain; }
         }
 
-        /// <summary>Gets or sets whether Nop should iterate assemblies in the app domain when loading Nop types. Loading patterns are applied when loading these assemblies.</summary>
+        /// <summary>
+        /// 获取或设置Nop在加载Nop类型时是否应该在应用程序域中迭代程序集。 
+        /// 加载这些装配体时应用加载模式。
+        /// </summary>
         public bool LoadAppDomainAssemblies
         {
             get { return loadAppDomainAssemblies; }
             set { loadAppDomainAssemblies = value; }
         }
 
-        /// <summary>Gets or sets assemblies loaded a startup in addition to those loaded in the AppDomain.</summary>
+        /// <summary>
+        /// 获取或设置加载启动的程序集以及AppDomain中加载的程序。
+        /// </summary>
         public IList<string> AssemblyNames
         {
             get { return assemblyNames; }
             set { assemblyNames = value; }
         }
 
-        /// <summary>Gets the pattern for dlls that we know don't need to be investigated.</summary>
+        /// <summary>
+        /// 跳过不需要加载的程序集模式
+        /// </summary>
         public string AssemblySkipLoadingPattern
         {
             get { return assemblySkipLoadingPattern; }
@@ -64,23 +72,46 @@ namespace Nop.Core.Infrastructure
 
         #endregion
 
-        #region Methods
+        #region 方法
+        /// <summary>
+        /// 通过类型查找类
+        /// </summary>
+        /// <typeparam name="T">类型</typeparam>
+        /// <param name="onlyConcreteClasses">只查找具体类</param>
+        /// <returns></returns>
 
         public IEnumerable<Type> FindClassesOfType<T>(bool onlyConcreteClasses = true)
         {
             return FindClassesOfType(typeof(T), onlyConcreteClasses);
         }
-
+        /// <summary>
+        /// 通过类型查找类
+        /// </summary>
+        /// <param name="assignTypeFrom">查找类型</param>
+        /// <param name="onlyConcreteClasses">只查找具体类</param>
+        /// <returns></returns>
         public IEnumerable<Type> FindClassesOfType(Type assignTypeFrom, bool onlyConcreteClasses = true)
         {
             return FindClassesOfType(assignTypeFrom, GetAssemblies(), onlyConcreteClasses);
         }
-
+        /// <summary>
+        /// 通过类型查找类
+        /// </summary>
+        /// <typeparam name="T">类型</typeparam>
+        /// <param name="assemblies">程序集集合</param>
+        /// <param name="onlyConcreteClasses">只查找具体类</param>
+        /// <returns></returns>
         public IEnumerable<Type> FindClassesOfType<T>(IEnumerable<Assembly> assemblies, bool onlyConcreteClasses = true)
         {
             return FindClassesOfType(typeof (T), assemblies, onlyConcreteClasses);
         }
-
+        /// <summary>
+        /// 通过类型查找类
+        /// </summary>
+        /// <param name="assignTypeFrom">查找类型</param>
+        /// <param name="assemblies">程序集集合</param>
+        /// <param name="onlyConcreteClasses">只查找具体类</param>
+        /// <returns></returns>
         public IEnumerable<Type> FindClassesOfType(Type assignTypeFrom, IEnumerable<Assembly> assemblies, bool onlyConcreteClasses = true)
         {
             var result = new List<Type>();
@@ -140,8 +171,8 @@ namespace Nop.Core.Infrastructure
             return result;
         }
 
-        /// <summary>Gets the assemblies related to the current implementation.</summary>
-        /// <returns>A list of assemblies that should be loaded by the Nop factory.</returns>
+        /// <summary>获取与当前实现相关的组件。</summary>
+        /// <returns>Nop工厂应加载的程序集列表。</returns>
         public virtual IList<Assembly> GetAssemblies()
         {
             var addedAssemblyNames = new List<string>();
@@ -272,9 +303,9 @@ namespace Nop.Core.Infrastructure
         }
 
         /// <summary>
-        /// Does type implement generic?
+        ///类型实现通用吗？
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="type">类型</param>
         /// <param name="openGeneric"></param>
         /// <returns></returns>
         protected virtual bool DoesTypeImplementOpenGeneric(Type type, Type openGeneric)

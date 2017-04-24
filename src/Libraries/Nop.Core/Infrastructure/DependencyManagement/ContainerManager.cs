@@ -9,23 +9,26 @@ using Autofac.Integration.Mvc;
 namespace Nop.Core.Infrastructure.DependencyManagement
 {
     /// <summary>
-    /// Container manager
+    /// 依赖注入容器管理
     /// </summary>
     public class ContainerManager
     {
+        /// <summary>
+        /// 依赖注入容器
+        /// </summary>
         private readonly IContainer _container;
 
         /// <summary>
-        /// Constructor
+        /// 构造函数
         /// </summary>
-        /// <param name="container">Conainer</param>
+        /// <param name="container">容器</param>
         public ContainerManager(IContainer container)
         {
             this._container = container;
         }
 
         /// <summary>
-        /// Gets a container
+        ///获取依赖注入容器
         /// </summary>
         public virtual IContainer Container
         {
@@ -36,17 +39,17 @@ namespace Nop.Core.Infrastructure.DependencyManagement
         }
 
         /// <summary>
-        /// Resolve
+        /// 解析服务
         /// </summary>
-        /// <typeparam name="T">Type</typeparam>
-        /// <param name="key">key</param>
-        /// <param name="scope">Scope; pass null to automatically resolve the current scope</param>
-        /// <returns>Resolved service</returns>
+        /// <typeparam name="T">类型</typeparam>
+        /// <param name="key">键</param>
+        /// <param name="scope">范围; 传递null以自动解析当前作用域</param>
+        /// <returns>解析后的服务</returns>
         public virtual T Resolve<T>(string key = "", ILifetimeScope scope = null) where T : class
         {
             if (scope == null)
             {
-                //no scope specified
+                //没有指定范围
                 scope = Scope();
             }
             if (string.IsNullOrEmpty(key))
@@ -57,33 +60,33 @@ namespace Nop.Core.Infrastructure.DependencyManagement
         }
 
         /// <summary>
-        /// Resolve
+        /// 解析服务
         /// </summary>
-        /// <param name="type">Type</param>
-        /// <param name="scope">Scope; pass null to automatically resolve the current scope</param>
-        /// <returns>Resolved service</returns>
+        /// <param name="type">类型</param>
+        /// <param name="scope">范围; 传递null以自动解析当前作用域</param>
+        /// <returns>解析后的服务</returns>
         public virtual object Resolve(Type type, ILifetimeScope scope = null)
         {
             if (scope == null)
             {
-                //no scope specified
+                //没有指定范围
                 scope = Scope();
             }
             return scope.Resolve(type);
         }
 
         /// <summary>
-        /// Resolve all
+        /// 解析所有
         /// </summary>
-        /// <typeparam name="T">Type</typeparam>
-        /// <param name="key">key</param>
-        /// <param name="scope">Scope; pass null to automatically resolve the current scope</param>
-        /// <returns>Resolved services</returns>
+        /// <typeparam name="T">类型</typeparam>
+        /// <param name="key">键</param>
+        /// <param name="scope">范围; 传递null以自动解析当前作用域</param>
+        /// <returns>解析后的服务集合</returns>
         public virtual T[] ResolveAll<T>(string key = "", ILifetimeScope scope = null)
         {
             if (scope == null)
             {
-                //no scope specified
+                //没有指定范围
                 scope = Scope();
             }
             if (string.IsNullOrEmpty(key))
@@ -94,27 +97,27 @@ namespace Nop.Core.Infrastructure.DependencyManagement
         }
 
         /// <summary>
-        /// Resolve unregistered service
+        /// 解析未注册的服务
         /// </summary>
-        /// <typeparam name="T">Type</typeparam>
-        /// <param name="scope">Scope; pass null to automatically resolve the current scope</param>
-        /// <returns>Resolved service</returns>
+        /// <typeparam name="T">类型</typeparam>
+        /// <param name="scope">范围; 传递null以自动解析当前作用域</param>
+        /// <returns>解析后的服务</returns>
         public virtual T ResolveUnregistered<T>(ILifetimeScope scope = null) where T:class
         {
             return ResolveUnregistered(typeof(T), scope) as T;
         }
 
         /// <summary>
-        /// Resolve unregistered service
+        /// 解析未注册的服务
         /// </summary>
-        /// <param name="type">Type</param>
-        /// <param name="scope">Scope; pass null to automatically resolve the current scope</param>
-        /// <returns>Resolved service</returns>
+        /// <param name="type">类型</param>
+        /// <param name="scope">范围; 传递null以自动解析当前作用域</param>
+        /// <returns>解析后的服务</returns>
         public virtual object ResolveUnregistered(Type type, ILifetimeScope scope = null)
         {
             if (scope == null)
             {
-                //no scope specified
+                //没有指定范围
                 scope = Scope();
             }
             var constructors = type.GetConstructors();
@@ -139,35 +142,35 @@ namespace Nop.Core.Infrastructure.DependencyManagement
             }
             throw new NopException("No constructor  was found that had all the dependencies satisfied.");
         }
-        
+
         /// <summary>
-        /// Try to resolve srevice
+        ///尝试解析服务
         /// </summary>
-        /// <param name="serviceType">Type</param>
-        /// <param name="scope">Scope; pass null to automatically resolve the current scope</param>
-        /// <param name="instance">Resolved service</param>
-        /// <returns>Value indicating whether service has been successfully resolved</returns>
+        /// <param name="serviceType">类型</param>
+        /// <param name="scope">范围; 传递null以自动解析当前作用域</param>
+        /// <param name="instance">解析后的服务</param>
+        /// <returns>指示服务是否已成功解决的值</returns>
         public virtual bool TryResolve(Type serviceType, ILifetimeScope scope, out object instance)
         {
             if (scope == null)
             {
-                //no scope specified
+                //没有指定范围
                 scope = Scope();
             }
             return scope.TryResolve(serviceType, out instance);
         }
 
         /// <summary>
-        /// Check whether some service is registered (can be resolved)
+        ///检查一些服务是否已注册（可以被解析）
         /// </summary>
-        /// <param name="serviceType">Type</param>
-        /// <param name="scope">Scope; pass null to automatically resolve the current scope</param>
-        /// <returns>Result</returns>
+        /// <param name="serviceType">类型</param>
+        /// <param name="scope">范围; 传递null以自动解析当前作用域</param>
+        /// <returns></returns>
         public virtual bool IsRegistered(Type serviceType, ILifetimeScope scope = null)
         {
             if (scope == null)
             {
-                //no scope specified
+                //没有指定范围
                 scope = Scope();
             }
             return scope.IsRegistered(serviceType);
@@ -176,23 +179,23 @@ namespace Nop.Core.Infrastructure.DependencyManagement
         /// <summary>
         /// Resolve optional
         /// </summary>
-        /// <param name="serviceType">Type</param>
-        /// <param name="scope">Scope; pass null to automatically resolve the current scope</param>
-        /// <returns>Resolved service</returns>
+        /// <param name="serviceType">类型</param>
+        /// <param name="scope">范围; 传递null以自动解析当前作用域</param>
+        /// <returns>解析后的服务</returns>
         public virtual object ResolveOptional(Type serviceType, ILifetimeScope scope = null)
         {
             if (scope == null)
             {
-                //no scope specified
+                //没有指定范围
                 scope = Scope();
             }
             return scope.ResolveOptional(serviceType);
         }
-        
+
         /// <summary>
-        /// Get current scope
+        /// 获取当前范围
         /// </summary>
-        /// <returns>Scope</returns>
+        /// <returns>范围</returns>
         public virtual ILifetimeScope Scope()
         {
             try

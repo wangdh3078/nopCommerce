@@ -5,17 +5,17 @@ using AutoMapper;
 namespace Nop.Core.Infrastructure.Mapper
 {
     /// <summary>
-    /// AutoMapper configuration
+    /// AutoMapper配置
     /// </summary>
     public static class AutoMapperConfiguration
     {
         private static MapperConfiguration _mapperConfiguration;
         private static IMapper _mapper;
-        
+
         /// <summary>
-        /// Initialize mapper
+        /// 初始化mapper
         /// </summary>
-        /// <param name="configurationActions">Configuration actions</param>
+        /// <param name="configurationActions">配置操作</param>
         public static void Init(List<Action<IMapperConfigurationExpression>> configurationActions)
         {
             if (configurationActions == null)
@@ -31,7 +31,7 @@ namespace Nop.Core.Infrastructure.Mapper
         }
 
         /// <summary>
-        /// Mapper
+        ///获取 Mapper
         /// </summary>
         public static IMapper Mapper
         {
