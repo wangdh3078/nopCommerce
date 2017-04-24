@@ -12,20 +12,88 @@ using Nop.Core.Infrastructure.Mapper;
 namespace Nop.Core.Infrastructure
 {
     /// <summary>
-    /// Engine
+    /// 引擎
     /// </summary>
     public class NopEngine : IEngine
     {
-        #region Fields
-
+        #region 字段
+        /// <summary>
+        /// 注入容器管理
+        /// </summary>
         private ContainerManager _containerManager;
+
+        #endregion
+
+        #region 属性
+
+        /// <summary>
+        ///获取注入容器管理
+        /// </summary>
+        public virtual ContainerManager ContainerManager
+        {
+            get { return _containerManager; }
+        }
+
+        #endregion
+
+        #region 方法
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <param name="config">配置信息</param>
+        public void Initialize(NopConfig config)
+        {
+            //注册依赖注入
+            RegisterDependencies(config);
+
+            //注册mapper配置
+            RegisterMapperConfiguration(config);
+
+            //开始任务
+            if (!config.IgnoreStartupTasks)
+            {
+                RunStartupTasks();
+            }
+
+        }
+
+        /// <summary>
+        /// 解析依赖注入
+        /// </summary>
+        /// <typeparam name="T">类型</typeparam>
+        /// <returns></returns>
+        public T Resolve<T>() where T : class
+        {
+            return ContainerManager.Resolve<T>();
+        }
+
+        /// <summary>
+        /// 解析依赖注入
+        /// </summary>
+        /// <param name="type">类型</param>
+        /// <returns></returns>
+        public object Resolve(Type type)
+        {
+            return ContainerManager.Resolve(type);
+        }
+
+        /// <summary>
+        /// 解析依赖注入
+        /// </summary>
+        /// <typeparam name="T">类型</typeparam>
+        /// <returns></returns>
+        public T[] ResolveAll<T>()
+        {
+            return ContainerManager.ResolveAll<T>();
+        }
 
         #endregion
 
         #region Utilities
 
         /// <summary>
-        /// Run startup tasks
+        /// 启动任务
         /// </summary>
         protected virtual void RunStartupTasks()
         {
@@ -34,20 +102,22 @@ namespace Nop.Core.Infrastructure
             var startUpTasks = new List<IStartupTask>();
             foreach (var startUpTaskType in startUpTaskTypes)
                 startUpTasks.Add((IStartupTask)Activator.CreateInstance(startUpTaskType));
-            //sort
+            //排序
             startUpTasks = startUpTasks.AsQueryable().OrderBy(st => st.Order).ToList();
             foreach (var startUpTask in startUpTasks)
+            {
                 startUpTask.Execute();
+            }
         }
 
         /// <summary>
-        /// Register dependencies
+        /// 注册依赖注入
         /// </summary>
-        /// <param name="config">Config</param>
+        /// <param name="config">配置信息</param>
         protected virtual void RegisterDependencies(NopConfig config)
         {
             var builder = new ContainerBuilder();
-            
+
             //dependencies
             var typeFinder = new WebAppTypeFinder();
             builder.RegisterInstance(config).As<NopConfig>().SingleInstance();
@@ -58,7 +128,7 @@ namespace Nop.Core.Infrastructure
             var drTypes = typeFinder.FindClassesOfType<IDependencyRegistrar>();
             var drInstances = new List<IDependencyRegistrar>();
             foreach (var drType in drTypes)
-                drInstances.Add((IDependencyRegistrar) Activator.CreateInstance(drType));
+                drInstances.Add((IDependencyRegistrar)Activator.CreateInstance(drType));
             //sort
             drInstances = drInstances.AsQueryable().OrderBy(t => t.Order).ToList();
             foreach (var dependencyRegistrar in drInstances)
@@ -72,9 +142,9 @@ namespace Nop.Core.Infrastructure
         }
 
         /// <summary>
-        /// Register mapping
+        /// 注册mapper配置
         /// </summary>
-        /// <param name="config">Config</param>
+        /// <param name="config">配置信息</param>
         protected virtual void RegisterMapperConfiguration(NopConfig config)
         {
             //dependencies
@@ -97,70 +167,5 @@ namespace Nop.Core.Infrastructure
 
         #endregion
 
-        #region Methods
-
-        /// <summary>
-        /// Initialize components and plugins in the nop environment.
-        /// </summary>
-        /// <param name="config">Config</param>
-        public void Initialize(NopConfig config)
-        {
-            //register dependencies
-            RegisterDependencies(config);
-
-            //register mapper configurations
-            RegisterMapperConfiguration(config);
-
-            //startup tasks
-            if (!config.IgnoreStartupTasks)
-            {
-                RunStartupTasks();
-            }
-
-        }
-
-        /// <summary>
-        /// Resolve dependency
-        /// </summary>
-        /// <typeparam name="T">T</typeparam>
-        /// <returns></returns>
-        public T Resolve<T>() where T : class
-		{
-            return ContainerManager.Resolve<T>();
-		}
-
-        /// <summary>
-        ///  Resolve dependency
-        /// </summary>
-        /// <param name="type">Type</param>
-        /// <returns></returns>
-        public object Resolve(Type type)
-        {
-            return ContainerManager.Resolve(type);
-        }
-        
-        /// <summary>
-        /// Resolve dependencies
-        /// </summary>
-        /// <typeparam name="T">T</typeparam>
-        /// <returns></returns>
-        public T[] ResolveAll<T>()
-        {
-            return ContainerManager.ResolveAll<T>();
-        }
-
-		#endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Container manager
-        /// </summary>
-        public virtual ContainerManager ContainerManager
-        {
-            get { return _containerManager; }
-        }
-
-        #endregion
     }
 }
