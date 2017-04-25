@@ -1,17 +1,17 @@
 namespace Nop.Core.Domain.Blogs
 {
     /// <summary>
-    /// Represents a blog post tag
+    /// 博客标签
     /// </summary>
     public partial class BlogPostTag
     {
         /// <summary>
-        /// Gets or sets the name
+        ///获取或设置名称
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the tagged product count
+        /// 获取或设置标记的产品数量
         /// </summary>
         public int BlogPostCount { get; set; }
     }

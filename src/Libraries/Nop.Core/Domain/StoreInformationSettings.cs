@@ -5,63 +5,62 @@ namespace Nop.Core.Domain
     public class StoreInformationSettings : ISettings
     {
         /// <summary>
-        /// Gets or sets a value indicating whether "powered by nopCommerce" text should be displayed.
-        /// Please find more info at http://www.nopcommerce.com/copyrightremoval.aspx
+        /// 获取或设置一个值，指示是否显示"powered by nopCommerce" 文本。
         /// </summary>
         public bool HidePoweredByNopCommerce { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether store is closed
+        /// 获取或设置一个值，指示商店是否关闭
         /// </summary>
         public bool StoreClosed { get; set; }
 
         /// <summary>
-        /// Gets or sets a picture identifier of the logo. If 0, then the default one will be used
+        /// 获取或设置徽标的图片标识符。 如果为0，则将使用默认值
         /// </summary>
         public int LogoPictureId { get; set; }
 
         /// <summary>
-        /// Gets or sets a default store theme
+        /// 获取或设置默认商店主题
         /// </summary>
         public string DefaultStoreTheme { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether customers are allowed to select a theme
+        ///获取或设置一个值，指示是否允许客户选择主题
         /// </summary>
         public bool AllowCustomerToSelectTheme { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether mini profiler should be displayed in public store (used for debugging)
+        ///获取或设置一个值，该值指示mini分析器是否应显示在公共存储中（用于调试）
         /// </summary>
         public bool DisplayMiniProfilerInPublicStore { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether mini profiler should be displayed only for users with access to the admin area
+        /// 获取或设置一个值，该值指示是否应仅在访问管理区域的用户显示mini分析器
         /// </summary>
         public bool DisplayMiniProfilerForAdminOnly { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether we should display warnings about the new EU cookie law
+        /// 获取或设置一个值，指示是否应该显示有关新的欧盟Cookie法律的警告
         /// </summary>
         public bool DisplayEuCookieLawWarning { get; set; }
 
         /// <summary>
-        /// Gets or sets a value of Facebook page URL of the site
+        /// 获取或设置网站的Facebook页面URL的值
         /// </summary>
         public string FacebookLink { get; set; }
 
         /// <summary>
-        /// Gets or sets a value of Twitter page URL of the site
+        /// 获取或设置网站的Twitter页面URL的值
         /// </summary>
         public string TwitterLink { get; set; }
 
         /// <summary>
-        /// Gets or sets a value of YouTube channel URL of the site
+        ///获取或设置网站的YouTube频道网址值
         /// </summary>
         public string YoutubeLink { get; set; }
 
         /// <summary>
-        /// Gets or sets a value of Google+ page URL of the site
+        /// 获取或设置网站的Google+信息页网址值
         /// </summary>
         public string GooglePlusLink { get; set; }
     }

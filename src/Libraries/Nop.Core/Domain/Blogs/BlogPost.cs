@@ -7,88 +7,88 @@ using Nop.Core.Domain.Stores;
 namespace Nop.Core.Domain.Blogs
 {
     /// <summary>
-    /// Represents a blog post
+    /// 博客文章
     /// </summary>
     public partial class BlogPost : BaseEntity, ISlugSupported, IStoreMappingSupported
     {
         private ICollection<BlogComment> _blogComments;
 
         /// <summary>
-        /// Gets or sets the language identifier
+        /// 获取或设置语言标识符
         /// </summary>
         public int LanguageId { get; set; }
 
         /// <summary>
-        /// Gets or sets the blog post title
+        /// 获取或设置博客帖子标题
         /// </summary>
         public string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets the blog post body
+        /// 获取或设置博客文章正文
         /// </summary>
         public string Body { get; set; }
 
         /// <summary>
-        /// Gets or sets the blog post overview. If specified, then it's used on the blog page instead of the "Body"
+        ///获取或设置博客文章概述。 如果指定，那么它在博客页面上使用，而不是“Body”
         /// </summary>
         public string BodyOverview { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the blog post comments are allowed 
+        /// 获取或设置一个值，指示是否允许博客帖子评论
         /// </summary>
         public bool AllowComments { get; set; }
 
         /// <summary>
-        /// Gets or sets the blog tags
+        /// 获取或设置博客标签
         /// </summary>
         public string Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets the blog post start date and time
+        /// 获取或设置博客帖子开始日期和时间
         /// </summary>
         public DateTime? StartDateUtc { get; set; }
 
         /// <summary>
-        /// Gets or sets the blog post end date and time
+        /// 获取或设置博客帖子结束日期和时间
         /// </summary>
         public DateTime? EndDateUtc { get; set; }
 
         /// <summary>
-        /// Gets or sets the meta keywords
+        /// 获取或设置元关键字
         /// </summary>
         public string MetaKeywords { get; set; }
 
         /// <summary>
-        /// Gets or sets the meta description
+        ///获取或设置元描述
         /// </summary>
         public string MetaDescription { get; set; }
 
         /// <summary>
-        /// Gets or sets the meta title
+        /// 获取或设置元标题
         /// </summary>
         public string MetaTitle { get; set; }
-        
+
         /// <summary>
-        /// Gets or sets a value indicating whether the entity is limited/restricted to certain stores
+        /// 获取或设置一个值，指示实体是限制/限制于某些商店
         /// </summary>
         public virtual bool LimitedToStores { get; set; }
- 
+
         /// <summary>
-        /// Gets or sets the date and time of entity creation
+        /// 获取或设置实体创建的日期和时间
         /// </summary>
         public DateTime CreatedOnUtc { get; set; }
 
         /// <summary>
-        /// Gets or sets the blog comments
+        /// 获取或设置博客评论
         /// </summary>
         public virtual ICollection<BlogComment> BlogComments
         {
             get { return _blogComments ?? (_blogComments = new List<BlogComment>()); }
             protected set { _blogComments = value; }
         }
-        
+
         /// <summary>
-        /// Gets or sets the language
+        /// 获取或设置语言
         /// </summary>
         public virtual Language Language { get; set; }
     }

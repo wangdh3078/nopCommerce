@@ -1,16 +1,16 @@
 namespace Nop.Core.Domain.Catalog
 {
     /// <summary>
-    /// Represents an attribute value type
+    /// 属性值类型
     /// </summary>
     public enum AttributeValueType
     {
         /// <summary>
-        /// Simple attribute value
+        ///简单的属性值
         /// </summary>
         Simple = 0,
         /// <summary>
-        /// Associated to a product (used when configuring bundled products)
+        /// 与产品相关联（在配置捆绑产品时使用）
         /// </summary>
         AssociatedToProduct = 10,
     }

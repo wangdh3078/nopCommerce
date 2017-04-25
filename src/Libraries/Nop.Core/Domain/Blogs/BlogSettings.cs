@@ -6,42 +6,42 @@ namespace Nop.Core.Domain.Blogs
     public class BlogSettings : ISettings
     {
         /// <summary>
-        /// Gets or sets a value indicating whether blog is enabled
+        /// 获取或设置一个值，指示是否启用博客
         /// </summary>
         public bool Enabled { get; set; }
 
         /// <summary>
-        /// Gets or sets the page size for posts
+        /// 获取或设置帖子的页面大小
         /// </summary>
         public int PostsPageSize { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether not registered user can leave comments
+        /// 获取或设置一个值，指示是否注册用户不能发表评论
         /// </summary>
         public bool AllowNotRegisteredUsersToLeaveComments { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to notify about new blog comments
+        /// 获取或设置一个值，指示是否通知新博客评论
         /// </summary>
         public bool NotifyAboutNewBlogComments { get; set; }
 
         /// <summary>
-        /// Gets or sets a number of blog tags that appear in the tag cloud
+        /// 获取或设置标签云中显示的许多博客标签
         /// </summary>
         public int NumberOfTags { get; set; }
 
         /// <summary>
-        /// Enable the blog RSS feed link in customers browser address bar
+        /// 在客户浏览器地址栏中启用博客RSS feed链接
         /// </summary>
         public bool ShowHeaderRssUrl { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether blog comments must be approved
+        /// 获取或设置一个值，指示是否必须批准博客评论
         /// </summary>
         public bool BlogCommentsMustBeApproved { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether blog comments will be filtered per store
+        ///获取或设置一个值，指示是否将每个商店过滤博客评论
         /// </summary>
         public bool ShowBlogCommentsPerStore { get; set; }
     }

@@ -12,7 +12,7 @@ namespace Nop.Core
     /// </summary>
     public partial class XmlHelper
     {
-        #region Methods
+        #region 方法
 
         /// <summary>
         /// XML编码

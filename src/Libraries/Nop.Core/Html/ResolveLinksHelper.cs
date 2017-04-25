@@ -26,7 +26,7 @@ namespace Nop.Core.Html
         /// <returns>格式化后的文本</returns>
         public static string FormatText(string text)
         {
-            if (String.IsNullOrEmpty(text))
+            if (string.IsNullOrEmpty(text))
                 return string.Empty;
 
             var info = CultureInfo.InvariantCulture;

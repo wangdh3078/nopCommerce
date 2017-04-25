@@ -9,32 +9,32 @@ namespace Nop.Core.Domain.Catalog
     public partial class BackInStockSubscription : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the store identifier
+        /// 获取或设置商店标识符
         /// </summary>
         public int StoreId { get; set; }
 
         /// <summary>
-        /// Gets or sets the product identifier
+        /// 获取或设置产品标识符
         /// </summary>
         public int ProductId { get; set; }
 
         /// <summary>
-        /// Gets or sets the customer identifier
+        /// 获取或设置客户标识符
         /// </summary>
         public int CustomerId { get; set; }
 
         /// <summary>
-        /// Gets or sets the date and time of instance creation
+        /// 获取或设置实例创建的日期和时间
         /// </summary>
         public DateTime CreatedOnUtc { get; set; }
 
         /// <summary>
-        /// Gets the product
+        /// 获取或设置产品
         /// </summary>
         public virtual Product Product { get; set; }
 
         /// <summary>
-        /// Gets the customer
+        /// 获取或设置客户
         /// </summary>
         public virtual Customer Customer { get; set; }
 

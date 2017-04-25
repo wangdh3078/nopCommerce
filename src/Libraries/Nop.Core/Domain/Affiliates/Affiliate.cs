@@ -3,37 +3,37 @@ using Nop.Core.Domain.Common;
 namespace Nop.Core.Domain.Affiliates
 {
     /// <summary>
-    /// Represents an affiliate
+    /// 会员
     /// </summary>
     public partial class Affiliate : BaseEntity
     {
         /// <summary>
-        /// Gets or sets the address identifier
+        /// 获取或设置地址标识符
         /// </summary>
         public int AddressId { get; set; }
 
         /// <summary>
-        /// Gets or sets the admin comment
+        /// 获取或设置管理员评论
         /// </summary>
         public string AdminComment { get; set; }
 
         /// <summary>
-        /// Gets or sets the friendly name for generated affiliate URL (by default affiliate ID is used)
+        /// 获取或设置网址的友好名称（默认使用会员ID）
         /// </summary>
         public string FriendlyUrlName { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the entity has been deleted
+        /// 获取或设置一个值，指示实体是否已被删除
         /// </summary>
         public bool Deleted { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the entity is active
+        /// 获取或设置一个值，指示实体是否处于活动状态
         /// </summary>
         public bool Active { get; set; }
 
         /// <summary>
-        /// Gets or sets the address
+        /// 获取或设置地址
         /// </summary>
         public virtual Address Address { get; set; }
     }

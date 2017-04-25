@@ -15,7 +15,7 @@ namespace Nop.Core
     /// </summary>
     public partial class WebHelper : IWebHelper
     {
-        #region Fields 
+        #region 字段 
         /// <summary>
         /// HTTP上下文
         /// </summary>
@@ -27,7 +27,7 @@ namespace Nop.Core
 
         #endregion
 
-        #region Constructor
+        #region 构造函数
 
         /// <summary>
         /// 构造函数
@@ -41,75 +41,7 @@ namespace Nop.Core
 
         #endregion
 
-        #region Utilities
-        /// <summary>
-        /// 请求是否可用
-        /// </summary>
-        /// <param name="httpContext">HTTP上下文</param>
-        /// <returns></returns>
-        protected virtual Boolean IsRequestAvailable(HttpContextBase httpContext)
-        {
-            if (httpContext == null)
-                return false;
-
-            try
-            {
-                if (httpContext.Request == null)
-                    return false;
-            }
-            catch (HttpException)
-            {
-                return false;
-            }
-
-            return true;
-        }
-        /// <summary>
-        /// 尝试写入webconfig
-        /// </summary>
-        /// <returns></returns>
-        protected virtual bool TryWriteWebConfig()
-        {
-            try
-            {
-                // 在中等信任度中，不支持“UnloadAppDomain”。 
-                // 触摸web.config强制AppDomain重新启动。
-                File.SetLastWriteTimeUtc(CommonHelper.MapPath("~/web.config"), DateTime.UtcNow);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        /// <summary>
-        /// 尝试写
-        /// </summary>
-        /// <returns></returns>
-        protected virtual bool TryWriteGlobalAsax()
-        {
-            try
-            {
-                //当新插件放到插件文件夹并被安装到NOP
-                //即使插件已经为其控制器注册了路由，
-                //这些路由将不会像MVC框架那样工作
-                //找到新的控制器类型，无法实例化请求的控制器。
-                //这就是为什么你得到这些讨厌的错误
-                //即“控制器不实现IController”。
-                //这里描述的问题: http://www.nopcommerce.com/boards/t/10969/nop-20-plugin.aspx?p=4#51318
-                //解决方案是修改global.asax文件
-                File.SetLastWriteTimeUtc(CommonHelper.MapPath("~/global.asax"), DateTime.UtcNow);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        #endregion
-
-        #region Methods
+        #region 方法
 
         /// <summary>
         /// 获取URL链接
@@ -144,7 +76,7 @@ namespace Nop.Core
                     //for identifying the originating IP address of a client
                     //connecting to a web server through an HTTP proxy or load balancer.
                     var forwardedHttpHeader = "X-FORWARDED-FOR";
-                    if (!String.IsNullOrEmpty(ConfigurationManager.AppSettings["ForwardedHTTPheader"]))
+                    if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["ForwardedHTTPheader"]))
                     {
                         //but in some cases server use other HTTP header
                         //in these cases an administrator can specify a custom Forwarded HTTP header
@@ -160,19 +92,19 @@ namespace Nop.Core
                         .FirstOrDefault();
 
                     //if you want to exclude private IP addresses, then see http://stackoverflow.com/questions/2577496/how-can-i-get-the-clients-ip-address-in-asp-net-mvc
-                    if (!String.IsNullOrEmpty(xff))
+                    if (!string.IsNullOrEmpty(xff))
                     {
                         string lastIp = xff.Split(new[] { ',' }).FirstOrDefault();
                         result = lastIp;
                     }
                 }
 
-                if (String.IsNullOrEmpty(result) && _httpContext.Request.UserHostAddress != null)
+                if (string.IsNullOrEmpty(result) && _httpContext.Request.UserHostAddress != null)
                 {
                     result = _httpContext.Request.UserHostAddress;
                 }
             }
-            catch 
+            catch
             {
                 return result;
             }
@@ -181,7 +113,7 @@ namespace Nop.Core
             if (result == "::1")
                 result = "127.0.0.1";
             //删除端口
-            if (!String.IsNullOrEmpty(result))
+            if (!string.IsNullOrEmpty(result))
             {
                 int index = result.IndexOf(":", StringComparison.InvariantCultureIgnoreCase);
                 if (index > 0)
@@ -291,7 +223,7 @@ namespace Nop.Core
         {
             var result = "";
             var httpHost = ServerVariables("HTTP_HOST");
-            if (!String.IsNullOrEmpty(httpHost))
+            if (!string.IsNullOrEmpty(httpHost))
             {
                 result = "http://" + httpHost;
                 if (!result.EndsWith("/"))
@@ -309,7 +241,7 @@ namespace Nop.Core
                 if (currentStore == null)
                     throw new Exception("Current store cannot be loaded");
 
-                if (String.IsNullOrWhiteSpace(httpHost))
+                if (string.IsNullOrWhiteSpace(httpHost))
                 {
                     //HTTP_HOST variable is not available.
                     //This scenario is possible only when HttpContext is not available (for example, running in a schedule task)
@@ -321,7 +253,7 @@ namespace Nop.Core
 
                 if (useSsl)
                 {
-                    result = !String.IsNullOrWhiteSpace(currentStore.SecureUrl) ?
+                    result = !string.IsNullOrWhiteSpace(currentStore.SecureUrl) ?
                         //Secure URL specified. 
                         //So a store owner don't want it to be detected automatically.
                         //In this case let's use the specified secure URL
@@ -332,7 +264,7 @@ namespace Nop.Core
                 }
                 else
                 {
-                    if (currentStore.SslEnabled && !String.IsNullOrWhiteSpace(currentStore.SecureUrl))
+                    if (currentStore.SslEnabled && !string.IsNullOrWhiteSpace(currentStore.SecureUrl))
                     {
                         //SSL is enabled in this store and secure URL is specified.
                         //So a store owner don't want it to be detected automatically.
@@ -601,7 +533,7 @@ namespace Nop.Core
             if (IsRequestAvailable(_httpContext) && _httpContext.Request.QueryString[name] != null)
                 queryParam = _httpContext.Request.QueryString[name];
 
-            if (!String.IsNullOrEmpty(queryParam))
+            if (!string.IsNullOrEmpty(queryParam))
                 return CommonHelper.To<T>(queryParam);
 
             return default(T);
@@ -648,7 +580,7 @@ namespace Nop.Core
             // new request will come to the newly started AppDomain.
             if (_httpContext != null && makeRedirect)
             {
-                if (String.IsNullOrEmpty(redirectUrl))
+                if (string.IsNullOrEmpty(redirectUrl))
                     redirectUrl = GetThisPageUrl(true);
                 _httpContext.Response.Redirect(redirectUrl, true /*endResponse*/);
             }
@@ -684,5 +616,74 @@ namespace Nop.Core
         }
 
         #endregion
+
+        #region Utilities
+        /// <summary>
+        /// 请求是否可用
+        /// </summary>
+        /// <param name="httpContext">HTTP上下文</param>
+        /// <returns></returns>
+        protected virtual Boolean IsRequestAvailable(HttpContextBase httpContext)
+        {
+            if (httpContext == null)
+                return false;
+
+            try
+            {
+                if (httpContext.Request == null)
+                    return false;
+            }
+            catch (HttpException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+        /// <summary>
+        /// 尝试写入webconfig
+        /// </summary>
+        /// <returns></returns>
+        protected virtual bool TryWriteWebConfig()
+        {
+            try
+            {
+                // 在中等信任度中，不支持“UnloadAppDomain”。 
+                // 触摸web.config强制AppDomain重新启动。
+                File.SetLastWriteTimeUtc(CommonHelper.MapPath("~/web.config"), DateTime.UtcNow);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// 尝试写
+        /// </summary>
+        /// <returns></returns>
+        protected virtual bool TryWriteGlobalAsax()
+        {
+            try
+            {
+                //当新插件放到插件文件夹并被安装到NOP
+                //即使插件已经为其控制器注册了路由，
+                //这些路由将不会像MVC框架那样工作
+                //找到新的控制器类型，无法实例化请求的控制器。
+                //这就是为什么你得到这些讨厌的错误
+                //即“控制器不实现IController”。
+                //这里描述的问题: http://www.nopcommerce.com/boards/t/10969/nop-20-plugin.aspx?p=4#51318
+                //解决方案是修改global.asax文件
+                File.SetLastWriteTimeUtc(CommonHelper.MapPath("~/global.asax"), DateTime.UtcNow);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        #endregion
+        
     }
 }

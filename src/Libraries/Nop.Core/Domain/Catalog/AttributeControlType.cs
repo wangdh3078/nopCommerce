@@ -1,48 +1,48 @@
 namespace Nop.Core.Domain.Catalog
 {
     /// <summary>
-    /// Represents an attribute control type
+    /// 属性控件类型
     /// </summary>
     public enum AttributeControlType
     {
         /// <summary>
-        /// Dropdown list
+        ///下拉列表
         /// </summary>
         DropdownList = 1,
         /// <summary>
-        /// Radio list
+        /// 单选按钮
         /// </summary>
         RadioList = 2,
         /// <summary>
-        /// Checkboxes
+        /// 复选框
         /// </summary>
         Checkboxes = 3,
         /// <summary>
-        /// TextBox
+        /// 文本框
         /// </summary>
         TextBox = 4,
         /// <summary>
-        /// Multiline textbox
+        /// 多行文本框
         /// </summary>
         MultilineTextbox = 10,
         /// <summary>
-        /// Datepicker
+        /// 时间控件
         /// </summary>
         Datepicker = 20,
         /// <summary>
-        /// File upload control
+        /// 文件上传控件
         /// </summary>
         FileUpload = 30,
         /// <summary>
-        /// Color squares
+        /// 颜色选择控件
         /// </summary>
         ColorSquares = 40,
         /// <summary>
-        /// Image squares
+        /// 图片
         /// </summary>
         ImageSquares = 45,
         /// <summary>
-        /// Read-only checkboxes
+        /// 只读复选框
         /// </summary>
         ReadonlyCheckboxes = 50,
     }

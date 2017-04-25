@@ -1,7 +1,7 @@
 namespace Nop.Core.Domain.Blogs
 {
     /// <summary>
-    /// Blog post comment approved event
+    ///博客发表评论批准的事件
     /// </summary>
     public class BlogCommentApprovedEvent
     {
@@ -11,7 +11,7 @@ namespace Nop.Core.Domain.Blogs
         }
 
         /// <summary>
-        /// Blog post comment
+        /// 博客发表评论
         /// </summary>
         public BlogComment BlogComment { get; private set; }
     }

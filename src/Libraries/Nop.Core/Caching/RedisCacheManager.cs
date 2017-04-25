@@ -39,7 +39,7 @@ namespace Nop.Core.Caching
 
         public RedisCacheManager(NopConfig config, IRedisConnectionWrapper connectionWrapper)
         {
-            if (String.IsNullOrEmpty(config.RedisCachingConnectionString))
+            if (string.IsNullOrEmpty(config.RedisCachingConnectionString))
                 throw new Exception("Redis connection string is empty");
 
             // ConnectionMultiplexer.Connect只应该被调用一次，并且被共享

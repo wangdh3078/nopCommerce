@@ -81,7 +81,7 @@ namespace Nop.Core.Plugins
                 var referencedPlugins = new List<PluginDescriptor>();
                 var incompatiblePlugins = new List<string>();
 
-                _clearShadowDirectoryOnStartup = !String.IsNullOrEmpty(ConfigurationManager.AppSettings["ClearPluginsShadowDirectoryOnStartup"]) &&
+                _clearShadowDirectoryOnStartup = !string.IsNullOrEmpty(ConfigurationManager.AppSettings["ClearPluginsShadowDirectoryOnStartup"]) &&
                    Convert.ToBoolean(ConfigurationManager.AppSettings["ClearPluginsShadowDirectoryOnStartup"]);
 
                 try
@@ -126,7 +126,7 @@ namespace Nop.Core.Plugins
                         }
 
                         //一些验证
-                        if (String.IsNullOrWhiteSpace(pluginDescriptor.SystemName))
+                        if (string.IsNullOrWhiteSpace(pluginDescriptor.SystemName))
                             throw new Exception(string.Format("A plugin '{0}' has no system name. Try assigning the plugin a unique name and recompiling.", descriptionFile.FullName));
                         if (referencedPlugins.Contains(pluginDescriptor))
                             throw new Exception(string.Format("A plugin with '{0}' system name is already defined", pluginDescriptor.SystemName));
@@ -215,7 +215,7 @@ namespace Nop.Core.Plugins
         /// <param name="systemName">插件系统名称</param>
         public static void MarkPluginAsInstalled(string systemName)
         {
-            if (String.IsNullOrEmpty(systemName))
+            if (string.IsNullOrEmpty(systemName))
                 throw new ArgumentNullException("systemName");
 
             var filePath = CommonHelper.MapPath(InstalledPluginsFilePath);
@@ -240,7 +240,7 @@ namespace Nop.Core.Plugins
         /// <param name="systemName">插件系统名称</param>
         public static void MarkPluginAsUninstalled(string systemName)
         {
-            if (String.IsNullOrEmpty(systemName))
+            if (string.IsNullOrEmpty(systemName))
                 throw new ArgumentNullException("systemName");
 
             var filePath = CommonHelper.MapPath(InstalledPluginsFilePath);

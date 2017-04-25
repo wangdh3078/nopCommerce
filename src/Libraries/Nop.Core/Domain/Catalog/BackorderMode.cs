@@ -6,15 +6,15 @@ namespace Nop.Core.Domain.Catalog
     public enum BackorderMode
     {
         /// <summary>
-        /// No backorders
+        /// 没有后退
         /// </summary>
         NoBackorders = 0,
         /// <summary>
-        /// Allow qty below 0
+        /// 允许数量低于0
         /// </summary>
         AllowQtyBelow0 = 1,
         /// <summary>
-        /// Allow qty below 0 and notify customer
+        ///允许数量低于0并通知客户
         /// </summary>
         AllowQtyBelow0AndNotifyCustomer = 2,
     }
