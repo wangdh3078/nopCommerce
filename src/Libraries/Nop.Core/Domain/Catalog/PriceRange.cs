@@ -1,7 +1,7 @@
 ﻿namespace Nop.Core.Domain.Catalog
 {
     /// <summary>
-    /// Represents a price range
+    /// 价格范围
     /// </summary>
     public partial class PriceRange
     {

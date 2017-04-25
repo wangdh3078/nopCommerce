@@ -1,7 +1,7 @@
 namespace Nop.Core.Domain.Catalog
 {
     /// <summary>
-    /// Product review approved event
+    /// 产品评审批准活动
     /// </summary>
     public class ProductReviewApprovedEvent
     {
@@ -11,7 +11,7 @@ namespace Nop.Core.Domain.Catalog
         }
 
         /// <summary>
-        /// Product review
+        /// 产品评论
         /// </summary>
         public ProductReview ProductReview { get; private set; }
     }

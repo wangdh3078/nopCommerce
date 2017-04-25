@@ -1,16 +1,16 @@
 namespace Nop.Core.Domain.Catalog
 {
     /// <summary>
-    /// Represents a gift card type
+    /// 礼品卡类型
     /// </summary>
     public enum GiftCardType
     {
         /// <summary>
-        /// Virtual
+        /// 虚拟
         /// </summary>
         Virtual = 0,
         /// <summary>
-        /// Physical
+        /// 物理
         /// </summary>
         Physical = 1,
     }
