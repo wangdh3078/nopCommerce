@@ -13,7 +13,9 @@ namespace Nop.Core.Data
         /// <param name="settings">数据配置</param>
         protected BaseDataProviderManager(DataSettings settings)
         {
-            this.Settings = settings ?? throw new ArgumentNullException("settings");
+            if (settings == null)
+                throw new ArgumentNullException("settings");
+            this.Settings = settings;
         }
 
         /// <summary>
