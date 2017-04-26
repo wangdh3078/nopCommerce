@@ -6,37 +6,37 @@ namespace Nop.Core.Domain.Catalog
     public class ProductEditorSettings : ISettings
     {
         /// <summary>
-        /// Gets or sets a value indicating whether 'ID' field is shown
+        ///获取或设置一个值，指示是否显示“ID”字段
         /// </summary>
         public bool Id { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Product type' field is shown
+        ///获取或设置一个值，指示是否显示“产品类型”字段
         /// </summary>
         public bool ProductType { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Visible individually' field is shown
+        /// 获取或设置一个值，指示是否显示 'Visible individually'字段
         /// </summary>
         public bool VisibleIndividually { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Product template' field is shown
+        /// 获取或设置一个值，指示是否显示“产品模板”字段
         /// </summary>
         public bool ProductTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Admin comment' feild is shown
+        /// 获取或设置一个值，指示是否显示“管理员注释”字段
         /// </summary>
         public bool AdminComment { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Vendor' field is shown
+        /// 获取或设置一个值，指示是否显示“供应商”字段
         /// </summary>
         public bool Vendor { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Stores' field is shown
+        /// 获取或设置一个值，指示是否显示“Stores”字段
         /// </summary>
         public bool Stores { get; set; }
 
