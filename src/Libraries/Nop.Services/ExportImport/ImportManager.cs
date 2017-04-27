@@ -166,7 +166,7 @@ namespace Nop.Services.ExportImport
         /// <returns>The image or null if the image has not changed</returns>
         protected virtual Picture LoadPicture(string picturePath, string name, int? picId = null)
         {
-            if (String.IsNullOrEmpty(picturePath) || !File.Exists(picturePath))
+            if (string.IsNullOrEmpty(picturePath) || !File.Exists(picturePath))
                 return null;
 
             var mimeType = GetMimeTypeFromFilePath(picturePath);
@@ -200,7 +200,7 @@ namespace Nop.Services.ExportImport
             {
                 foreach (var picturePath in new[] { product.Picture1Path, product.Picture2Path, product.Picture3Path })
                 {
-                    if (String.IsNullOrEmpty(picturePath))
+                    if (string.IsNullOrEmpty(picturePath))
                         continue;
 
                     var mimeType = GetMimeTypeFromFilePath(picturePath);
@@ -252,7 +252,7 @@ namespace Nop.Services.ExportImport
             {
                 foreach (var picturePath in new[] { product.Picture1Path, product.Picture2Path, product.Picture3Path })
                 {
-                    if (String.IsNullOrEmpty(picturePath))
+                    if (string.IsNullOrEmpty(picturePath))
                         continue;
 
                     var mimeType = GetMimeTypeFromFilePath(picturePath);
@@ -388,13 +388,13 @@ namespace Nop.Services.ExportImport
                 manager.SetSelectList("RecurringCyclePeriod", RecurringProductCyclePeriod.Days.ToSelectList(useLocalization: false));
                 manager.SetSelectList("RentalPricePeriod", RentalPricePeriod.Days.ToSelectList(useLocalization: false));
 
-                manager.SetSelectList("Vendor", _vendorService.GetAllVendors(showHidden: true).Select(v => v as BaseEntity).ToSelectList(p => (p as Vendor).Return(v => v.Name, String.Empty)));
-                manager.SetSelectList("ProductTemplate", _productTemplateService.GetAllProductTemplates().Select(pt => pt as BaseEntity).ToSelectList(p => (p as ProductTemplate).Return(pt => pt.Name, String.Empty)));
-                manager.SetSelectList("DeliveryDate", _dateRangeService.GetAllDeliveryDates().Select(dd => dd as BaseEntity).ToSelectList(p => (p as DeliveryDate).Return(dd => dd.Name, String.Empty)));
-                manager.SetSelectList("ProductAvailabilityRange", _dateRangeService.GetAllProductAvailabilityRanges().Select(range => range as BaseEntity).ToSelectList(p => (p as ProductAvailabilityRange).Return(range => range.Name, String.Empty)));
-                manager.SetSelectList("TaxCategory", _taxCategoryService.GetAllTaxCategories().Select(tc => tc as BaseEntity).ToSelectList(p => (p as TaxCategory).Return(tc => tc.Name, String.Empty)));
-                manager.SetSelectList("BasepriceUnit", _measureService.GetAllMeasureWeights().Select(mw => mw as BaseEntity).ToSelectList(p =>(p as MeasureWeight).Return(mw => mw.Name, String.Empty)));
-                manager.SetSelectList("BasepriceBaseUnit", _measureService.GetAllMeasureWeights().Select(mw => mw as BaseEntity).ToSelectList(p => (p as MeasureWeight).Return(mw => mw.Name, String.Empty)));
+                manager.SetSelectList("Vendor", _vendorService.GetAllVendors(showHidden: true).Select(v => v as BaseEntity).ToSelectList(p => (p as Vendor).Return(v => v.Name, string.Empty)));
+                manager.SetSelectList("ProductTemplate", _productTemplateService.GetAllProductTemplates().Select(pt => pt as BaseEntity).ToSelectList(p => (p as ProductTemplate).Return(pt => pt.Name, string.Empty)));
+                manager.SetSelectList("DeliveryDate", _dateRangeService.GetAllDeliveryDates().Select(dd => dd as BaseEntity).ToSelectList(p => (p as DeliveryDate).Return(dd => dd.Name, string.Empty)));
+                manager.SetSelectList("ProductAvailabilityRange", _dateRangeService.GetAllProductAvailabilityRanges().Select(range => range as BaseEntity).ToSelectList(p => (p as ProductAvailabilityRange).Return(range => range.Name, string.Empty)));
+                manager.SetSelectList("TaxCategory", _taxCategoryService.GetAllTaxCategories().Select(tc => tc as BaseEntity).ToSelectList(p => (p as TaxCategory).Return(tc => tc.Name, string.Empty)));
+                manager.SetSelectList("BasepriceUnit", _measureService.GetAllMeasureWeights().Select(mw => mw as BaseEntity).ToSelectList(p =>(p as MeasureWeight).Return(mw => mw.Name, string.Empty)));
+                manager.SetSelectList("BasepriceBaseUnit", _measureService.GetAllMeasureWeights().Select(mw => mw as BaseEntity).ToSelectList(p => (p as MeasureWeight).Return(mw => mw.Name, string.Empty)));
 
                 var allAttributeIds = new List<int>();
                 var attributeIdCellNum = managerProductAttribute.GetProperty("AttributeId").PropertyOrderPosition + ExportProductAttribute.ProducAttributeCellOffset;
@@ -406,12 +406,12 @@ namespace Nop.Services.ExportImport
                 {
                     var allColumnsAreEmpty = manager.GetProperties
                         .Select(property => worksheet.Cells[endRow, property.PropertyOrderPosition])
-                        .All(cell => cell == null || cell.Value == null || String.IsNullOrEmpty(cell.Value.ToString()));
+                        .All(cell => cell == null || cell.Value == null || string.IsNullOrEmpty(cell.Value.ToString()));
 
                     if (allColumnsAreEmpty)
                         break;
 
-                    if (new[] { 1, 2 }.Select(cellNum => worksheet.Cells[endRow, cellNum]).All(cell => cell == null || cell.Value == null || String.IsNullOrEmpty(cell.Value.ToString())) && worksheet.Row(endRow).OutlineLevel == 0)
+                    if (new[] { 1, 2 }.Select(cellNum => worksheet.Cells[endRow, cellNum]).All(cell => cell == null || cell.Value == null || string.IsNullOrEmpty(cell.Value.ToString())) && worksheet.Row(endRow).OutlineLevel == 0)
                     {
                         var cellValue = worksheet.Cells[endRow, attributeIdCellNum].Value;
                         try
@@ -425,7 +425,7 @@ namespace Nop.Services.ExportImport
                         }
                         catch (FormatException)
                         {
-                            if (cellValue.Return(cv => cv.ToString(), String.Empty) == "AttributeId")
+                            if (cellValue.Return(cv => cv.ToString(), string.Empty) == "AttributeId")
                                 worksheet.Row(endRow).OutlineLevel = 1;
                         }
                     }
@@ -1060,9 +1060,9 @@ namespace Nop.Services.ExportImport
                         _productTagService.UpdateProductTags(product, productTags);
                     }
 
-                    var picture1 = manager.GetProperty("Picture1").Return(p => p.StringValue, String.Empty);
-                    var picture2 = manager.GetProperty("Picture2").Return(p => p.StringValue, String.Empty);
-                    var picture3 = manager.GetProperty("Picture3").Return(p => p.StringValue, String.Empty);
+                    var picture1 = manager.GetProperty("Picture1").Return(p => p.StringValue, string.Empty);
+                    var picture2 = manager.GetProperty("Picture2").Return(p => p.StringValue, string.Empty);
+                    var picture3 = manager.GetProperty("Picture3").Return(p => p.StringValue, string.Empty);
 
                     productPictureMetadata.Add(new ProductPictureMetadata
                     {
@@ -1103,7 +1103,7 @@ namespace Nop.Services.ExportImport
                 while (!reader.EndOfStream)
                 {
                     string line = reader.ReadLine();
-                    if (String.IsNullOrWhiteSpace(line))
+                    if (string.IsNullOrWhiteSpace(line))
                         continue;
                     string[] tmp = line.Split(',');
 
@@ -1172,7 +1172,7 @@ namespace Nop.Services.ExportImport
                 while (!reader.EndOfStream)
                 {
                     string line = reader.ReadLine();
-                    if (String.IsNullOrWhiteSpace(line))
+                    if (string.IsNullOrWhiteSpace(line))
                         continue;
                     string[] tmp = line.Split(',');
 
@@ -1251,7 +1251,7 @@ namespace Nop.Services.ExportImport
                 {
                     var allColumnsAreEmpty = manager.GetProperties
                         .Select(property => worksheet.Cells[iRow, property.PropertyOrderPosition])
-                        .All(cell => cell == null || cell.Value == null || String.IsNullOrEmpty(cell.Value.ToString()));
+                        .All(cell => cell == null || cell.Value == null || string.IsNullOrEmpty(cell.Value.ToString()));
 
                     if (allColumnsAreEmpty)
                         break;
@@ -1375,7 +1375,7 @@ namespace Nop.Services.ExportImport
                 {
                     var allColumnsAreEmpty = manager.GetProperties
                         .Select(property => worksheet.Cells[iRow, property.PropertyOrderPosition])
-                        .All(cell => cell == null || cell.Value == null || String.IsNullOrEmpty(cell.Value.ToString()));
+                        .All(cell => cell == null || cell.Value == null || string.IsNullOrEmpty(cell.Value.ToString()));
 
                     if (allColumnsAreEmpty)
                         break;

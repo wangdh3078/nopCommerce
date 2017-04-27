@@ -15,7 +15,7 @@ namespace Nop.Web.Framework.Validators
         protected override bool IsValid(PropertyValidatorContext context)
         {
             var ccValue = context.PropertyValue as string;
-            if (String.IsNullOrWhiteSpace(ccValue))
+            if (string.IsNullOrWhiteSpace(ccValue))
                 return false;
 
             ccValue = ccValue.Replace(" ", "");

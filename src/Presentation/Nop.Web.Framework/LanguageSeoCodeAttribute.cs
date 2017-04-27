@@ -30,7 +30,7 @@ namespace Nop.Web.Framework
                 return;
 
             //only GET requests
-            if (!String.Equals(request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase))
                 return;
 
             if (!DataSettingsHelper.DatabaseIsInstalled())

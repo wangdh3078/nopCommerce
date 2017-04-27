@@ -544,7 +544,7 @@ namespace Nop.Services.Orders
                             var attributeValuesStr = _productAttributeParser.ParseValues(attributesXml, a1.Id);
                             foreach (string str1 in attributeValuesStr)
                             {
-                                if (!String.IsNullOrEmpty(str1.Trim()))
+                                if (!string.IsNullOrEmpty(str1.Trim()))
                                 {
                                     found = true;
                                     break;
@@ -598,7 +598,7 @@ namespace Nop.Services.Orders
                     {
                         var valuesStr = _productAttributeParser.ParseValues(attributesXml, pam.Id);
                         var enteredText = valuesStr.FirstOrDefault();
-                        int enteredTextLength = String.IsNullOrEmpty(enteredText) ? 0 : enteredText.Length;
+                        int enteredTextLength = string.IsNullOrEmpty(enteredText) ? 0 : enteredText.Length;
 
                         if (pam.ValidationMinLength.Value > enteredTextLength)
                         {
@@ -615,7 +615,7 @@ namespace Nop.Services.Orders
                     {
                         var valuesStr = _productAttributeParser.ParseValues(attributesXml, pam.Id);
                         var enteredText = valuesStr.FirstOrDefault();
-                        int enteredTextLength = String.IsNullOrEmpty(enteredText) ? 0 : enteredText.Length;
+                        int enteredTextLength = string.IsNullOrEmpty(enteredText) ? 0 : enteredText.Length;
 
                         if (pam.ValidationMaxLength.Value < enteredTextLength)
                         {
@@ -691,23 +691,23 @@ namespace Nop.Services.Orders
                     out giftCardRecipientName, out giftCardRecipientEmail,
                     out giftCardSenderName, out giftCardSenderEmail, out giftCardMessage);
 
-                if (String.IsNullOrEmpty(giftCardRecipientName))
+                if (string.IsNullOrEmpty(giftCardRecipientName))
                     warnings.Add(_localizationService.GetResource("ShoppingCart.RecipientNameError"));
 
                 if (product.GiftCardType == GiftCardType.Virtual)
                 {
                     //validate for virtual gift cards only
-                    if (String.IsNullOrEmpty(giftCardRecipientEmail) || !CommonHelper.IsValidEmail(giftCardRecipientEmail))
+                    if (string.IsNullOrEmpty(giftCardRecipientEmail) || !CommonHelper.IsValidEmail(giftCardRecipientEmail))
                         warnings.Add(_localizationService.GetResource("ShoppingCart.RecipientEmailError"));
                 }
 
-                if (String.IsNullOrEmpty(giftCardSenderName))
+                if (string.IsNullOrEmpty(giftCardSenderName))
                     warnings.Add(_localizationService.GetResource("ShoppingCart.SenderNameError"));
 
                 if (product.GiftCardType == GiftCardType.Virtual)
                 {
                     //validate for virtual gift cards only
-                    if (String.IsNullOrEmpty(giftCardSenderEmail) || !CommonHelper.IsValidEmail(giftCardSenderEmail))
+                    if (string.IsNullOrEmpty(giftCardSenderEmail) || !CommonHelper.IsValidEmail(giftCardSenderEmail))
                         warnings.Add(_localizationService.GetResource("ShoppingCart.SenderEmailError"));
                 }
             }
@@ -904,7 +904,7 @@ namespace Nop.Services.Orders
                             {
                                 var attributeValuesStr = _checkoutAttributeParser.ParseValues(checkoutAttributesXml, a1.Id);
                                 foreach (string str1 in attributeValuesStr)
-                                    if (!String.IsNullOrEmpty(str1.Trim()))
+                                    if (!string.IsNullOrEmpty(str1.Trim()))
                                     {
                                         found = true;
                                         break;
@@ -935,7 +935,7 @@ namespace Nop.Services.Orders
                         {
                             var valuesStr = _checkoutAttributeParser.ParseValues(checkoutAttributesXml, ca.Id);
                             var enteredText = valuesStr.FirstOrDefault();
-                            int enteredTextLength = String.IsNullOrEmpty(enteredText) ? 0 : enteredText.Length;
+                            int enteredTextLength = string.IsNullOrEmpty(enteredText) ? 0 : enteredText.Length;
 
                             if (ca.ValidationMinLength.Value > enteredTextLength)
                             {
@@ -952,7 +952,7 @@ namespace Nop.Services.Orders
                         {
                             var valuesStr = _checkoutAttributeParser.ParseValues(checkoutAttributesXml, ca.Id);
                             var enteredText = valuesStr.FirstOrDefault();
-                            int enteredTextLength = String.IsNullOrEmpty(enteredText) ? 0 : enteredText.Length;
+                            int enteredTextLength = string.IsNullOrEmpty(enteredText) ? 0 : enteredText.Length;
 
                             if (ca.ValidationMaxLength.Value < enteredTextLength)
                             {

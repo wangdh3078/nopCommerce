@@ -50,7 +50,7 @@ namespace Nop.Web.Factories
         /// <returns>List of identifiers and names of states and provinces</returns>
         public virtual dynamic GetStatesByCountryId(string countryId, bool addSelectStateItem)
         {
-            if (String.IsNullOrEmpty(countryId))
+            if (string.IsNullOrEmpty(countryId))
                 throw new ArgumentNullException("countryId");
 
             string cacheKey = string.Format(ModelCacheEventConsumer.STATEPROVINCES_BY_COUNTRY_MODEL_KEY, countryId, addSelectStateItem, _workContext.WorkingLanguage.Id);

@@ -410,7 +410,7 @@ namespace Nop.Admin.Controllers
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageDiscounts))
                 return AccessDeniedView();
 
-            if (String.IsNullOrEmpty(systemName))
+            if (string.IsNullOrEmpty(systemName))
                 throw new ArgumentNullException("systemName");
 
             var discountRequirementRule = _discountService.LoadDiscountRequirementRuleBySystemName(systemName);

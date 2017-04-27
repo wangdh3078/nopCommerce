@@ -111,7 +111,7 @@ namespace Nop.Plugin.Shipping.UPS
             sb.Append("</TransactionReference>");
             sb.Append("<RequestOption>Shop</RequestOption>");
             sb.Append("</Request>");
-            if (String.Equals(countryCodeFrom, "US", StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(countryCodeFrom, "US", StringComparison.InvariantCultureIgnoreCase))
             {
                 sb.Append("<PickupType>");
                 sb.AppendFormat("<Code>{0}</Code>", GetPickupTypeCode(pickupType));
@@ -686,10 +686,10 @@ namespace Nop.Plugin.Shipping.UPS
                             }
                         }
                         string service = GetServiceName(serviceCode);
-                        string serviceId = String.Format("[{0}]", serviceCode);
+                        string serviceId = string.Format("[{0}]", serviceCode);
 
                         // Go to the next rate if the service ID is not in the list of services to offer
-                        if (!saturdayDelivery && !String.IsNullOrEmpty(carrierServicesOffered) && !carrierServicesOffered.Contains(serviceId))
+                        if (!saturdayDelivery && !string.IsNullOrEmpty(carrierServicesOffered) && !carrierServicesOffered.Contains(serviceId))
                         {
                             continue;
                         }
@@ -761,7 +761,7 @@ namespace Nop.Plugin.Shipping.UPS
 
                 string error = "";
                 var shippingOptions = ParseResponse(responseXml, false, ref error);
-                if (String.IsNullOrEmpty(error))
+                if (string.IsNullOrEmpty(error))
                 {
                     foreach (var shippingOption in shippingOptions)
                     {
@@ -815,7 +815,7 @@ namespace Nop.Plugin.Shipping.UPS
             {
                 if (_upsSettings.Tracing && _traceMessages.Length > 0)
                 {
-                    string shortMessage = String.Format("UPS Get Shipping Options for customer {0}.  {1} item(s) in cart",
+                    string shortMessage = string.Format("UPS Get Shipping Options for customer {0}.  {1} item(s) in cart",
                         getShippingOptionRequest.Customer.Email, getShippingOptionRequest.Items.Count);
                     _logger.Information(shortMessage, new Exception(_traceMessages.ToString()), getShippingOptionRequest.Customer);
                 }

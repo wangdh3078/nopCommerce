@@ -16,7 +16,7 @@ using Nop.Web.Framework.UI;
 namespace Nop.Web.Framework.Controllers
 {
     /// <summary>
-    /// Base controller
+    /// 基类控制器
     /// </summary>
     [StoreIpAddress]
     [CustomerLastActivity]

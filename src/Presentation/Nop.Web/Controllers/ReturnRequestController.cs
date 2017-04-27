@@ -193,7 +193,7 @@ namespace Nop.Web.Controllers
             Stream stream = null;
             var fileName = "";
             var contentType = "";
-            if (String.IsNullOrEmpty(Request["qqfile"]))
+            if (string.IsNullOrEmpty(Request["qqfile"]))
             {
                 // IE
                 HttpPostedFileBase httpPostedFile = Request.Files[0];
@@ -214,7 +214,7 @@ namespace Nop.Web.Controllers
             stream.Read(fileBinary, 0, fileBinary.Length);
 
             var fileExtension = Path.GetExtension(fileName);
-            if (!String.IsNullOrEmpty(fileExtension))
+            if (!string.IsNullOrEmpty(fileExtension))
                 fileExtension = fileExtension.ToLowerInvariant();
 
             int validationFileMaximumSize = _orderSettings.ReturnRequestsFileMaximumSize;

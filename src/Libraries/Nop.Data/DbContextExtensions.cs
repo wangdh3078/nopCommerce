@@ -99,7 +99,7 @@ namespace Nop.Data
             if (context == null)
                 throw new ArgumentNullException("context");
 
-            if (String.IsNullOrEmpty(tableName))
+            if (string.IsNullOrEmpty(tableName))
                 throw new ArgumentNullException("tableName");
 
             //drop the table

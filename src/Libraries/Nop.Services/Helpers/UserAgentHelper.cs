@@ -35,7 +35,7 @@ namespace Nop.Services.Helpers
                 return Singleton<BrowscapXmlHelper>.Instance;
 
             //no database created
-            if (String.IsNullOrEmpty(_config.UserAgentStringsPath))
+            if (string.IsNullOrEmpty(_config.UserAgentStringsPath))
                 return null;
 
             //prevent multi loading data

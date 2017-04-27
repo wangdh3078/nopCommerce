@@ -567,10 +567,10 @@ namespace Nop.Web.Factories
                         switch (_forumSettings.ForumEditor)
                         {
                             case EditorType.SimpleTextBox:
-                                text = String.Format("{0}:\n{1}\n", quotePost.Customer.FormatUserName(), quotePostText);
+                                text = string.Format("{0}:\n{1}\n", quotePost.Customer.FormatUserName(), quotePostText);
                                 break;
                             case EditorType.BBCodeEditor:
-                                text = String.Format("[quote={0}]{1}[/quote]", quotePost.Customer.FormatUserName(), BBCodeHelper.RemoveQuotes(quotePostText));
+                                text = string.Format("[quote={0}]{1}[/quote]", quotePost.Customer.FormatUserName(), BBCodeHelper.RemoveQuotes(quotePostText));
                                 break;
                         }
                         model.Text = text;
@@ -762,7 +762,7 @@ namespace Nop.Web.Factories
 
             try
             {
-                if (!String.IsNullOrWhiteSpace(searchterms))
+                if (!string.IsNullOrWhiteSpace(searchterms))
                 {
                     searchterms = searchterms.Trim();
                     model.SearchTerms = searchterms;

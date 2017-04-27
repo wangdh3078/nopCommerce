@@ -94,7 +94,7 @@ namespace Nop.Admin.Controllers
 
         public virtual ActionResult MarkAsPrimaryProvider(string systemName)
         {
-            if (String.IsNullOrEmpty(systemName))
+            if (string.IsNullOrEmpty(systemName))
             {
                 return RedirectToAction("Providers");
             }

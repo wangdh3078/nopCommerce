@@ -144,7 +144,7 @@ namespace Nop.Web.Controllers
             }
 
             //home page
-            if (String.IsNullOrEmpty(returnUrl))
+            if (string.IsNullOrEmpty(returnUrl))
                 returnUrl = Url.RouteUrl("HomePage");
 
             //prevent open redirection attack
@@ -184,7 +184,7 @@ namespace Nop.Web.Controllers
                 _workContext.WorkingCurrency = currency;
 
             //home page
-            if (String.IsNullOrEmpty(returnUrl))
+            if (string.IsNullOrEmpty(returnUrl))
                 returnUrl = Url.RouteUrl("HomePage");
 
             //prevent open redirection attack
@@ -212,7 +212,7 @@ namespace Nop.Web.Controllers
             _workContext.TaxDisplayType = taxDisplayType;
 
             //home page
-            if (String.IsNullOrEmpty(returnUrl))
+            if (string.IsNullOrEmpty(returnUrl))
                 returnUrl = Url.RouteUrl("HomePage");
 
             //prevent open redirection attack
@@ -400,7 +400,7 @@ namespace Nop.Web.Controllers
             _themeContext.WorkingThemeName = themeName;
 
             //home page
-            if (String.IsNullOrEmpty(returnUrl))
+            if (string.IsNullOrEmpty(returnUrl))
                 returnUrl = Url.RouteUrl("HomePage");
 
             //prevent open redirection attack
@@ -415,7 +415,7 @@ namespace Nop.Web.Controllers
         public virtual ActionResult Favicon()
         {
             var model = _commonModelFactory.PrepareFaviconModel();
-            if (String.IsNullOrEmpty(model.FaviconUrl))
+            if (string.IsNullOrEmpty(model.FaviconUrl))
                 return Content("");
 
             return PartialView(model);

@@ -306,7 +306,7 @@ namespace Nop.Web.Factories
                         pagingFilteringModel.PageSizeOptions.Add(new SelectListItem
                         {
                             Text = pageSize,
-                            Value = String.Format(sortUrl, pageSize),
+                            Value = string.Format(sortUrl, pageSize),
                             Selected = pageSize.Equals(command.PageSize.ToString(), StringComparison.InvariantCultureIgnoreCase)
                         });
                     }
@@ -1355,7 +1355,7 @@ namespace Nop.Web.Factories
                 //that's why we do not re-throw it
 
                 //just ensure that some search term is specified (0 length is not supported inthis case)
-                isSearchTermSpecified = !String.IsNullOrEmpty(searchTerms);
+                isSearchTermSpecified = !string.IsNullOrEmpty(searchTerms);
             }
             if (isSearchTermSpecified)
             {
@@ -1432,7 +1432,7 @@ namespace Nop.Web.Factories
                     model.NoResults = !model.Products.Any();
 
                     //search term statistics
-                    if (!String.IsNullOrEmpty(searchTerms))
+                    if (!string.IsNullOrEmpty(searchTerms))
                     {
                         var searchTerm = _searchTermService.GetSearchTermByKeyword(searchTerms, _storeContext.CurrentStore.Id);
                         if (searchTerm != null)

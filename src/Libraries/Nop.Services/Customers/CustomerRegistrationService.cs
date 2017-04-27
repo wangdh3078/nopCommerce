@@ -195,7 +195,7 @@ namespace Nop.Services.Customers
                 result.AddError("Current customer is already registered");
                 return result;
             }
-            if (String.IsNullOrEmpty(request.Email))
+            if (string.IsNullOrEmpty(request.Email))
             {
                 result.AddError(_localizationService.GetResource("Account.Register.Errors.EmailIsNotProvided"));
                 return result;
@@ -205,14 +205,14 @@ namespace Nop.Services.Customers
                 result.AddError(_localizationService.GetResource("Common.WrongEmail"));
                 return result;
             }
-            if (String.IsNullOrWhiteSpace(request.Password))
+            if (string.IsNullOrWhiteSpace(request.Password))
             {
                 result.AddError(_localizationService.GetResource("Account.Register.Errors.PasswordIsNotProvided"));
                 return result;
             }
             if (_customerSettings.UsernamesEnabled)
             {
-                if (String.IsNullOrEmpty(request.Username))
+                if (string.IsNullOrEmpty(request.Username))
                 {
                     result.AddError(_localizationService.GetResource("Account.Register.Errors.UsernameIsNotProvided"));
                     return result;
@@ -303,12 +303,12 @@ namespace Nop.Services.Customers
                 throw new ArgumentNullException("request");
 
             var result = new ChangePasswordResult();
-            if (String.IsNullOrWhiteSpace(request.Email))
+            if (string.IsNullOrWhiteSpace(request.Email))
             {
                 result.AddError(_localizationService.GetResource("Account.ChangePassword.Errors.EmailIsNotProvided"));
                 return result;
             }
-            if (String.IsNullOrWhiteSpace(request.NewPassword))
+            if (string.IsNullOrWhiteSpace(request.NewPassword))
             {
                 result.AddError(_localizationService.GetResource("Account.ChangePassword.Errors.PasswordIsNotProvided"));
                 return result;
@@ -419,7 +419,7 @@ namespace Nop.Services.Customers
                 _customerService.UpdateCustomer(customer);
 
                 //update newsletter subscription (if required)
-                if (!String.IsNullOrEmpty(oldEmail) && !oldEmail.Equals(newEmail, StringComparison.InvariantCultureIgnoreCase))
+                if (!string.IsNullOrEmpty(oldEmail) && !oldEmail.Equals(newEmail, StringComparison.InvariantCultureIgnoreCase))
                 {
                     foreach (var store in _storeService.GetAllStores())
                     {

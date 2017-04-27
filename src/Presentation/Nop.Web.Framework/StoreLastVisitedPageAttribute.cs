@@ -8,8 +8,15 @@ using Nop.Services.Common;
 
 namespace Nop.Web.Framework
 {
+    /// <summary>
+    /// 最近访问的页面属性
+    /// </summary>
     public class StoreLastVisitedPageAttribute : ActionFilterAttribute
     {
+        /// <summary>
+        /// action执行时
+        /// </summary>
+        /// <param name="filterContext">上下文</param>
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (!DataSettingsHelper.DatabaseIsInstalled())
@@ -18,12 +25,12 @@ namespace Nop.Web.Framework
             if (filterContext == null || filterContext.HttpContext == null || filterContext.HttpContext.Request == null)
                 return;
 
-            //don't apply filter to child methods
+            //不对子方法应用过滤器
             if (filterContext.IsChildAction)
                 return;
 
             //only GET requests
-            if (!String.Equals(filterContext.HttpContext.Request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(filterContext.HttpContext.Request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase))
                 return;
 
             var customerSettings = EngineContext.Current.Resolve<CustomerSettings>();
@@ -32,7 +39,7 @@ namespace Nop.Web.Framework
 
             var webHelper = EngineContext.Current.Resolve<IWebHelper>();
             var pageUrl = webHelper.GetThisPageUrl(true);
-            if (!String.IsNullOrEmpty(pageUrl))
+            if (!string.IsNullOrEmpty(pageUrl))
             {
                 var workContext = EngineContext.Current.Resolve<IWorkContext>();
                 var genericAttributeService = EngineContext.Current.Resolve<IGenericAttributeService>();

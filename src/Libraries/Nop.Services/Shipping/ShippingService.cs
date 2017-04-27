@@ -437,7 +437,7 @@ namespace Nop.Services.Shipping
 
             //attribute weight
             decimal attributesTotalWeight = decimal.Zero;
-            if (_shippingSettings.ConsiderAssociatedProductsDimensions && !String.IsNullOrEmpty(shoppingCartItem.AttributesXml))
+            if (_shippingSettings.ConsiderAssociatedProductsDimensions && !string.IsNullOrEmpty(shoppingCartItem.AttributesXml))
             {
                 var attributeValues = _productAttributeParser.ParseProductAttributeValues(shoppingCartItem.AttributesXml);
                 foreach (var attributeValue in attributeValues)
@@ -490,7 +490,7 @@ namespace Nop.Services.Shipping
             if (customer != null && includeCheckoutAttributes)
             {
                 var checkoutAttributesXml = customer.GetAttribute<string>(SystemCustomerAttributeNames.CheckoutAttributes, _genericAttributeService, _storeContext.CurrentStore.Id);
-                if (!String.IsNullOrEmpty(checkoutAttributesXml))
+                if (!string.IsNullOrEmpty(checkoutAttributesXml))
                 {
                     var attributeValues = _checkoutAttributeParser.ParseCheckoutAttributeValues(checkoutAttributesXml);
                     foreach (var attributeValue in attributeValues)
@@ -520,7 +520,7 @@ namespace Nop.Services.Shipping
                 return;
 
             //attributes
-            if (String.IsNullOrEmpty(shoppingCartItem.AttributesXml))
+            if (string.IsNullOrEmpty(shoppingCartItem.AttributesXml))
                 return;
 
             //bundled products (associated attributes)
@@ -814,7 +814,7 @@ namespace Nop.Services.Shipping
 
             var shippingRateComputationMethods = LoadActiveShippingRateComputationMethods(customer, storeId);
             //filter by system name
-            if (!String.IsNullOrWhiteSpace(allowedShippingRateComputationMethodSystemName))
+            if (!string.IsNullOrWhiteSpace(allowedShippingRateComputationMethodSystemName))
             {
                 shippingRateComputationMethods = shippingRateComputationMethods
                     .Where(srcm => allowedShippingRateComputationMethodSystemName.Equals(srcm.PluginDescriptor.SystemName, StringComparison.InvariantCultureIgnoreCase))
@@ -880,7 +880,7 @@ namespace Nop.Services.Shipping
                     foreach (var so in srcmShippingOptions)
                     {
                         //set system name if not set yet
-                        if (String.IsNullOrEmpty(so.ShippingRateComputationMethodSystemName))
+                        if (string.IsNullOrEmpty(so.ShippingRateComputationMethodSystemName))
                             so.ShippingRateComputationMethodSystemName = srcm.PluginDescriptor.SystemName;
                         if (_shoppingCartSettings.RoundPricesDuringCalculation)
                             so.Rate = RoundingHelper.RoundPrice(so.Rate);

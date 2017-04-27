@@ -874,8 +874,8 @@ namespace Nop.Services.Orders
                     if (gc.GiftCardType == GiftCardType.Virtual)
                     {
                         //send email for virtual gift card
-                        if (!String.IsNullOrEmpty(gc.RecipientEmail) &&
-                            !String.IsNullOrEmpty(gc.SenderEmail))
+                        if (!string.IsNullOrEmpty(gc.RecipientEmail) &&
+                            !string.IsNullOrEmpty(gc.SenderEmail))
                         {
                             var customerLang = _languageService.GetLanguageById(order.CustomerLanguageId);
                             if (customerLang == null)
@@ -1937,7 +1937,7 @@ namespace Nop.Services.Orders
                 if (i != result.Errors.Count - 1)
                     error += ". ";
             }
-            if (!String.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(error))
             {
                 //add a note
                 initialOrder.OrderNotes.Add(new OrderNote
@@ -2355,7 +2355,7 @@ namespace Nop.Services.Orders
                 if (i != result.Errors.Count - 1)
                     error += ". ";
             }
-            if (!String.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(error))
             {
                 //add a note
                 order.OrderNotes.Add(new OrderNote
@@ -2544,7 +2544,7 @@ namespace Nop.Services.Orders
                 if (i != result.Errors.Count - 1)
                     error += ". ";
             }
-            if (!String.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(error))
             {
                 //add a note
                 order.OrderNotes.Add(new OrderNote
@@ -2776,7 +2776,7 @@ namespace Nop.Services.Orders
                 if (i != result.Errors.Count - 1)
                     error += ". ";
             }
-            if (!String.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(error))
             {
                 //add a note
                 order.OrderNotes.Add(new OrderNote
@@ -2967,7 +2967,7 @@ namespace Nop.Services.Orders
                 if (i != result.Errors.Count - 1)
                     error += ". ";
             }
-            if (!String.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(error))
             {
                 //add a note
                 order.OrderNotes.Add(new OrderNote

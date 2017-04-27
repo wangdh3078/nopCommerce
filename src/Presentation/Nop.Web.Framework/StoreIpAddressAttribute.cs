@@ -7,8 +7,15 @@ using Nop.Services.Customers;
 
 namespace Nop.Web.Framework
 {
+    /// <summary>
+    /// IP地址特性
+    /// </summary>
     public class StoreIpAddressAttribute : ActionFilterAttribute
     {
+        /// <summary>
+        /// action执行时
+        /// </summary>
+        /// <param name="filterContext">上下文</param>
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (!DataSettingsHelper.DatabaseIsInstalled())
@@ -17,19 +24,19 @@ namespace Nop.Web.Framework
             if (filterContext == null || filterContext.HttpContext == null || filterContext.HttpContext.Request == null)
                 return;
 
-            //don't apply filter to child methods
+            //不对子方法应用过滤器
             if (filterContext.IsChildAction)
                 return;
 
-            //only GET requests
-            if (!String.Equals(filterContext.HttpContext.Request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase))
+            //只处理GET请求
+            if (!string.Equals(filterContext.HttpContext.Request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase))
                 return;
 
             var webHelper = EngineContext.Current.Resolve<IWebHelper>();
 
-            //update IP address
+            //更新IP地址
             string currentIpAddress = webHelper.GetCurrentIpAddress();
-            if (!String.IsNullOrEmpty(currentIpAddress))
+            if (!string.IsNullOrEmpty(currentIpAddress))
             {
                 var workContext = EngineContext.Current.Resolve<IWorkContext>();
                 var customer = workContext.CurrentCustomer;

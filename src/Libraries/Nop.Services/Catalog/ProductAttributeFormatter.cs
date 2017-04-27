@@ -228,7 +228,7 @@ namespace Nop.Services.Catalog
                         giftCardFor = HttpUtility.HtmlEncode(giftCardFor);
                     }
 
-                    if (!String.IsNullOrEmpty(result.ToString()))
+                    if (!string.IsNullOrEmpty(result.ToString()))
                     {
                         result.Append(serapator);
                     }

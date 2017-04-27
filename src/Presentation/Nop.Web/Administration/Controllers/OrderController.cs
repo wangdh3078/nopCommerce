@@ -300,7 +300,7 @@ namespace Nop.Admin.Controllers
                     case AttributeControlType.ImageSquares:
                         {
                             var ctrlAttributes = form[controlId];
-                            if (!String.IsNullOrEmpty(ctrlAttributes))
+                            if (!string.IsNullOrEmpty(ctrlAttributes))
                             {
                                 int selectedAttributeId = int.Parse(ctrlAttributes);
                                 if (selectedAttributeId > 0)
@@ -320,7 +320,7 @@ namespace Nop.Admin.Controllers
                     case AttributeControlType.Checkboxes:
                         {
                             var ctrlAttributes = form[controlId];
-                            if (!String.IsNullOrEmpty(ctrlAttributes))
+                            if (!string.IsNullOrEmpty(ctrlAttributes))
                             {
                                 foreach (var item in ctrlAttributes.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                                 {
@@ -364,7 +364,7 @@ namespace Nop.Admin.Controllers
                     case AttributeControlType.MultilineTextbox:
                         {
                             var ctrlAttributes = form[controlId];
-                            if (!String.IsNullOrEmpty(ctrlAttributes))
+                            if (!string.IsNullOrEmpty(ctrlAttributes))
                             {
                                 string enteredText = ctrlAttributes.Trim();
                                 attributesXml = _productAttributeParser.AddProductAttribute(attributesXml,
@@ -603,10 +603,10 @@ namespace Nop.Admin.Controllers
                 model.CardCvv2 = _encryptionService.DecryptText(order.CardCvv2);
                 //expiry date
                 string cardExpirationMonthDecrypted = _encryptionService.DecryptText(order.CardExpirationMonth);
-                if (!String.IsNullOrEmpty(cardExpirationMonthDecrypted) && cardExpirationMonthDecrypted != "0")
+                if (!string.IsNullOrEmpty(cardExpirationMonthDecrypted) && cardExpirationMonthDecrypted != "0")
                     model.CardExpirationMonth = cardExpirationMonthDecrypted;
                 string cardExpirationYearDecrypted = _encryptionService.DecryptText(order.CardExpirationYear);
-                if (!String.IsNullOrEmpty(cardExpirationYearDecrypted) && cardExpirationYearDecrypted != "0")
+                if (!string.IsNullOrEmpty(cardExpirationYearDecrypted) && cardExpirationYearDecrypted != "0")
                     model.CardExpirationYear = cardExpirationYearDecrypted;
 
                 model.AllowStoringCreditCardNumber = true;
@@ -614,7 +614,7 @@ namespace Nop.Admin.Controllers
             else
             {
                 string maskedCreditCardNumberDecrypted = _encryptionService.DecryptText(order.MaskedCreditCardNumber);
-                if (!String.IsNullOrEmpty(maskedCreditCardNumberDecrypted))
+                if (!string.IsNullOrEmpty(maskedCreditCardNumberDecrypted))
                     model.CardNumber = maskedCreditCardNumberDecrypted;
             }
 
@@ -868,9 +868,9 @@ namespace Nop.Admin.Controllers
                     TextPrompt = attribute.TextPrompt,
                     IsRequired = attribute.IsRequired,
                     AttributeControlType = attribute.AttributeControlType,
-                    HasCondition = !String.IsNullOrEmpty(attribute.ConditionAttributeXml)
+                    HasCondition = !string.IsNullOrEmpty(attribute.ConditionAttributeXml)
                 };
-                if (!String.IsNullOrEmpty(attribute.ValidationFileAllowedExtensions))
+                if (!string.IsNullOrEmpty(attribute.ValidationFileAllowedExtensions))
                 {
                     attributeModel.AllowedFileExtensions = attribute.ValidationFileAllowedExtensions
                         .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
@@ -986,7 +986,7 @@ namespace Nop.Admin.Controllers
                 }
             }
 
-            if (prepareShipmentEvent && !String.IsNullOrEmpty(shipment.TrackingNumber))
+            if (prepareShipmentEvent && !string.IsNullOrEmpty(shipment.TrackingNumber))
             {
                 var shipmentTracker = shipment.GetShipmentTracker(_shippingService, _shippingSettings);
                 if (shipmentTracker != null)
@@ -1228,7 +1228,7 @@ namespace Nop.Admin.Controllers
         public virtual ActionResult ProductSearchAutoComplete(string term)
         {
             const int searchTermMinimumLength = 3;
-            if (String.IsNullOrWhiteSpace(term) || term.Length < searchTermMinimumLength)
+            if (string.IsNullOrWhiteSpace(term) || term.Length < searchTermMinimumLength)
                 return Content("");
 
             //a vendor should have access only to his products
