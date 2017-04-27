@@ -41,87 +41,87 @@ namespace Nop.Core.Domain.Catalog
         public bool Stores { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'ACL' field is shown
+        /// 获取或设置一个值，指示是否显示“ACL”字段
         /// </summary>
         public bool ACL { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Show on home page' field is shown
+        ///获取或设置一个值，指示是否显示“显示在主页”字段
         /// </summary>
         public bool ShowOnHomePage { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Display order 'field is shown
+        /// 获取或设置一个值，指示是否显示“显示顺序”字段
         /// </summary>
         public bool DisplayOrder { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Allow customer reviews' field is shown
+        /// 获取或设置一个值，指示是否显示“允许客户评论”字段
         /// </summary>
         public bool AllowCustomerReviews { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Product tags' field is shown
+        /// 获取或设置一个值，指示是否显示“产品标签”字段
         /// </summary>
         public bool ProductTags { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Manufacturer part number' field is shown
+        /// 获取或设置一个值，指示是否显示“制造商零件编号”字段
         /// </summary>
         public bool ManufacturerPartNumber { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'GTIN' field is shown
+        /// 获取或设置一个值，指示是否显示“GTIN”字段
         /// </summary>
         public bool GTIN { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Product cost' field is shown
+        /// 获取或设置一个值，指示是否显示“产品成本”字段
         /// </summary>
         public bool ProductCost { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Tier prices' field is shown
+        ///获取或设置一个值，指示是否显示“层次价格”字段
         /// </summary>
         public bool TierPrices { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Discounts' field is shown
+        /// 获取或设置一个值，指示是否显示“折扣”字段
         /// </summary>
         public bool Discounts { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Disable buy button' field is shown
+        /// 获取或设置一个值，指示是否显示“禁用购买按钮”字段
         /// </summary>
         public bool DisableBuyButton { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Disable wishlist button' field is shown
+        /// 获取或设置一个值，指示是否显示“禁用愿望清单按钮”字段
         /// </summary>
         public bool DisableWishlistButton { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Available for pre-order' field is shown
+        ///获取或设置一个值，指示是否显示“可用于预订”字段
         /// </summary>
         public bool AvailableForPreOrder { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Call for price' field is shown
+        /// 获取或设置一个值，指示是否显示“Call for price”字段
         /// </summary>
         public bool CallForPrice { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Old price' field is shown
+        ///获取或设置一个值，指示是否显示“旧价格”字段
         /// </summary>
         public bool OldPrice { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'Customer enters price' field is shown
+        ///获取或设置一个值，指示是否显示“客户输入价格”字段
         /// </summary>
         public bool CustomerEntersPrice { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether 'PAngV' field is shown
+        /// 获取或设置一个值，指示是否显示“PAngV”字段
         /// </summary>
         public bool PAngV { get; set; }
 
