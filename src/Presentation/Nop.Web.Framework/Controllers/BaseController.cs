@@ -25,40 +25,40 @@ namespace Nop.Web.Framework.Controllers
     public abstract class BaseController : Controller
     {
         /// <summary>
-        /// Render partial view to string
+        /// 渲染部分视图到字符串
         /// </summary>
-        /// <returns>Result</returns>
+        /// <returns></returns>
         public virtual string RenderPartialViewToString()
         {
             return RenderPartialViewToString(null, null);
         }
         /// <summary>
-        /// Render partial view to string
+        /// 渲染部分视图到字符串
         /// </summary>
-        /// <param name="viewName">View name</param>
-        /// <returns>Result</returns>
+        /// <param name="viewName">视图名称</param>
+        /// <returns></returns>
         public virtual string RenderPartialViewToString(string viewName)
         {
             return RenderPartialViewToString(viewName, null);
         }
         /// <summary>
-        /// Render partial view to string
+        /// 渲染部分视图到字符串
         /// </summary>
-        /// <param name="model">Model</param>
-        /// <returns>Result</returns>
+        /// <param name="model">模型</param>
+        /// <returns></returns>
         public virtual string RenderPartialViewToString(object model)
         {
             return RenderPartialViewToString(null, model);
         }
         /// <summary>
-        /// Render partial view to string
+        /// 渲染部分视图到字符串
         /// </summary>
-        /// <param name="viewName">View name</param>
-        /// <param name="model">Model</param>
-        /// <returns>Result</returns>
+        /// <param name="viewName">视图名称</param>
+        /// <param name="model">模型</param>
+        /// <returns></returns>
         public virtual string RenderPartialViewToString(string viewName, object model)
         {
-            //Original source code: http://craftycodeblog.com/2010/05/15/asp-net-mvc-render-partial-view-to-string/
+            //原始源代码： http://craftycodeblog.com/2010/05/15/asp-net-mvc-render-partial-view-to-string/
             if (string.IsNullOrEmpty(viewName))
                 viewName = this.ControllerContext.RouteData.GetRequiredString("action");
 
@@ -76,14 +76,14 @@ namespace Nop.Web.Framework.Controllers
 
 
         /// <summary>
-        /// Get active store scope (for multi-store configuration mode)
+        /// 获取活动存储范围（用于多存储配置模式）
         /// </summary>
-        /// <param name="storeService">Store service</param>
+        /// <param name="storeService">商店服务</param>
         /// <param name="workContext">Work context</param>
         /// <returns>Store ID; 0 if we are in a shared mode</returns>
         public virtual int GetActiveStoreScopeConfiguration(IStoreService storeService, IWorkContext workContext)
         {
-            //ensure that we have 2 (or more) stores
+            //确保我们有2个（或更多）商店
             if (storeService.GetAllStores().Count < 2)
                 return 0;
 
@@ -95,9 +95,9 @@ namespace Nop.Web.Framework.Controllers
 
 
         /// <summary>
-        /// Log exception
+        ///记录异常
         /// </summary>
-        /// <param name="exc">Exception</param>
+        /// <param name="exc">异常信息</param>
         protected void LogException(Exception exc)
         {
             var workContext = EngineContext.Current.Resolve<IWorkContext>();
@@ -107,29 +107,29 @@ namespace Nop.Web.Framework.Controllers
             logger.Error(exc.Message, exc, customer);
         }
         /// <summary>
-        /// Display success notification
+        ///显示成功通知
         /// </summary>
-        /// <param name="message">Message</param>
-        /// <param name="persistForTheNextRequest">A value indicating whether a message should be persisted for the next request</param>
+        /// <param name="message">消息</param>
+        /// <param name="persistForTheNextRequest">指示消息是否应该持续下一个请求的值</param>
         protected virtual void SuccessNotification(string message, bool persistForTheNextRequest = true)
         {
             AddNotification(NotifyType.Success, message, persistForTheNextRequest);
         }
         /// <summary>
-        /// Display error notification
+        /// 显示错误通知
         /// </summary>
-        /// <param name="message">Message</param>
-        /// <param name="persistForTheNextRequest">A value indicating whether a message should be persisted for the next request</param>
+        /// <param name="message">消息</param>
+        /// <param name="persistForTheNextRequest">指示消息是否应该持续下一个请求的值</param>
         protected virtual void ErrorNotification(string message, bool persistForTheNextRequest = true)
         {
             AddNotification(NotifyType.Error, message, persistForTheNextRequest);
         }
         /// <summary>
-        /// Display error notification
+        /// 显示错误通知
         /// </summary>
-        /// <param name="exception">Exception</param>
-        /// <param name="persistForTheNextRequest">A value indicating whether a message should be persisted for the next request</param>
-        /// <param name="logException">A value indicating whether exception should be logged</param>
+        /// <param name="exception">异常信息</param>
+        /// <param name="persistForTheNextRequest">指示消息是否应该持续下一个请求的值</param>
+        /// <param name="logException">指示是否应该记录异常的值</param>
         protected virtual void ErrorNotification(Exception exception, bool persistForTheNextRequest = true, bool logException = true)
         {
             if (logException)
@@ -137,19 +137,19 @@ namespace Nop.Web.Framework.Controllers
             AddNotification(NotifyType.Error, exception.Message, persistForTheNextRequest);
         }
         /// <summary>
-        /// Display warning notification
+        ///显示警告通知
         /// </summary>
-        /// <param name="message">Message</param>
-        /// <param name="persistForTheNextRequest">A value indicating whether a message should be persisted for the next request</param>
+        /// <param name="message">消息</param>
+        /// <param name="persistForTheNextRequest">指示消息是否应该持续下一个请求的值</param>
         protected virtual void WarningNotification(string message, bool persistForTheNextRequest = true) {
             AddNotification(NotifyType.Warning, message, persistForTheNextRequest);
         }
         /// <summary>
-        /// Display notification
+        /// 显示通知
         /// </summary>
-        /// <param name="type">Notification type</param>
-        /// <param name="message">Message</param>
-        /// <param name="persistForTheNextRequest">A value indicating whether a message should be persisted for the next request</param>
+        /// <param name="type">通知类型</param>
+        /// <param name="message">消息</param>
+        /// <param name="persistForTheNextRequest">指示消息是否应该持续下一个请求的值</param>
         protected virtual void AddNotification(NotifyType type, string message, bool persistForTheNextRequest)
         {
             string dataKey = string.Format("nop.notifications.{0}", type);
@@ -170,7 +170,7 @@ namespace Nop.Web.Framework.Controllers
         /// <summary>
         /// Error's json data for kendo grid
         /// </summary>
-        /// <param name="errorMessage">Error message</param>
+        /// <param name="errorMessage">错误消息</param>
         /// <returns>Error's json data</returns>
         protected JsonResult ErrorForKendoGridJson(string errorMessage)
         {
@@ -183,13 +183,13 @@ namespace Nop.Web.Framework.Controllers
         }
 
         /// <summary>
-        /// Display "Edit" (manage) link (in public store)
+        /// 显示“编辑”（管理）链接（在公共商店）
         /// </summary>
-        /// <param name="editPageUrl">Edit page URL</param>
+        /// <param name="editPageUrl">编辑页面URL</param>
         protected virtual void DisplayEditLink(string editPageUrl)
         {
-            //We cannot use ViewData because it works only for the current controller (and we pass and then render "Edit" link data in distinct controllers)
-            //that's why we use IPageHeadBuilder
+            //我们不能使用ViewData，因为它仅适用于当前的控制器（并且我们传递然后在不同的控制器中呈现“编辑”链接数据）
+            //这就是为什么我们使用IPageHeadBuilder
             //ViewData["nop.editpage.link"] = editPageUrl;
             var pageHeadBuilder = EngineContext.Current.Resolve<IPageHeadBuilder>();
             pageHeadBuilder.AddEditPageUrl(editPageUrl);
@@ -198,22 +198,22 @@ namespace Nop.Web.Framework.Controllers
 
 
         /// <summary>
-        /// Add locales for localizable entities
+        ///添加可本地化实体的区域设置
         /// </summary>
-        /// <typeparam name="TLocalizedModelLocal">Localizable model</typeparam>
-        /// <param name="languageService">Language service</param>
-        /// <param name="locales">Locales</param>
+        /// <typeparam name="TLocalizedModelLocal">本地化模型</typeparam>
+        /// <param name="languageService">语言服务</param>
+        /// <param name="locales">区域设置</param>
         protected virtual void AddLocales<TLocalizedModelLocal>(ILanguageService languageService, IList<TLocalizedModelLocal> locales) where TLocalizedModelLocal : ILocalizedModelLocal
         {
             AddLocales(languageService, locales, null);
         }
         /// <summary>
-        /// Add locales for localizable entities
+        /// 添加可本地化实体的区域设置
         /// </summary>
-        /// <typeparam name="TLocalizedModelLocal">Localizable model</typeparam>
-        /// <param name="languageService">Language service</param>
-        /// <param name="locales">Locales</param>
-        /// <param name="configure">Configure action</param>
+        /// <typeparam name="TLocalizedModelLocal">本地化模型</typeparam>
+        /// <param name="languageService">语言服务</param>
+        /// <param name="locales">区域设置</param>
+        /// <param name="configure">配置动作</param>
         protected virtual void AddLocales<TLocalizedModelLocal>(ILanguageService languageService, IList<TLocalizedModelLocal> locales, Action<TLocalizedModelLocal, int> configure) where TLocalizedModelLocal : ILocalizedModelLocal
         {
             foreach (var language in languageService.GetAllLanguages(true))

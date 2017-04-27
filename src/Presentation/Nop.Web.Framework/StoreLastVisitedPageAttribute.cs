@@ -14,7 +14,7 @@ namespace Nop.Web.Framework
     public class StoreLastVisitedPageAttribute : ActionFilterAttribute
     {
         /// <summary>
-        /// action执行时
+        /// 在执行Action方法之前，由ASP.NET MVC框架调用
         /// </summary>
         /// <param name="filterContext">上下文</param>
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -29,7 +29,7 @@ namespace Nop.Web.Framework
             if (filterContext.IsChildAction)
                 return;
 
-            //only GET requests
+            //只处理GET请求
             if (!string.Equals(filterContext.HttpContext.Request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase))
                 return;
 

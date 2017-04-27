@@ -13,7 +13,7 @@ namespace Nop.Web.Framework
     public class CustomerLastActivityAttribute : ActionFilterAttribute
     {
         /// <summary>
-        /// action执行时
+        ///在执行Action方法之前，由ASP.NET MVC框架调用
         /// </summary>
         /// <param name="filterContext">上下文</param>
         public override void OnActionExecuting(ActionExecutingContext filterContext)

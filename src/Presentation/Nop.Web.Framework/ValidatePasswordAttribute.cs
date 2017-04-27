@@ -8,20 +8,20 @@ using Nop.Services.Customers;
 namespace Nop.Web.Framework
 {
     /// <summary>
-    /// Represents filter attribute to validate customer password expiration
+    /// 过滤器属性以验证客户密码到期
     /// </summary>
     public class ValidatePasswordAttribute : ActionFilterAttribute
     {
         /// <summary>
-        /// Called by the ASP.NET MVC framework before the action method executes
+        /// 在执行Action方法之前，由ASP.NET MVC框架调用
         /// </summary>
-        /// <param name="filterContext">The filter context</param>
+        /// <param name="filterContext">过滤器上下文</param>
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (filterContext == null || filterContext.HttpContext == null || filterContext.HttpContext.Request == null)
                 return;
 
-            //don't apply filter to child methods
+            //不对子方法应用过滤器
             if (filterContext.IsChildAction)
                 return;
 
@@ -36,10 +36,10 @@ namespace Nop.Web.Framework
             if (!DataSettingsHelper.DatabaseIsInstalled())
                 return;
 
-            //get current customer
+            //获取当前用户
             var customer = EngineContext.Current.Resolve<IWorkContext>().CurrentCustomer;
 
-            //check password expiration
+            //检查密码到期
             if (customer.PasswordIsExpired())
             {
                 var changePasswordUrl = new UrlHelper(filterContext.RequestContext).RouteUrl("CustomerChangePassword");
