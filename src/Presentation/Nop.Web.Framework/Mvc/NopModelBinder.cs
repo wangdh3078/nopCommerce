@@ -19,10 +19,10 @@ namespace Nop.Web.Framework.Mvc
         protected override void SetProperty(ControllerContext controllerContext, ModelBindingContext bindingContext,
             PropertyDescriptor propertyDescriptor, object value)
         {
-            //check if data type of value is System.String
+            //检查数据类型的值是否为System.String
             if (propertyDescriptor.PropertyType == typeof(string))
             {
-                //developers can mark properties to be excluded from trimming with [NoTrim] attribute
+                //开发人员可以使用[NoTrim]属性将属性标记为不被修剪
                 if (propertyDescriptor.Attributes.Cast<object>().All(a => a.GetType() != typeof (NoTrimAttribute)))
                 {
                         var stringValue = (string)value;

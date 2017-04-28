@@ -20,8 +20,8 @@ namespace Nop.Web.Framework.Mvc
         }
 
         /// <summary>
-        /// Developers can override this method in custom partial classes
-        /// in order to add some custom initialization code to constructors
+        /// 开发人员可以在自定义部分类中覆盖此方法
+        /// 以便为构造函数添加一些自定义的初始化代码
         /// </summary>
         protected virtual void PostInitialize()
         {
@@ -29,13 +29,13 @@ namespace Nop.Web.Framework.Mvc
         }
 
         /// <summary>
-        /// Use this property to store any custom value for your models. 
+        /// 使用此属性可存储模型的任何自定义值。
         /// </summary>
         public Dictionary<string, object> CustomProperties { get; set; }
     }
 
     /// <summary>
-    /// Base nopCommerce entity model
+    ///基本nopCommerce实体模型
     /// </summary>
     public partial class BaseNopEntityModel : BaseNopModel
     {

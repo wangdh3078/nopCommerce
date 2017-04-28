@@ -15,11 +15,18 @@ namespace Nop.Web.Framework.Controllers
     {
         private readonly bool _ignore;
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="ignore"></param>
         public AdminVendorValidation(bool ignore = false)
         {
             this._ignore = ignore;
         }
-
+        /// <summary>
+        /// 授权
+        /// </summary>
+        /// <param name="filterContext"></param>
         public virtual void OnAuthorization(AuthorizationContext filterContext)
         {
             if (filterContext == null)
@@ -28,7 +35,7 @@ namespace Nop.Web.Framework.Controllers
             if (_ignore)
                 return;
 
-            //don't apply filter to child methods
+            //不对子方法应用过滤器
             if (filterContext.IsChildAction)
                 return;
 
@@ -39,7 +46,7 @@ namespace Nop.Web.Framework.Controllers
             if (!workContext.CurrentCustomer.IsVendor())
                 return;
 
-            //ensure that this user has active vendor record associated
+            //确保此用户具有关联的活动供应商记录
             if (workContext.CurrentVendor == null)
                 filterContext.Result = new HttpUnauthorizedResult();
         }

@@ -7,19 +7,19 @@ using Nop.Core;
 namespace Nop.Web.Framework.Security
 {
     /// <summary>
-    /// File permission helper
+    /// 文件权限帮助类
     /// </summary>
     public static class FilePermissionHelper
     {
         /// <summary>
-        /// Check permissions
+        /// 检查权限
         /// </summary>
-        /// <param name="path">Path</param>
-        /// <param name="checkRead">Check read</param>
-        /// <param name="checkWrite">Check write</param>
-        /// <param name="checkModify">Check modify</param>
-        /// <param name="checkDelete">Check delete</param>
-        /// <returns>Result</returns>
+        /// <param name="path">路径</param>
+        /// <param name="checkRead">检查读</param>
+        /// <param name="checkWrite">检查写</param>
+        /// <param name="checkModify">检查修改</param>
+        /// <param name="checkDelete">检查删除</param>
+        /// <returns></returns>
         public static bool CheckPermissions(string path, bool checkRead, bool checkWrite, bool checkModify, bool checkDelete)
         {
             bool flag = false;
@@ -147,9 +147,9 @@ namespace Nop.Web.Framework.Security
         }
 
         /// <summary>
-        /// Gets a list of directories (physical paths) which require write permission
+        /// 获取需要写许可的目录（物理路径）列表
         /// </summary>
-        /// <returns>Result</returns>
+        /// <returns></returns>
         public static IEnumerable<string> GetDirectoriesWrite()
         {
             string rootDir = CommonHelper.MapPath("~/");
@@ -169,9 +169,9 @@ namespace Nop.Web.Framework.Security
         }
 
         /// <summary>
-        /// Gets a list of files (physical paths) which require write permission
+        /// 获取需要写入权限的文件（物理路径）列表
         /// </summary>
-        /// <returns>Result</returns>
+        /// <returns></returns>
         public static IEnumerable<string> GetFilesWrite()
         {
             string rootDir = CommonHelper.MapPath("~/");

@@ -7,60 +7,59 @@ using Nop.Core.Infrastructure;
 namespace Nop.Web.Framework.Localization
 {
     /// <summary>
-    /// Provides properties and methods for defining a localized route, and for getting information about the localized route.
+    ///提供定义本地化路由的属性和方法，以及获取有关本地化路由的信息。
     /// </summary>
     public class LocalizedRoute : Route
     {
-        #region Fields
+        #region 字段
 
         private bool? _seoFriendlyUrlsForLanguagesEnabled;
 
         #endregion
 
-        #region Constructors
+        #region 构造函数
 
         /// <summary>
-        /// Initializes a new instance of the System.Web.Routing.Route class, using the specified URL pattern and handler class.
+        ///使用指定的URL模式和处理程序类初始化System.Web.Routing.Route类的新实例。
         /// </summary>
-        /// <param name="url">The URL pattern for the route.</param>
-        /// <param name="routeHandler">The object that processes requests for the route.</param>
+        /// <param name="url">路由的URL模式。</param>
+        /// <param name="routeHandler">处理路由请求的对象。</param>
         public LocalizedRoute(string url, IRouteHandler routeHandler)
             : base(url, routeHandler)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the System.Web.Routing.Route class, using the specified URL pattern, handler class and default parameter values.
+        /// 使用指定的URL模式，处理程序类和默认参数值初始化System.Web.Routing.Route类的新实例。
         /// </summary>
-        /// <param name="url">The URL pattern for the route.</param>
-        /// <param name="defaults">The values to use if the URL does not contain all the parameters.</param>
-        /// <param name="routeHandler">The object that processes requests for the route.</param>
+        /// <param name="url">路由的URL模式。</param>
+        /// <param name="defaults">如果URL不包含所有参数，则使用的值。</param>
+        /// <param name="routeHandler">处理路由请求的对象。</param>
         public LocalizedRoute(string url, RouteValueDictionary defaults, IRouteHandler routeHandler)
             : base(url, defaults, routeHandler)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the System.Web.Routing.Route class, using the specified URL pattern, handler class, default parameter values and constraints.
+        /// 初始化System.Web.Routing.Route类的新实例，使用指定的URL模式，处理程序类，默认参数值和约束。
         /// </summary>
-        /// <param name="url">The URL pattern for the route.</param>
-        /// <param name="defaults">The values to use if the URL does not contain all the parameters.</param>
-        /// <param name="constraints">A regular expression that specifies valid values for a URL parameter.</param>
-        /// <param name="routeHandler">The object that processes requests for the route.</param>
+        /// <param name="url">路由的URL模式。</param>
+        /// <param name="defaults">如果URL不包含所有参数，则使用的值。</param>
+        /// <param name="constraints">指定URL参数有效值的正则表达式。</param>
+        /// <param name="routeHandler">处理路由请求的对象。</param>
         public LocalizedRoute(string url, RouteValueDictionary defaults, RouteValueDictionary constraints, IRouteHandler routeHandler)
             : base(url, defaults, constraints, routeHandler)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the System.Web.Routing.Route class, using the specified URL pattern, handler class, default parameter values, 
-        /// constraints,and custom values.
+        /// 使用指定的URL模式，处理程序类，默认参数值，约束和自定义值初始化System.Web.Routing.Route类的新实例。
         /// </summary>
-        /// <param name="url">The URL pattern for the route.</param>
-        /// <param name="defaults">The values to use if the URL does not contain all the parameters.</param>
-        /// <param name="constraints">A regular expression that specifies valid values for a URL parameter.</param>
-        /// <param name="dataTokens">Custom values that are passed to the route handler, but which are not used to determine whether the route matches a specific URL pattern. The route handler might need these values to process the request.</param>
-        /// <param name="routeHandler">The object that processes requests for the route.</param>
+        /// <param name="url">路由的URL模式。</param>
+        /// <param name="defaults">如果URL不包含所有参数，则使用的值。</param>
+        /// <param name="constraints">指定URL参数有效值的正则表达式。</param>
+        /// <param name="dataTokens">传递给路由处理程序但不用于确定路由是否匹配特定URL模式的自定义值。 路由处理程序可能需要这些值来处理请求。</param>
+        /// <param name="routeHandler">处理路由请求的对象。</param>
         public LocalizedRoute(string url, RouteValueDictionary defaults, RouteValueDictionary constraints, RouteValueDictionary dataTokens, IRouteHandler routeHandler)
             : base(url, defaults, constraints, dataTokens, routeHandler)
         {
@@ -68,14 +67,14 @@ namespace Nop.Web.Framework.Localization
 
         #endregion
 
-        #region Methods
+        #region 方法
 
         /// <summary>
-        /// Returns information about the requested route.
+        /// 返回有关请求路由的信息。
         /// </summary>
-        /// <param name="httpContext">An object that encapsulates information about the HTTP request.</param>
+        /// <param name="httpContext">封装有关HTTP请求的信息的对象。</param>
         /// <returns>
-        /// An object that contains the values from the route definition.
+        /// 包含路由定义中的值的对象。
         /// </returns>
         public override RouteData GetRouteData(HttpContextBase httpContext)
         {
@@ -106,12 +105,12 @@ namespace Nop.Web.Framework.Localization
         }
 
         /// <summary>
-        /// Returns information about the URL that is associated with the route.
+        ///返回有关与路由关联的URL的信息。
         /// </summary>
-        /// <param name="requestContext">An object that encapsulates information about the requested route.</param>
-        /// <param name="values">An object that contains the parameters for a route.</param>
+        /// <param name="requestContext">封装有关所请求路由的信息的对象。</param>
+        /// <param name="values">包含路由参数的对象。</param>
         /// <returns>
-        /// An object that contains information about the URL that is associated with the route.
+        /// 包含与路由相关联的URL的信息的对象。
         /// </returns>
         public override VirtualPathData GetVirtualPath(RequestContext requestContext, RouteValueDictionary values)
         {
@@ -137,7 +136,7 @@ namespace Nop.Web.Framework.Localization
 
         #endregion
 
-        #region Properties
+        #region 属性
 
         protected bool SeoFriendlyUrlsForLanguagesEnabled
         {

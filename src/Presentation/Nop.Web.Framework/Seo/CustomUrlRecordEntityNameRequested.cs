@@ -5,7 +5,7 @@ using Nop.Services.Seo;
 namespace Nop.Web.Framework.Seo
 {
     /// <summary>
-    /// Event to handle unknow URL record entity names
+    /// 事件处理未知的URL记录实体名称
     /// </summary>
     public class CustomUrlRecordEntityNameRequested
     {

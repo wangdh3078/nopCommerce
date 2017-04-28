@@ -6,7 +6,7 @@ namespace Nop.Web.Framework.Localization
 {
     public static class LocalizedRouteExtensions
     {
-        //Override for localized route
+        //覆盖本地路由
         public static Route MapLocalizedRoute(this RouteCollection routes, string name, string url)
         {
             return MapLocalizedRoute(routes, name, url, null /* defaults */, (object)null /* constraints */);

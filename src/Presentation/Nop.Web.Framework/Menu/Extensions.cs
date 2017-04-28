@@ -6,10 +6,10 @@ namespace Nop.Web.Framework.Menu
     public static class Extensions
     {
         /// <summary>
-        /// Checks whether this node or child ones has a specified system name
+        /// 检查此节点或子节点是否具有指定的系统名称
         /// </summary>
-        /// <param name="node"></param>
-        /// <param name="systemName"></param>
+        /// <param name="node">节点</param>
+        /// <param name="systemName">系统名称</param>
         /// <returns></returns>
         public static bool ContainsSystemName(this SiteMapNode node, string systemName)
         {

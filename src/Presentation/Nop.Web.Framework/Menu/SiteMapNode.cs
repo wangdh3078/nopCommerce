@@ -4,10 +4,13 @@ using System.Web.Routing;
 //code from Telerik MVC Extensions
 namespace Nop.Web.Framework.Menu
 {
+    /// <summary>
+    /// 网站地图节点
+    /// </summary>
     public class SiteMapNode
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SiteMapNode"/> class.
+        /// 初始化<see cref ="SiteMapNode"/>类的新实例。
         /// </summary>
         public SiteMapNode()
         {
@@ -16,52 +19,52 @@ namespace Nop.Web.Framework.Menu
         }
 
         /// <summary>
-        /// Gets or sets the system name.
+        ///获取或设置系统名称。
         /// </summary>
         public string SystemName { get; set; }
 
         /// <summary>
-        /// Gets or sets the title.
+        /// 获取或设置标题。
         /// </summary>
         public string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the controller.
+        /// 获取或设置控制器的名称。
         /// </summary>
         public string ControllerName { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the action.
+        ///获取或设置Action的名称。
         /// </summary>
         public string ActionName { get; set; }
 
         /// <summary>
-        /// Gets or sets the route values.
+        ///获取或设置路由值。
         /// </summary>
         public RouteValueDictionary RouteValues { get; set; }
 
         /// <summary>
-        /// Gets or sets the URL.
+        /// 获取或设置URL。
         /// </summary>
         public string Url { get; set; }
 
         /// <summary>
-        /// Gets or sets the child nodes.
+        ///获取或设置子节点。
         /// </summary>
         public IList<SiteMapNode> ChildNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets the icon class (Font Awesome: http://fontawesome.io/)
+        ///获取或设置图标类（Font Awesome：http://fontawesome.io/）
         /// </summary>
         public string IconClass { get; set; }
 
         /// <summary>
-        /// Gets or sets the item is visible
+        /// 获取或设置项目是可见的
         /// </summary>
         public bool Visible { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to open url in new tab (window) or not
+        /// 获取或设置一个值，指示是否在新选项卡（窗口）中打开网址
         /// </summary>
         public bool OpenUrlInNewTab { get; set; }
     }

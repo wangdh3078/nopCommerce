@@ -3,6 +3,9 @@ using Nop.Core.Infrastructure;
 
 namespace Nop.Web.Framework.Security.Captcha
 {
+    /// <summary>
+    /// 验证码验证属性
+    /// </summary>
     public class CaptchaValidatorAttribute : ActionFilterAttribute
     {
         private const string CHALLENGE_FIELD_KEY = "recaptcha_challenge_field";

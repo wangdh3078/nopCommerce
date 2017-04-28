@@ -3,15 +3,15 @@
     public enum SslRequirement
     {
         /// <summary>
-        /// Page should be secured
+        /// 页面应该被保护
         /// </summary>
         Yes,
         /// <summary>
-        /// Page should not be secured
+        /// 页面不应该被保护
         /// </summary>
         No,
         /// <summary>
-        /// It doesn't matter (as requested)
+        /// 没关系（按请求）
         /// </summary>
         NoMatter,
     }

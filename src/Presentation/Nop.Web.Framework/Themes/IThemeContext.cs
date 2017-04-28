@@ -1,12 +1,12 @@
 ﻿namespace Nop.Web.Framework.Themes
 {
     /// <summary>
-    /// Work context
+    /// 主题上下文
     /// </summary>
     public interface IThemeContext
     {
         /// <summary>
-        /// Get or set current theme system name
+        /// 获取或设置当前主题系统名称
         /// </summary>
         string WorkingThemeName { get; set; }
     }

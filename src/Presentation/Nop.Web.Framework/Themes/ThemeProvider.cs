@@ -7,16 +7,19 @@ using Nop.Core;
 
 namespace Nop.Web.Framework.Themes
 {
+    /// <summary>
+    /// 主题驱动
+    /// </summary>
     public partial class ThemeProvider : IThemeProvider
     {
-        #region Fields
+        #region 字段
 
         private readonly IList<ThemeConfiguration> _themeConfigurations = new List<ThemeConfiguration>();
         private readonly string _basePath = string.Empty;
 
         #endregion
 
-        #region Constructors
+        #region 构造函数
 
         public ThemeProvider()
         {

@@ -1,7 +1,7 @@
 ﻿namespace Nop.Web.Framework.Security.Captcha
 {
     /// <summary>
-    /// Represents a reCAPTCHA version
+    /// 验证码的版本
     /// </summary>
     public enum ReCaptchaVersion
     {

@@ -3,7 +3,7 @@
 namespace Nop.Web.Framework.Mvc
 {
     /// <summary>
-    /// Attribute indicating that entered values should not be trimmed
+    /// 指示输入的值不应被修剪的属性
     /// </summary>
     public class NoTrimAttribute : Attribute
     {

@@ -15,8 +15,8 @@ namespace Nop.Web.Framework.Validators
         }
 
         /// <summary>
-        /// Developers can override this method in custom partial classes
-        /// in order to add some custom initialization code to constructors
+        /// 开发人员可以在自定义部分类中覆盖此方法，
+        /// 以便为构造函数添加一些自定义的初始化代码
         /// </summary>
         protected virtual void PostInitialize()
         {
@@ -24,11 +24,11 @@ namespace Nop.Web.Framework.Validators
         }
 
         /// <summary>
-        /// Sets validation rule(s) to appropriate database model
+        /// 将验证规则设置为适当的数据库模型
         /// </summary>
-        /// <typeparam name="TObject">Object type</typeparam>
-        /// <param name="dbContext">Database context</param>
-        /// <param name="filterStringPropertyNames">Properties to skip</param>
+        /// <typeparam name="TObject">对象类型</typeparam>
+        /// <param name="dbContext">数据库上下文</param>
+        /// <param name="filterStringPropertyNames">要跳过的属性</param>
         protected virtual void SetDatabaseValidationRules<TObject>(IDbContext dbContext, params string[] filterStringPropertyNames)
         {
             SetStringPropertiesMaxLength<TObject>(dbContext, filterStringPropertyNames);
@@ -36,11 +36,11 @@ namespace Nop.Web.Framework.Validators
         }
 
         /// <summary>
-        /// Sets length validation rule(s) to string properties according to appropriate database model
+        /// 根据适当的数据库模型将长度验证规则设置为字符串属性
         /// </summary>
-        /// <typeparam name="TObject">Object type</typeparam>
-        /// <param name="dbContext">Database context</param>
-        /// <param name="filterPropertyNames">Properties to skip</param>
+        /// <typeparam name="TObject">对象类型</typeparam>
+        /// <param name="dbContext">数据库上下文</param>
+        /// <param name="filterPropertyNames">要跳过的属性</param>
         protected virtual void SetStringPropertiesMaxLength<TObject>(IDbContext dbContext, params string[] filterPropertyNames)
         {
             if (dbContext == null)
@@ -62,10 +62,10 @@ namespace Nop.Web.Framework.Validators
         }
 
         /// <summary>
-        /// Sets max value validation rule(s) to decimal properties according to appropriate database model
+        ///根据适当的数据库模型将最大值验证规则设置为小数属性
         /// </summary>
-        /// <typeparam name="TObject">Object type</typeparam>
-        /// <param name="dbContext">Database context</param>
+        /// <typeparam name="TObject">对象类型</typeparam>
+        /// <param name="dbContext">数据库上下文</param>
         protected virtual void SetDecimalMaxValue<TObject>(IDbContext dbContext)
         {
             var localizationService = EngineContext.Current.Resolve<ILocalizationService>();

@@ -12,9 +12,9 @@ namespace Nop.Web.Framework.Security
         private readonly bool _ignore;
 
         /// <summary>
-        /// Anti-forgery security attribute
+        /// 防伪安全属性
         /// </summary>
-        /// <param name="ignore">Pass false in order to ignore this security validation</param>
+        /// <param name="ignore">传递错误以忽略此安全验证</param>
         public PublicAntiForgeryAttribute(bool ignore = false)
         {
             this._ignore = ignore;

@@ -7,9 +7,8 @@ using Nop.Core;
 namespace Nop.Web.Framework.Mvc
 {
     /// <summary>
-    /// This MetadataProvider adds some functionality on top of the default DataAnnotationsModelMetadataProvider.
-    /// It adds custom attributes (implementing IModelAttribute) to the AdditionalValues property of the model's metadata
-    /// so that it can be retrieved later.
+    /// 该MetadataProvider在默认的DataAnnotationsModelMetadataProvider之上添加了一些功能。
+    /// 它将自定义属性（实现IModelAttribute）添加到模型元数据的AdditionalValues属性，以便稍后检索。
     /// </summary>
     public class NopMetadataProvider : DataAnnotationsModelMetadataProvider
     {

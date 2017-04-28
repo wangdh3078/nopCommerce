@@ -8,26 +8,26 @@ using Nop.Core.Plugins;
 namespace Nop.Web.Framework.Mvc.Routes
 {
     /// <summary>
-    /// Route publisher
+    /// 路由发布
     /// </summary>
     public class RoutePublisher : IRoutePublisher
     {
         protected readonly ITypeFinder typeFinder;
 
         /// <summary>
-        /// Ctor
+        /// 构造函数
         /// </summary>
-        /// <param name="typeFinder"></param>
+        /// <param name="typeFinder">类型查找对象</param>
         public RoutePublisher(ITypeFinder typeFinder)
         {
             this.typeFinder = typeFinder;
         }
 
         /// <summary>
-        /// Find a plugin descriptor by some type which is located into its assembly
+        ///通过位于程序集中的某种类型查找插件描述符
         /// </summary>
-        /// <param name="providerType">Provider type</param>
-        /// <returns>Plugin descriptor</returns>
+        /// <param name="providerType">驱动类型</param>
+        /// <returns>插件描述</returns>
         protected virtual PluginDescriptor FindPlugin(Type providerType)
         {
             if (providerType == null)
@@ -46,16 +46,16 @@ namespace Nop.Web.Framework.Mvc.Routes
         }
 
         /// <summary>
-        /// Register routes
+        /// 注册路由
         /// </summary>
-        /// <param name="routes">Routes</param>
+        /// <param name="routes">路由集合</param>
         public virtual void RegisterRoutes(RouteCollection routes)
         {
             var routeProviderTypes = typeFinder.FindClassesOfType<IRouteProvider>();
             var routeProviders = new List<IRouteProvider>();
             foreach (var providerType in routeProviderTypes)
             {
-                //Ignore not installed plugins
+                //忽略未安装的插件
                 var plugin = FindPlugin(providerType);
                 if (plugin != null && !plugin.Installed)
                     continue;

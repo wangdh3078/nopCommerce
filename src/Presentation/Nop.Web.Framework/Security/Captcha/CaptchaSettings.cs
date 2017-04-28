@@ -3,48 +3,48 @@
 namespace Nop.Web.Framework.Security.Captcha
 {
     /// <summary>
-    /// CAPTCHA settings
+    /// 验证码设置
     /// </summary>
     public class CaptchaSettings : ISettings
     {
         /// <summary>
-        /// Is CAPTCHA enabled?
+        /// 是否启用验证码
         /// </summary>
         public bool Enabled { get; set; }
         /// <summary>
-        /// A value indicating whether CAPTCHA should be displayed on the login page
+        ///登录页面是否启用验证码
         /// </summary>
         public bool ShowOnLoginPage { get; set; }
         /// <summary>
-        /// A value indicating whether CAPTCHA should be displayed on the registration page
+        /// 是否在注册页面显示验证码
         /// </summary>
         public bool ShowOnRegistrationPage { get; set; }
         /// <summary>
-        /// A value indicating whether CAPTCHA should be displayed on the contacts page
+        ///是否应在联系人页面上显示验证码
         /// </summary>
         public bool ShowOnContactUsPage { get; set; }
         /// <summary>
-        /// A value indicating whether CAPTCHA should be displayed on the wishlist page
+        /// 是否应该在心愿单页面上显示验证码
         /// </summary>
         public bool ShowOnEmailWishlistToFriendPage { get; set; }
         /// <summary>
-        /// A value indicating whether CAPTCHA should be displayed on the "email a friend" page
+        /// 是否应在“电子邮件朋友”页面上显示验证码
         /// </summary>
         public bool ShowOnEmailProductToFriendPage { get; set; }
         /// <summary>
-        /// A value indicating whether CAPTCHA should be displayed on the "comment blog" page
+        /// 验证码是否应显示在“评论博客”页面上
         /// </summary>
         public bool ShowOnBlogCommentPage { get; set; }
         /// <summary>
-        /// A value indicating whether CAPTCHA should be displayed on the "comment news" page
+        ///是否应在“评论新闻”页面上显示验证码
         /// </summary>
         public bool ShowOnNewsCommentPage { get; set; }
         /// <summary>
-        /// A value indicating whether CAPTCHA should be displayed on the product reviews page
+        /// 是否应在产品评论页面上显示验证码
         /// </summary>
         public bool ShowOnProductReviewPage { get; set; }
         /// <summary>
-        /// A value indicating whether CAPTCHA should be displayed on the "Apply for vendor account" page
+        ///是否应在“申请供应商帐户”页面上显示验证码
         /// </summary>
         public bool ShowOnApplyVendorPage { get; set; }
         /// <summary>

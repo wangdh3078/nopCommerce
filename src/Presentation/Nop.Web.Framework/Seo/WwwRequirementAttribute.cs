@@ -15,16 +15,16 @@ namespace Nop.Web.Framework.Seo
             if (filterContext == null)
                 throw new ArgumentNullException("filterContext");
 
-            //don't apply filter to child methods
+            //不对子方法应用过滤器
             if (filterContext.IsChildAction)
                 return;
 
-            // only redirect for GET requests, 
-            // otherwise the browser might not propagate the verb and request body correctly.
+            // 仅重定向GET请求，
+            // 否则浏览器可能不会正确地传播动词和请求正文。
             if (!string.Equals(filterContext.HttpContext.Request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase))
                 return;
 
-            //ignore this rule for localhost
+            //忽略本地规则
             if (filterContext.HttpContext.Request.IsLocal)
                 return;
 
@@ -46,8 +46,8 @@ namespace Nop.Web.Framework.Seo
                         {
                             url = url.Replace("https://", "https://www.");
 
-                            //301 (permanent) redirection
-                            filterContext.Result = new RedirectResult(url, true);
+                                //301（永久）重定向
+                                filterContext.Result = new RedirectResult(url, true);
                         }
                     }
                     else
@@ -57,8 +57,8 @@ namespace Nop.Web.Framework.Seo
                         {
                             url = url.Replace("http://", "http://www.");
 
-                            //301 (permanent) redirection
-                            filterContext.Result = new RedirectResult(url, true);
+                                //301（永久）重定向
+                                filterContext.Result = new RedirectResult(url, true);
                         }
                     }
                 }
@@ -75,8 +75,8 @@ namespace Nop.Web.Framework.Seo
                         {
                             url = url.Replace("https://www.", "https://");
 
-                            //301 (permanent) redirection
-                            filterContext.Result = new RedirectResult(url, true);
+                                //301（永久）重定向
+                                filterContext.Result = new RedirectResult(url, true);
                         }
                     }
                     else
@@ -86,8 +86,8 @@ namespace Nop.Web.Framework.Seo
                         {
                             url = url.Replace("http://www.", "http://");
 
-                            //301 (permanent) redirection
-                            filterContext.Result = new RedirectResult(url, true);
+                                //301（永久）重定向
+                                filterContext.Result = new RedirectResult(url, true);
                         }
                     }
                 }

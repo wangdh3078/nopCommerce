@@ -6,7 +6,7 @@ namespace Nop.Web.Framework.Seo
 {
     public static class GenericPathRouteExtensions
     {
-        //Override for localized route
+        //覆盖本地路由
         public static Route MapGenericPathRoute(this RouteCollection routes, string name, string url)
         {
             return MapGenericPathRoute(routes, name, url, null /* defaults */, (object)null /* constraints */);

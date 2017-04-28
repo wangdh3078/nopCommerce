@@ -6,17 +6,17 @@ using Nop.Core;
 namespace Nop.Web.Framework.Mvc
 {
     /// <summary>
-    /// Represents custom JsonResult with using Json converters
+    /// 用Json转换器表示自定义的JsonResult
     /// </summary>
     public class ConverterJsonResult : JsonResult
     {
-        #region Fields
+        #region 字段
 
         private readonly JsonConverter[] _converters;
 
         #endregion
 
-        #region Ctor
+        #region 构造函数
 
         public ConverterJsonResult(params JsonConverter[] converters)
         {
@@ -25,12 +25,12 @@ namespace Nop.Web.Framework.Mvc
 
         #endregion
 
-        #region Methods
+        #region 方法
 
         /// <summary>
-        /// Enables processing of the result of an action method
+        /// 处理方法
         /// </summary>
-        /// <param name="context">The context within which the result is executed</param>
+        /// <param name="context">执行结果的上下文</param>
         public override void ExecuteResult(ControllerContext context)
         {
             if (context == null)

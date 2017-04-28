@@ -12,9 +12,9 @@ namespace Nop.Web.Framework.Security
         private readonly bool _ignore;
 
         /// <summary>
-        /// Anti-forgery security attribute
+        /// 防伪安全属性
         /// </summary>
-        /// <param name="ignore">Pass false in order to ignore this security validation</param>
+        /// <param name="ignore">传递错误以忽略此安全验证</param>
         public AdminAntiForgeryAttribute(bool ignore = false)
         {
             this._ignore = ignore;
@@ -27,11 +27,11 @@ namespace Nop.Web.Framework.Security
             if (_ignore)
                 return;
 
-            //don't apply filter to child methods
+            //不对子方法应用过滤器
             if (filterContext.IsChildAction)
                 return;
 
-            //only POST requests
+            //只处理POST请求
             if (!string.Equals(filterContext.HttpContext.Request.HttpMethod, "POST", StringComparison.OrdinalIgnoreCase))
                 return;
 

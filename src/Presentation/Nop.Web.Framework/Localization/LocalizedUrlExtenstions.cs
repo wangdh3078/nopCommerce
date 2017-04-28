@@ -7,12 +7,12 @@ namespace Nop.Web.Framework.Localization
     public static class LocalizedUrlExtenstions
     {
         private static int _seoCodeLength = 2;
-        
+
         /// <summary>
-        /// Returns a value indicating whether nopCommerce is run in virtual directory
+        /// 返回一个值，指示nopCommerce是否在虚拟目录中运行
         /// </summary>
-        /// <param name="applicationPath">Application path</param>
-        /// <returns>Result</returns>
+        /// <param name="applicationPath">应用路径</param>
+        /// <returns></returns>
         private static bool IsVirtualDirectory(this string applicationPath)
         {
             if (string.IsNullOrEmpty(applicationPath))
@@ -22,11 +22,11 @@ namespace Nop.Web.Framework.Localization
         }
 
         /// <summary>
-        /// Remove application path from raw URL
+        /// 从原始URL中删除应用程序路径
         /// </summary>
-        /// <param name="rawUrl">Raw URL</param>
-        /// <param name="applicationPath">Application path</param>
-        /// <returns>Result</returns>
+        /// <param name="rawUrl">原始URL</param>
+        /// <param name="applicationPath">应用路径</param>
+        /// <returns></returns>
         public static string RemoveApplicationPathFromRawUrl(this string rawUrl, string applicationPath)
         {
             if (string.IsNullOrEmpty(applicationPath))
@@ -37,26 +37,26 @@ namespace Nop.Web.Framework.Localization
 
             
             var result = rawUrl.Substring(applicationPath.Length);
-            //raw url always starts with '/'
+            //原始URL始终以'/'开头
             if (!result.StartsWith("/"))
                 result = "/" + result;
             return result;
         }
 
         /// <summary>
-        /// Get language SEO code from URL
+        /// 从URL获取语言SEO代码
         /// </summary>
         /// <param name="url">URL</param>
-        /// <param name="applicationPath">Application path</param>
-        /// <param name="isRawPath">A value indicating whether war URL is passed</param>
-        /// <returns>Result</returns>
+        /// <param name="applicationPath">应用路径</param>
+        /// <param name="isRawPath">指示是否传递原始URL的值</param>
+        /// <returns></returns>
         public static string GetLanguageSeoCodeFromUrl(this string url, string applicationPath, bool isRawPath)
         {
             if (isRawPath)
             {
                 if (applicationPath.IsVirtualDirectory())
                 {
-                    //we're in virtual directory. So remove its path
+                    //我们在虚拟目录。 所以删除它的路径
                     url = url.RemoveApplicationPathFromRawUrl(applicationPath);
                 }
 
@@ -67,11 +67,11 @@ namespace Nop.Web.Framework.Localization
         }
 
         /// <summary>
-        /// Get a value indicating whether URL is localized (contains SEO code)
+        /// 获取一个值，指示URL是否已本地化（包含SEO代码）
         /// </summary>
         /// <param name="url">URL</param>
-        /// <param name="applicationPath">Application path</param>
-        /// <param name="isRawPath">A value indicating whether raw URL is passed</param>
+        /// <param name="applicationPath">应用路径</param>
+        /// <param name="isRawPath">指示是否传递原始URL的值</param>
         /// <returns>Result</returns>
         public static bool IsLocalizedUrl(this string url, string applicationPath, bool isRawPath)
         {
@@ -81,12 +81,12 @@ namespace Nop.Web.Framework.Localization
             {
                 if (applicationPath.IsVirtualDirectory())
                 {
-                    //we're in virtual directory. So remove its path
+                    //我们在虚拟目录。 所以删除它的路径
                     url = url.RemoveApplicationPathFromRawUrl(applicationPath);
                 }
 
                 int length = url.Length;
-                //too short url
+                //太短的网址
                 if (length < 1 + _seoCodeLength)
                     return false;
 
@@ -114,11 +114,11 @@ namespace Nop.Web.Framework.Localization
         }
 
         /// <summary>
-        /// Remove language SEO code from URL
+        /// 从URL中删除语言SEO代码
         /// </summary>
-        /// <param name="url">Raw URL</param>
-        /// <param name="applicationPath">Application path</param>
-        /// <returns>Result</returns>
+        /// <param name="url">原始URL</param>
+        /// <param name="applicationPath">应用路径</param>
+        /// <returns></returns>
         public static string RemoveLanguageSeoCodeFromRawUrl(this string url, string applicationPath)
         {
             if (string.IsNullOrEmpty(url))
@@ -145,12 +145,12 @@ namespace Nop.Web.Framework.Localization
         }
 
         /// <summary>
-        /// Add language SEO code from URL
+        /// 从URL添加语言SEO代码
         /// </summary>
-        /// <param name="url">Raw URL</param>
-        /// <param name="applicationPath">Application path</param>
-        /// <param name="language">Language</param>
-        /// <returns>Result</returns>
+        /// <param name="url">原始URL</param>
+        /// <param name="applicationPath">应用路径</param>
+        /// <param name="language">语言</param>
+        /// <returns></returns>
         public static string AddLanguageSeoCodeToRawUrl(this string url, string applicationPath,
             Language language)
         {

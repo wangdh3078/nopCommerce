@@ -11,13 +11,14 @@ using Nop.Core.Infrastructure;
 namespace Nop.Web.Framework.Themes
 {
     /// <summary>
-    /// Themable view engine
+    /// 视图引擎
     /// </summary>
     public abstract class ThemeableVirtualPathProviderViewEngine : VirtualPathProviderViewEngine
     {
-        //the original implementation can be found at http://aspnetwebstack.codeplex.com/SourceControl/latest#src/System.Web.Mvc/VirtualPathProviderViewEngine.cs
-        //we make some methods protected virtual because they are overridden by some plugin vendors
-        #region Fields
+        //原始实现可以在 http://aspnetwebstack.codeplex.com/SourceControl/latest#src/System.Web.Mvc/VirtualPathProviderViewEngine.cs 找到
+        //我们使一些方法受到虚拟保护，因为它们被一些插件供应商所覆盖
+
+        #region 字段
 
         private const string CacheKeyFormat = ":ViewCacheEntry:{0}:{1}:{2}:{3}:{4}:{5}";
         private const string CacheKeyPrefixMaster = "Master";
@@ -30,7 +31,11 @@ namespace Nop.Web.Framework.Themes
         #endregion
         
         #region Utilities & Methods
-
+        /// <summary>
+        /// 获取区域名称
+        /// </summary>
+        /// <param name="routeData">路由数据</param>
+        /// <returns></returns>
         protected virtual string GetAreaName(RouteData routeData)
         {
             object result;
@@ -40,7 +45,11 @@ namespace Nop.Web.Framework.Themes
             }
             return GetAreaName(routeData.Route);
         }
-
+        /// <summary>
+        /// 获取区域名称
+        /// </summary>
+        /// <param name="route">路由数据</param>
+        /// <returns></returns>
         protected virtual string GetAreaName(RouteBase route)
         {
             var area = route as IRouteWithArea;
@@ -55,7 +64,10 @@ namespace Nop.Web.Framework.Themes
             }
             return null;
         }
-
+        /// <summary>
+        /// 获取当前主题
+        /// </summary>
+        /// <returns></returns>
         protected virtual string GetCurrentTheme()
         {
             var themeContext = EngineContext.Current.Resolve<IThemeContext>();
@@ -72,7 +84,13 @@ namespace Nop.Web.Framework.Themes
         {
             return cacheKey + displayMode + ":";
         }
-
+        /// <summary>
+        /// 查找部分视图
+        /// </summary>
+        /// <param name="controllerContext"></param>
+        /// <param name="partialViewName"></param>
+        /// <param name="useCache"></param>
+        /// <returns></returns>
         public override ViewEngineResult FindPartialView(ControllerContext controllerContext, string partialViewName, bool useCache)
         {
             if (controllerContext == null)
@@ -96,7 +114,14 @@ namespace Nop.Web.Framework.Themes
 
             return new ViewEngineResult(CreatePartialView(controllerContext, partialPath), this);
         }
-
+        /// <summary>
+        /// 查找视图
+        /// </summary>
+        /// <param name="controllerContext"></param>
+        /// <param name="viewName"></param>
+        /// <param name="masterName"></param>
+        /// <param name="useCache"></param>
+        /// <returns></returns>
         public override ViewEngineResult FindView(ControllerContext controllerContext, string viewName, string masterName, bool useCache)
         {
             if (controllerContext == null)
@@ -123,7 +148,20 @@ namespace Nop.Web.Framework.Themes
 
             return new ViewEngineResult(CreateView(controllerContext, viewPath, masterPath), this);
         }
-
+        /// <summary>
+        /// 获取路径
+        /// </summary>
+        /// <param name="controllerContext"></param>
+        /// <param name="locations"></param>
+        /// <param name="areaLocations"></param>
+        /// <param name="locationsPropertyName"></param>
+        /// <param name="name"></param>
+        /// <param name="controllerName"></param>
+        /// <param name="theme"></param>
+        /// <param name="cacheKeyPrefix"></param>
+        /// <param name="useCache"></param>
+        /// <param name="searchedLocations"></param>
+        /// <returns></returns>
         protected virtual string GetPath(ControllerContext controllerContext, string[] locations, string[] areaLocations, string locationsPropertyName, string name, string controllerName, string theme, string cacheKeyPrefix, bool useCache, out string[] searchedLocations)
         {
             searchedLocations = _emptyLocations;

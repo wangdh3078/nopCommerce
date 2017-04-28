@@ -2,55 +2,55 @@
 
 namespace Nop.Web.Framework.UI.Paging
 {
-	/// <summary>
-	/// A collection of objects that has been split into pages.
-	/// </summary>
-	public interface IPageableModel
+    /// <summary>
+    /// 已经拆分成页面的对象的集合。
+    /// </summary>
+    public interface IPageableModel
     {
         /// <summary>
-        /// The current page index (starts from 0)
+        /// 当前页面索引（从0开始）
         /// </summary>
         int PageIndex { get; }
-		/// <summary>
-		/// The current page number (starts from 1)
-		/// </summary>
-		int PageNumber { get; }
-		/// <summary>
-		/// The number of items in each page.
-		/// </summary>
-		int PageSize { get; }
-		/// <summary>
-		/// The total number of items.
-		/// </summary>
-		int TotalItems { get; }
-		/// <summary>
-		/// The total number of pages.
-		/// </summary>
-		int TotalPages { get; }
-		/// <summary>
-		/// The index of the first item in the page.
-		/// </summary>
-		int FirstItem { get; }
-		/// <summary>
-		/// The index of the last item in the page.
-		/// </summary>
-		int LastItem { get; }
-		/// <summary>
-		/// Whether there are pages before the current page.
-		/// </summary>
-		bool HasPreviousPage { get; }
-		/// <summary>
-		/// Whether there are pages after the current page.
-		/// </summary>
-		bool HasNextPage { get; }
+        /// <summary>
+        /// 当前页码（从1开始）
+        /// </summary>
+        int PageNumber { get; }
+        /// <summary>
+        /// 每页中的项目数。
+        /// </summary>
+        int PageSize { get; }
+        /// <summary>
+        /// 总数。
+        /// </summary>
+        int TotalItems { get; }
+        /// <summary>
+        /// 总页数。
+        /// </summary>
+        int TotalPages { get; }
+        /// <summary>
+        /// 页面中第一个项目的索引。
+        /// </summary>
+        int FirstItem { get; }
+        /// <summary>
+        /// 页面最后一个项目的索引。
+        /// </summary>
+        int LastItem { get; }
+        /// <summary>
+        /// 当前页面之前是否有页面。
+        /// </summary>
+        bool HasPreviousPage { get; }
+        /// <summary>
+        /// 是否有当前页面之后的页面。
+        /// </summary>
+        bool HasNextPage { get; }
 	}
 
 
-	/// <summary>
-	/// Generic form of <see cref="IPageableModel"/>
-	/// </summary>
-	/// <typeparam name="T">Type of object being paged</typeparam>
-	public interface IPagination<T> : IPageableModel
+    /// <summary>
+    /// 反省 <see cref="IPageableModel"/>
+    /// </summary>
+    /// <typeparam name="T">正在分页的对象类型</typeparam>
+    public interface IPagination<T> : IPageableModel
 	{
 
 	}

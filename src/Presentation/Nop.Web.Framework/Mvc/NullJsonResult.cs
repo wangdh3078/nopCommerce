@@ -12,7 +12,7 @@ namespace Nop.Web.Framework.Mvc
             if (context == null)
                 throw new ArgumentNullException("context");
 
-            //we do it as described here - http://stackoverflow.com/questions/15939944/jquery-post-json-fails-when-returning-null-from-asp-net-mvc
+            //我们按照这里所述进行操作 - http://stackoverflow.com/questions/15939944/jquery-post-json-fails-when-returning-null-from-asp-net-mvc
 
             var response = context.HttpContext.Response;
             response.ContentType = !string.IsNullOrEmpty(ContentType) ? ContentType : MimeTypes.ApplicationJson;
@@ -21,7 +21,7 @@ namespace Nop.Web.Framework.Mvc
 
             this.Data = null;
 
-            //If you need special handling, you can call another form of SerializeObject below
+            //如果需要特殊处理，可以在下面调用另一种形式的SerializeObject
             var serializedObject = JsonConvert.SerializeObject(Data, Formatting.Indented);
             response.Write(serializedObject);
         }

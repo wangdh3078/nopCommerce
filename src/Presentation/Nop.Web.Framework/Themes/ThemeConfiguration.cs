@@ -2,8 +2,17 @@
 
 namespace Nop.Web.Framework.Themes
 {
+    /// <summary>
+    /// 主题配置
+    /// </summary>
     public class ThemeConfiguration
     {
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="themeName">主题名称</param>
+        /// <param name="path">路径</param>
+        /// <param name="doc">文档</param>
         public ThemeConfiguration(string themeName, string path, XmlDocument doc)
         {
             ThemeName = themeName;

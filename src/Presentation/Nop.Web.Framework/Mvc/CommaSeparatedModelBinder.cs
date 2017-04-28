@@ -7,6 +7,9 @@ using System.Web.Mvc;
 
 namespace Nop.Web.Framework.Mvc
 {
+    /// <summary>
+    /// 逗号分隔
+    /// </summary>
     public class CommaSeparatedModelBinder : DefaultModelBinder
     {
         private static readonly MethodInfo ToArrayMethod = typeof(Enumerable).GetMethod("ToArray");

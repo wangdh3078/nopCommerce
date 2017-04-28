@@ -7,17 +7,17 @@ using Nop.Data;
 namespace Nop.Web.Framework.Mvc
 {
     /// <summary>
-    /// Extensions for DependencyRegistrar
+    /// 依赖注入的扩展
     /// </summary>
     public static class DependencyRegistrarExtensions
     {
         /// <summary>
-        /// Register custom DataContext for a plugin
+        /// 注册插件的自定义数据上下文
         /// </summary>
-        /// <typeparam name="T">Class implementing IDbContext</typeparam>
-        /// <param name="dependencyRegistrar">Dependency registrar</param>
+        /// <typeparam name="T">实现IDbContext的类</typeparam>
+        /// <param name="dependencyRegistrar">依赖注入</param>
         /// <param name="builder">Builder</param>
-        /// <param name="contextName">Context name</param>
+        /// <param name="contextName">上下文名称</param>
         public static void RegisterPluginDataContext<T>(this IDependencyRegistrar dependencyRegistrar,
             ContainerBuilder builder, string contextName)
              where T: IDbContext
@@ -28,7 +28,7 @@ namespace Nop.Web.Framework.Mvc
 
             if (dataProviderSettings != null && dataProviderSettings.IsValid())
             {
-                //register named context
+                //注册命名上下文
                 builder.Register(c => (IDbContext)Activator.CreateInstance(typeof(T), new object[] { dataProviderSettings.DataConnectionString }))
                     .Named<IDbContext>(contextName)
                     .InstancePerLifetimeScope();
@@ -38,7 +38,7 @@ namespace Nop.Web.Framework.Mvc
             }
             else
             {
-                //register named context
+                //注册命名上下文
                 builder.Register(c => (T)Activator.CreateInstance(typeof(T), new object[] { c.Resolve<DataSettings>().DataConnectionString }))
                     .Named<IDbContext>(contextName)
                     .InstancePerLifetimeScope();

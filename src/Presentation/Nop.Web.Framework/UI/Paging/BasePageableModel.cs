@@ -7,7 +7,7 @@ namespace Nop.Web.Framework.UI.Paging
 {
     public abstract class BasePageableModel : IPageableModel
     {
-        #region Methods
+        #region ∑Ω∑®
 
         public virtual void LoadPagedList<T>(IPagedList<T> pagedList)
         {
@@ -23,7 +23,7 @@ namespace Nop.Web.Framework.UI.Paging
 
         #endregion
 
-        #region Properties
+        #region  Ù–‘
 
         public int FirstItem { get; set; }
 

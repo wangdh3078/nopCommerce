@@ -8,7 +8,7 @@ using Nop.Services.Common;
 namespace Nop.Web.Framework.Themes
 {
     /// <summary>
-    /// Theme context
+    /// T主题上下文
     /// </summary>
     public partial class ThemeContext : IThemeContext
     {
@@ -35,7 +35,7 @@ namespace Nop.Web.Framework.Themes
         }
 
         /// <summary>
-        /// Get or set current theme system name
+        /// 获取或设置当前主题系统名称
         /// </summary>
         public string WorkingThemeName
         {
@@ -51,11 +51,11 @@ namespace Nop.Web.Framework.Themes
                         theme = _workContext.CurrentCustomer.GetAttribute<string>(SystemCustomerAttributeNames.WorkingThemeName, _genericAttributeService, _storeContext.CurrentStore.Id);
                 }
 
-                //default store theme
+                //默认商店主题
                 if (string.IsNullOrEmpty(theme))
                     theme = _storeInformationSettings.DefaultStoreTheme;
 
-                //ensure that theme exists
+                //确保主题存在
                 if (!_themeProvider.ThemeConfigurationExists(theme))
                 {
                     var themeInstance = _themeProvider.GetThemeConfigurations()
@@ -65,7 +65,7 @@ namespace Nop.Web.Framework.Themes
                     theme = themeInstance.ThemeName;
                 }
                 
-                //cache theme
+                //缓存主题
                 this._cachedThemeName = theme;
                 this._themeIsCached = true;
                 return theme;
@@ -80,7 +80,7 @@ namespace Nop.Web.Framework.Themes
 
                 _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, SystemCustomerAttributeNames.WorkingThemeName, value, _storeContext.CurrentStore.Id);
 
-                //clear cache
+                //清除缓存
                 this._themeIsCached = false;
             }
         }

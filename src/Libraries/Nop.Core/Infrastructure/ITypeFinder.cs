@@ -5,7 +5,7 @@ using System.Reflection;
 namespace Nop.Core.Infrastructure
 {
     /// <summary>
-    /// 实现此接口的类提供有关Nop引擎中各种服务的类型的信息。
+    /// 类型查找
     /// </summary>
     public interface ITypeFinder
     {
