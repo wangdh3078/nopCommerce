@@ -12,9 +12,9 @@ namespace Nop.Web.Framework
         private readonly bool _ignore;
 
         /// <summary>
-        /// Ctor 
+        /// 构造函数 
         /// </summary>
-        /// <param name="ignore">Pass false in order to ignore this functionality for a certain action method</param>
+        /// <param name="ignore">传递错误以忽略某个操作方法的此功能</param>
         public PublicStoreAllowNavigationAttribute(bool ignore = false)
         {
             this._ignore = ignore;

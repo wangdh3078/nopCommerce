@@ -9,7 +9,7 @@ using Nop.Web.Framework.Kendoui;
 namespace Nop.Web.Framework
 {
     /// <summary>
-    /// Extensions
+    /// 扩展
     /// </summary>
     public static class Extensions
     {
@@ -19,46 +19,46 @@ namespace Nop.Web.Framework
         }
 
         /// <summary>
-        /// Returns a value indicating whether real selection is not possible
+        ///返回一个值，表示是否实际选择是不可能的
         /// </summary>
-        /// <param name="items">Items</param>
-        /// <param name="ignoreZeroValue">A value indicating whether we should ignore items with "0" value</param>
-        /// <returns>A value indicating whether real selection is not possible</returns>
+        /// <param name="items">项目</param>
+        /// <param name="ignoreZeroValue">一个值，表示我们是否忽略具有“0”值的项目</param>
+        /// <returns>指示实际选择是否不可能的值</returns>
         public static bool SelectionIsNotPossible(this IList<SelectListItem> items, bool ignoreZeroValue = true)
         {
             if (items == null)
                 throw  new ArgumentNullException("items");
 
-            //we ignore items with "0" value? Usually it's something like "Select All", "etc
+            //我们忽略具有“0”值的项目？ 通常它是像“全选”，“等等”
             return items.Count(x => !ignoreZeroValue || !x.Value.ToString().Equals("0")) < 2;
         }
 
         /// <summary>
-        /// Relative formatting of DateTime (e.g. 2 hours ago, a month ago)
+        /// DateTime的相对格式（例如2个月前，一个月前）
         /// </summary>
-        /// <param name="source">Source (UTC format)</param>
-        /// <returns>Formatted date and time string</returns>
+        /// <param name="source">来源（UTC格式）</param>
+        /// <returns>格式化日期和时间字符串</returns>
         public static string RelativeFormat(this DateTime source)
         {
             return RelativeFormat(source, string.Empty);
         }
         /// <summary>
-        /// Relative formatting of DateTime (e.g. 2 hours ago, a month ago)
+        /// DateTime的相对格式（例如2个月前，一个月前）
         /// </summary>
-        /// <param name="source">Source (UTC format)</param>
-        /// <param name="defaultFormat">Default format string (in case relative formatting is not applied)</param>
-        /// <returns>Formatted date and time string</returns>
+        /// <param name="source">来源（UTC格式）</param>
+        /// <param name="defaultFormat">默认格式字符串（在不应用相对格式的情况下）</param>
+        /// <returns>格式化日期和时间字符串</returns>
         public static string RelativeFormat(this DateTime source, string defaultFormat)
         {
             return RelativeFormat(source, false, defaultFormat);
         }
         /// <summary>
-        /// Relative formatting of DateTime (e.g. 2 hours ago, a month ago)
+        /// DateTime的相对格式（例如2个月前，一个月前）
         /// </summary>
-        /// <param name="source">Source (UTC format)</param>
-        /// <param name="convertToUserTime">A value indicating whether we should convet DateTime instance to user local time (in case relative formatting is not applied)</param>
-        /// <param name="defaultFormat">Default format string (in case relative formatting is not applied)</param>
-        /// <returns>Formatted date and time string</returns>
+        /// <param name="source">来源（UTC格式）</param>
+        /// <param name="convertToUserTime">一个值，表示是否应将DateTime实例转换为用户本地时间（如果未应用相对格式化）</param>
+        /// <param name="defaultFormat">默认格式字符串（在不应用相对格式的情况下）</param>
+        /// <returns>格式化日期和时间字符串</returns>
         public static string RelativeFormat(this DateTime source,
             bool convertToUserTime, string defaultFormat)
         {

@@ -12,7 +12,7 @@ using Nop.Web.Framework.Localization;
 namespace Nop.Web.Framework
 {
     /// <summary>
-    /// Attribute which ensures that store URL contains a language SEO code if "SEO friendly URLs with multiple languages" setting is enabled
+    /// 如果启用了“具有多语言的SEO友好URL”设置，则确保商店URL包含语言SEO代码的属性
     /// </summary>
     public class LanguageSeoCodeAttribute : ActionFilterAttribute
     {
@@ -25,11 +25,11 @@ namespace Nop.Web.Framework
             if (request == null)
                 return;
 
-            //don't apply filter to child methods
+            //不对子方法应用过滤器
             if (filterContext.IsChildAction)
                 return;
 
-            //only GET requests
+            //只有GET请求
             if (!string.Equals(request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase))
                 return;
 
@@ -39,19 +39,19 @@ namespace Nop.Web.Framework
             var localizationSettings = EngineContext.Current.Resolve<LocalizationSettings>();
             if (!localizationSettings.SeoFriendlyUrlsForLanguagesEnabled)
                 return;
-            
-            //ensure that this route is registered and localizable (LocalizedRoute in RouteProvider.cs)
+
+            //确保此路由已注册并可本地化（RouteProvider.cs中的LocalizedRoute）
             if (filterContext.RouteData == null || filterContext.RouteData.Route == null || !(filterContext.RouteData.Route is LocalizedRoute))
                 return;
 
 
-            //process current URL
+            //处理当前URL
             var pageUrl = request.RawUrl;
             string applicationPath = request.ApplicationPath;
             if (pageUrl.IsLocalizedUrl(applicationPath, true))
             {
-                //already localized URL
-                //let's ensure that this language exists
+                //已经本地化的网址
+                //让我们确保这种语言存在
                 var seoCode = pageUrl.GetLanguageSeoCodeFromUrl(applicationPath, true);
                 
                 var languageService = EngineContext.Current.Resolve<ILanguageService>();
@@ -59,20 +59,20 @@ namespace Nop.Web.Framework
                     .FirstOrDefault(l => seoCode.Equals(l.UniqueSeoCode, StringComparison.InvariantCultureIgnoreCase));
                 if (language != null && language.Published)
                 {
-                    //exists
+                    //存在
                     return;
                 }
                 else
                 {
-                    //doesn't exist. redirect to the original page (not permanent)
+                    //不存在 重定向到原始页面（不是永久的）
                     pageUrl = pageUrl.RemoveLanguageSeoCodeFromRawUrl(applicationPath);
                     filterContext.Result = new RedirectResult(pageUrl);
                 }
             }
-            //add language code to URL
+            //添加语言代码到URL
             var workContext = EngineContext.Current.Resolve<IWorkContext>();
             pageUrl = pageUrl.AddLanguageSeoCodeToRawUrl(applicationPath, workContext.WorkingLanguage);
-            //301 (permanent) redirection
+            //301（永久）重定向
             filterContext.Result = new RedirectResult(pageUrl, true);
         }
     }

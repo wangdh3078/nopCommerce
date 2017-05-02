@@ -7,10 +7,17 @@ using Nop.Services.Common;
 namespace Nop.Web.Extensions
 {
     /// <summary>
-    /// Parser helper
+    /// 解析帮助类
     /// </summary>
     public static class AttributeParserHelper
     {
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="form"></param>
+        /// <param name="addressAttributeParser"></param>
+        /// <param name="addressAttributeService"></param>
+        /// <returns></returns>
         public static string ParseCustomAddressAttributes(this FormCollection form,
             IAddressAttributeParser addressAttributeParser,
             IAddressAttributeService addressAttributeService)
@@ -55,7 +62,7 @@ namespace Nop.Web.Extensions
                         break;
                     case AttributeControlType.ReadonlyCheckboxes:
                         {
-                            //load read-only (already server-side selected) values
+                            //加载只读（已经是服务器端选择）值
                             var attributeValues = addressAttributeService.GetAddressAttributeValues(attribute.Id);
                             foreach (var selectedAttributeId in attributeValues
                                 .Where(v => v.IsPreSelected)

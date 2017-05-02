@@ -21,17 +21,17 @@ using Nop.Web.Framework.Localization;
 namespace Nop.Web.Framework
 {
     /// <summary>
-    /// Work context for web application
+    /// Web应用程序的工作环境
     /// </summary>
     public partial class WebWorkContext : IWorkContext
     {
-        #region Const
+        #region 静态变量
 
         private const string CustomerCookieName = "Nop.customer";
 
         #endregion
 
-        #region Fields
+        #region 字段
 
         private readonly HttpContextBase _httpContext;
         private readonly ICustomerService _customerService;
@@ -56,7 +56,7 @@ namespace Nop.Web.Framework
 
         #endregion
 
-        #region Ctor
+        #region 构造函数
 
         public WebWorkContext(HttpContextBase httpContext,
             ICustomerService customerService,
@@ -170,10 +170,10 @@ namespace Nop.Web.Framework
 
         #endregion
 
-        #region Properties
+        #region 属性
 
         /// <summary>
-        /// Gets or sets the current customer
+        ///获取或设置当前客户
         /// </summary>
         public virtual Customer CurrentCustomer
         {
@@ -185,14 +185,14 @@ namespace Nop.Web.Framework
                 Customer customer = null;
                 if (_httpContext == null || _httpContext is FakeHttpContext)
                 {
-                    //check whether request is made by a background task
-                    //in this case return built-in customer record for background task
+                    //检查请求是否由后台任务进行
+                    //在这种情况下，返回内置的客户记录用于后台任务
                     customer = _customerService.GetCustomerBySystemName(SystemCustomerNames.BackgroundTask);
                 }
 
-                //check whether request is made by a search engine
-                //in this case return built-in customer record for search engines 
-                //or comment the following two lines of code in order to disable this functionality
+                //检查请求是否由搜索引擎进行
+                //在这种情况下，返回搜索引擎的内置客户记录
+                //或注释以下两行代码以禁用此功能
                 if (customer == null || customer.Deleted || !customer.Active || customer.RequireReLogin)
                 {
                     if (_userAgentHelper.IsSearchEngine())
@@ -201,13 +201,13 @@ namespace Nop.Web.Framework
                     }
                 }
 
-                //registered user
+                //注册用户
                 if (customer == null || customer.Deleted || !customer.Active || customer.RequireReLogin)
                 {
                     customer = _authenticationService.GetAuthenticatedCustomer();
                 }
 
-                //impersonate user if required (currently used for 'phone order' support)
+                //如果需要模拟用户（目前用于“电话订单”支持）
                 if (customer != null && !customer.Deleted && customer.Active && !customer.RequireReLogin)
                 {
                     var impersonatedCustomerId = customer.GetAttribute<int?>(SystemCustomerAttributeNames.ImpersonatedCustomerId);
@@ -216,14 +216,14 @@ namespace Nop.Web.Framework
                         var impersonatedCustomer = _customerService.GetCustomerById(impersonatedCustomerId.Value);
                         if (impersonatedCustomer != null && !impersonatedCustomer.Deleted && impersonatedCustomer.Active && !impersonatedCustomer.RequireReLogin)
                         {
-                            //set impersonated customer
+                            //设置模拟客户
                             _originalCustomerIfImpersonated = customer;
                             customer = impersonatedCustomer;
                         }
                     }
                 }
 
-                //load guest customer
+                //加载客户
                 if (customer == null || customer.Deleted || !customer.Active || customer.RequireReLogin)
                 {
                     var customerCookie = GetCustomerCookie();
@@ -241,14 +241,14 @@ namespace Nop.Web.Framework
                     }
                 }
 
-                //create guest if not exists
+                //创建客人如果不存在
                 if (customer == null || customer.Deleted || !customer.Active || customer.RequireReLogin)
                 {
                     customer = _customerService.InsertGuestCustomer();
                 }
 
 
-                //validation
+                //验证
                 if (!customer.Deleted && customer.Active && !customer.RequireReLogin)
                 {
                     SetCustomerCookie(customer.CustomerGuid);
@@ -265,7 +265,7 @@ namespace Nop.Web.Framework
         }
 
         /// <summary>
-        /// Gets or sets the original customer (in case the current one is impersonated)
+        /// 获取或设置原始客户（如果当前的客户被模拟）
         /// </summary>
         public virtual Customer OriginalCustomerIfImpersonated
         {
@@ -276,7 +276,7 @@ namespace Nop.Web.Framework
         }
 
         /// <summary>
-        /// Gets or sets the current vendor (logged-in manager)
+        /// 获取或设置当前供应商（登录管理器）
         /// </summary>
         public virtual Vendor CurrentVendor
         {
@@ -300,7 +300,7 @@ namespace Nop.Web.Framework
         }
 
         /// <summary>
-        /// Get or set current user working language
+        /// 获取或设置当前用户工作语言
         /// </summary>
         public virtual Language WorkingLanguage
         {
@@ -312,13 +312,13 @@ namespace Nop.Web.Framework
                 Language detectedLanguage = null;
                 if (_localizationSettings.SeoFriendlyUrlsForLanguagesEnabled)
                 {
-                    //get language from URL
+                    //从URL获取语言
                     detectedLanguage = GetLanguageFromUrl();
                 }
                 if (detectedLanguage == null && _localizationSettings.AutomaticallyDetectLanguage)
                 {
-                    //get language from browser settings
-                    //but we do it only once
+                    //从浏览器设置获取语言
+                    //但我们只做一次
                     if (!this.CurrentCustomer.GetAttribute<bool>(SystemCustomerAttributeNames.LanguageAutomaticallyDetected, 
                         _genericAttributeService, _storeContext.CurrentStore.Id))
                     {
@@ -332,7 +332,7 @@ namespace Nop.Web.Framework
                 }
                 if (detectedLanguage != null)
                 {
-                    //the language is detected. now we need to save it
+                    //检测到语言。 现在我们需要保存它
                     if (this.CurrentCustomer.GetAttribute<int>(SystemCustomerAttributeNames.LanguageId,
                         _genericAttributeService, _storeContext.CurrentStore.Id) != detectedLanguage.Id)
                     {
@@ -342,28 +342,28 @@ namespace Nop.Web.Framework
                 }
 
                 var allLanguages = _languageService.GetAllLanguages(storeId: _storeContext.CurrentStore.Id);
-                //find current customer language
+                //查找当前的客户语言
                 var languageId = this.CurrentCustomer.GetAttribute<int>(SystemCustomerAttributeNames.LanguageId,
                     _genericAttributeService, _storeContext.CurrentStore.Id);
                 var language = allLanguages.FirstOrDefault(x => x.Id == languageId);
                 if (language == null)
                 {
-                    //it not found, then let's load the default currency for the current language (if specified)
+                    //没有找到，那么我们加载当前语言的默认货币（如果指定）
                     languageId = _storeContext.CurrentStore.DefaultLanguageId;
                     language = allLanguages.FirstOrDefault(x => x.Id == languageId);
                 }
                 if (language == null)
                 {
-                    //it not specified, then return the first (filtered by current store) found one
+                    //它没有指定，然后返回第一个（由当前存储过滤）找到一个
                     language = allLanguages.FirstOrDefault();
                 }
                 if (language == null)
                 {
-                    //it not specified, then return the first found one
+                    //它没有指定，然后返回第一个找到一个
                     language = _languageService.GetAllLanguages().FirstOrDefault();
                 }
 
-                //cache
+                //缓存
                 _cachedLanguage = language;
                 return _cachedLanguage;
             }
@@ -380,7 +380,7 @@ namespace Nop.Web.Framework
         }
 
         /// <summary>
-        /// Get or set current user working currency
+        /// 获取或设置当前用户工作货币
         /// </summary>
         public virtual Currency WorkingCurrency
         {
@@ -440,7 +440,7 @@ namespace Nop.Web.Framework
         }
 
         /// <summary>
-        /// Get or set current tax display type
+        /// 获取或设置当前的税显示类型
         /// </summary>
         public virtual TaxDisplayType TaxDisplayType
         {
@@ -484,7 +484,7 @@ namespace Nop.Web.Framework
         }
 
         /// <summary>
-        /// Get or set value indicating whether we're in admin area
+        /// 获取或设置值，指示我们是否在管理区域
         /// </summary>
         public virtual bool IsAdmin { get; set; }
 

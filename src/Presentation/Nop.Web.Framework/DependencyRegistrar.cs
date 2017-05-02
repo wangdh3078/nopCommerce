@@ -57,21 +57,21 @@ using Nop.Web.Framework.UI;
 namespace Nop.Web.Framework
 {
     /// <summary>
-    /// Dependency registrar
+    ///依赖注入
     /// </summary>
     public class DependencyRegistrar : IDependencyRegistrar
     {
         /// <summary>
-        /// Register services and interfaces
+        /// 注册服务和接口
         /// </summary>
         /// <param name="builder">Container builder</param>
         /// <param name="typeFinder">Type finder</param>
         /// <param name="config">Config</param>
         public virtual void Register(ContainerBuilder builder, ITypeFinder typeFinder, NopConfig config)
         {
-            //HTTP context and other related stuff
-            builder.Register(c => 
-                //register FakeHttpContext when HttpContext is not available
+            //HTTP上下文等相关内容
+            builder.Register(c =>
+                //当HttpContext不可用时，注册FakeHttpContext
                 HttpContext.Current != null ?
                 (new HttpContextWrapper(HttpContext.Current) as HttpContextBase) :
                 (new FakeHttpContext("~/") as HttpContextBase))
@@ -90,16 +90,16 @@ namespace Nop.Web.Framework
                 .As<HttpSessionStateBase>()
                 .InstancePerLifetimeScope();
 
-            //web helper
+            //web帮助
             builder.RegisterType<WebHelper>().As<IWebHelper>().InstancePerLifetimeScope();
-            //user agent helper
+            //用户代理帮助
             builder.RegisterType<UserAgentHelper>().As<IUserAgentHelper>().InstancePerLifetimeScope();
 
             
             //controllers
             builder.RegisterControllers(typeFinder.GetAssemblies().ToArray());
 
-            //data layer
+            //数据层
             var dataSettingsManager = new DataSettingsManager();
             var dataProviderSettings = dataSettingsManager.LoadSettings();
             builder.Register(c => dataSettingsManager.LoadSettings()).As<DataSettings>();
@@ -124,11 +124,11 @@ namespace Nop.Web.Framework
 
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
             
-            //plugins
+            //插件
             builder.RegisterType<PluginFinder>().As<IPluginFinder>().InstancePerLifetimeScope();
             builder.RegisterType<OfficialFeedManager>().As<IOfficialFeedManager>().InstancePerLifetimeScope();
 
-            //cache managers
+            //缓存管理
             if (config.RedisCachingEnabled)
             {
                 builder.RegisterType<RedisConnectionWrapper>().As<IRedisConnectionWrapper>().SingleInstance();
@@ -154,7 +154,7 @@ namespace Nop.Web.Framework
             //store context
             builder.RegisterType<WebStoreContext>().As<IStoreContext>().InstancePerLifetimeScope();
 
-            //services
+            //服务
             builder.RegisterType<BackInStockSubscriptionService>().As<IBackInStockSubscriptionService>().InstancePerLifetimeScope();
             builder.RegisterType<CategoryService>().As<ICategoryService>().InstancePerLifetimeScope();
             builder.RegisterType<CompareProductsService>().As<ICompareProductsService>().InstancePerLifetimeScope();
@@ -171,7 +171,7 @@ namespace Nop.Web.Framework
             builder.RegisterType<CategoryTemplateService>().As<ICategoryTemplateService>().InstancePerLifetimeScope();
             builder.RegisterType<ManufacturerTemplateService>().As<IManufacturerTemplateService>().InstancePerLifetimeScope();
             builder.RegisterType<TopicTemplateService>().As<ITopicTemplateService>().InstancePerLifetimeScope();
-            //use static cache (between HTTP requests)
+            //使用静态缓存（在HTTP请求之间）
             builder.RegisterType<ProductTagService>().As<IProductTagService>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"))
                 .InstancePerLifetimeScope();
@@ -194,15 +194,15 @@ namespace Nop.Web.Framework
             builder.RegisterType<CustomerRegistrationService>().As<ICustomerRegistrationService>().InstancePerLifetimeScope();
             builder.RegisterType<CustomerReportService>().As<ICustomerReportService>().InstancePerLifetimeScope();
 
-            //use static cache (between HTTP requests)
+            //使用静态缓存（在HTTP请求之间）
             builder.RegisterType<PermissionService>().As<IPermissionService>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"))
                 .InstancePerLifetimeScope();
-            //use static cache (between HTTP requests)
+            //使用静态缓存（在HTTP请求之间）
             builder.RegisterType<AclService>().As<IAclService>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"))
                 .InstancePerLifetimeScope();
-            //use static cache (between HTTP requests)
+            //使用静态缓存（在HTTP请求之间）
             builder.RegisterType<PriceCalculationService>().As<IPriceCalculationService>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"))
                 .InstancePerLifetimeScope();
@@ -214,35 +214,35 @@ namespace Nop.Web.Framework
             builder.RegisterType<StateProvinceService>().As<IStateProvinceService>().InstancePerLifetimeScope();
 
             builder.RegisterType<StoreService>().As<IStoreService>().InstancePerLifetimeScope();
-            //use static cache (between HTTP requests)
+            //使用静态缓存（在HTTP请求之间）
             builder.RegisterType<StoreMappingService>().As<IStoreMappingService>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"))
                 .InstancePerLifetimeScope();
 
-            //use static cache (between HTTP requests)
+            //使用静态缓存（在HTTP请求之间）
             builder.RegisterType<DiscountService>().As<IDiscountService>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"))
                 .InstancePerLifetimeScope();
 
-            //use static cache (between HTTP requests)
+            //使用静态缓存（在HTTP请求之间）
             builder.RegisterType<SettingService>().As<ISettingService>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"))
                 .InstancePerLifetimeScope();
             builder.RegisterSource(new SettingsSource());
 
-            //use static cache (between HTTP requests)
+            //使用静态缓存（在HTTP请求之间）
             builder.RegisterType<LocalizationService>().As<ILocalizationService>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"))
                 .InstancePerLifetimeScope();
 
-            //use static cache (between HTTP requests)
+            //使用静态缓存（在HTTP请求之间）
             builder.RegisterType<LocalizedEntityService>().As<ILocalizedEntityService>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"))
                 .InstancePerLifetimeScope();
             builder.RegisterType<LanguageService>().As<ILanguageService>().InstancePerLifetimeScope();
 
             builder.RegisterType<DownloadService>().As<IDownloadService>().InstancePerLifetimeScope();
-            //picture service
+            //图片服务
             var useAzureBlobStorage = !string.IsNullOrEmpty(config.AzureBlobStorageConnectionString);
             if (useAzureBlobStorage)
             {

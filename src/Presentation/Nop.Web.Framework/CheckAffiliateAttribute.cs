@@ -9,6 +9,9 @@ using Nop.Services.Customers;
 
 namespace Nop.Web.Framework
 {
+    /// <summary>
+    /// 检查会员属性
+    /// </summary>
     public class CheckAffiliateAttribute : ActionFilterAttribute
     {
         private const string AFFILIATE_ID_QUERY_PARAMETER_NAME = "affiliateid";
@@ -23,7 +26,7 @@ namespace Nop.Web.Framework
             if (request == null)
                 return;
 
-            //don't apply filter to child methods
+            //不对子方法应用过滤器
             if (filterContext.IsChildAction)
                 return;
 
@@ -31,7 +34,7 @@ namespace Nop.Web.Framework
 
             if (request.QueryString != null)
             {
-                //try to find by ID ("affiliateId" parameter)
+                //尝试通过ID查找（“affiliateId”参数）
                 if (request.QueryString[AFFILIATE_ID_QUERY_PARAMETER_NAME] != null)
                 {
                     var affiliateId = Convert.ToInt32(request.QueryString[AFFILIATE_ID_QUERY_PARAMETER_NAME]);
@@ -41,7 +44,7 @@ namespace Nop.Web.Framework
                         affiliate = affiliateService.GetAffiliateById(affiliateId);
                     }
                 }
-                //try to find by friendly name ("affiliate" parameter)
+                //尝试通过友好名称（“affiliate”参数）查找
                 else if (request.QueryString[AFFILIATE_FRIENDLYURLNAME_QUERY_PARAMETER_NAME] != null)
                 {
                     var friendlyUrlName = request.QueryString[AFFILIATE_FRIENDLYURLNAME_QUERY_PARAMETER_NAME];

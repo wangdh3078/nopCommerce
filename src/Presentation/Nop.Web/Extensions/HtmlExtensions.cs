@@ -15,6 +15,9 @@ using Nop.Web.Models.Common;
 
 namespace Nop.Web.Extensions
 {
+    /// <summary>
+    /// HTML帮助类
+    /// </summary>
     public static class HtmlExtensions
     {
         /// <summary>
